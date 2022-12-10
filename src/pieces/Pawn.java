@@ -1,6 +1,8 @@
+package pieces;
+
 import java.util.List;
 
-class King extends ChessPiece {
+public class Pawn extends ChessPiece {
     @Override
     List<Coordinate> calculateMoves()
     {

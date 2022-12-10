@@ -1,10 +1,8 @@
+package pieces;
+
 import java.util.List;
 
-abstract class ChessPiece {
-    class Coordinate {
-        int row;
-        char col;
-    }
+public abstract class ChessPiece {
 
     char pieceColor;
     Coordinate position;

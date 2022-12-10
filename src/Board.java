@@ -1,4 +1,5 @@
-import java.awt.*;
+import pieces.ChessPiece;
+
 import java.util.List;
 
 public class Board {
