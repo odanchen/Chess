@@ -6,10 +6,10 @@ public class Board {
     ColorPair boardColor = BoardColors.OPTION1;
 
     ChessPiece[][] configuration = new ChessPiece[BOARD_SIZE][BOARD_SIZE];
-    public ChessPiece getPieceAt(Coordinate coordinate)
+    public ChessPiece getPieceAt(Position position)
     {
-        int matrixRow = Math.abs(coordinate.getRow() - BOARD_SIZE);
-        int matrixCol = (int) coordinate.getCol() - 'a';
+        int matrixRow = Math.abs(position.getRow() - BOARD_SIZE);
+        int matrixCol = (int) position.getCol() - 'a';
         return configuration[matrixRow][matrixCol];
     }
     public ChessPiece getPieceAt(char letter, int digit)
@@ -18,42 +18,42 @@ public class Board {
         int matrixCol = (int) letter - 'a';
         return configuration[matrixRow][matrixCol];
     }
-    public void setPieceAt(Coordinate coordinate, ChessPiece piece)
+    public void setPieceAt(Position position, ChessPiece piece)
     {
-        int matrixRow = Math.abs(coordinate.getRow() - BOARD_SIZE);
-        int matrixCol = (int) coordinate.getCol() - 'a';
+        int matrixRow = Math.abs(position.getRow() - BOARD_SIZE);
+        int matrixCol = (int) position.getCol() - 'a';
         configuration[matrixRow][matrixCol] = piece;
     }
     public void fillStandardBoard()
     {
-        this.setPieceAt(new Coordinate('a', 1), new Castle(new Coordinate('a', 1), 'W'));
-        this.setPieceAt(new Coordinate('a', 8), new Castle(new Coordinate('a', 8), 'B'));
+        this.setPieceAt(new Position('a', 1), new Castle(new Position('a', 1), PieceColor.WHITE));
+        this.setPieceAt(new Position('a', 8), new Castle(new Position('a', 8), PieceColor.BLACK));
 
-        this.setPieceAt(new Coordinate('b', 1), new Knight(new Coordinate('b', 1), 'W'));
-        this.setPieceAt(new Coordinate('b', 8), new Knight(new Coordinate('b', 8), 'B'));
+        this.setPieceAt(new Position('b', 1), new Knight(new Position('b', 1), PieceColor.WHITE));
+        this.setPieceAt(new Position('b', 8), new Knight(new Position('b', 8), PieceColor.BLACK));
 
-        this.setPieceAt(new Coordinate('c', 1), new Bishop(new Coordinate('c', 1), 'W'));
-        this.setPieceAt(new Coordinate('c', 8), new Bishop(new Coordinate('c', 8), 'B'));
+        this.setPieceAt(new Position('c', 1), new Bishop(new Position('c', 1), PieceColor.WHITE));
+        this.setPieceAt(new Position('c', 8), new Bishop(new Position('c', 8), PieceColor.BLACK));
 
-        this.setPieceAt(new Coordinate('d', 1), new Queen(new Coordinate('d', 1), 'W'));
-        this.setPieceAt(new Coordinate('d', 8), new Queen(new Coordinate('d', 8), 'B'));
+        this.setPieceAt(new Position('d', 1), new Queen(new Position('d', 1), PieceColor.WHITE));
+        this.setPieceAt(new Position('d', 8), new Queen(new Position('d', 8), PieceColor.BLACK));
 
-        this.setPieceAt(new Coordinate('e', 1), new King(new Coordinate('e', 1), 'W'));
-        this.setPieceAt(new Coordinate('e', 8), new King(new Coordinate('e', 8), 'B'));
+        this.setPieceAt(new Position('e', 1), new King(new Position('e', 1), PieceColor.WHITE));
+        this.setPieceAt(new Position('e', 8), new King(new Position('e', 8), PieceColor.BLACK));
 
-        this.setPieceAt(new Coordinate('f', 1), new Bishop(new Coordinate('f', 1), 'W'));
-        this.setPieceAt(new Coordinate('f', 8), new Bishop(new Coordinate('f', 8), 'B'));
+        this.setPieceAt(new Position('f', 1), new Bishop(new Position('f', 1), PieceColor.WHITE));
+        this.setPieceAt(new Position('f', 8), new Bishop(new Position('f', 8), PieceColor.BLACK));
 
-        this.setPieceAt(new Coordinate('g', 1), new Knight(new Coordinate('g', 1), 'W'));
-        this.setPieceAt(new Coordinate('g', 8), new Knight(new Coordinate('g', 8), 'B'));
+        this.setPieceAt(new Position('g', 1), new Knight(new Position('g', 1), PieceColor.WHITE));
+        this.setPieceAt(new Position('g', 8), new Knight(new Position('g', 8), PieceColor.BLACK));
 
-        this.setPieceAt(new Coordinate('h', 1), new Castle(new Coordinate('h', 1), 'W'));
-        this.setPieceAt(new Coordinate('h', 8), new Castle(new Coordinate('h', 8), 'B'));
+        this.setPieceAt(new Position('h', 1), new Castle(new Position('h', 1), PieceColor.WHITE));
+        this.setPieceAt(new Position('h', 8), new Castle(new Position('h', 8), PieceColor.BLACK));
 
         for (char i = 'a'; i <= 'h'; i++)
         {
-            this.setPieceAt(new Coordinate(i, 2), new Pawn(new Coordinate(i, 2), 'W', false));
-            this.setPieceAt(new Coordinate(i, 7), new Pawn(new Coordinate(i, 7), 'B', false));
+            this.setPieceAt(new Position(i, 2), new Pawn(new Position(i, 2), PieceColor.WHITE, false));
+            this.setPieceAt(new Position(i, 7), new Pawn(new Position(i, 7), PieceColor.BLACK, false));
         }
     }
 }

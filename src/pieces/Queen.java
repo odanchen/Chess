@@ -4,11 +4,11 @@ import java.util.List;
 
 public class Queen extends ChessPiece {
     @Override
-    List<Coordinate> calculateMoves()
+    List<Position> calculateMoves()
     {
         return null;
     }
-    public Queen(Coordinate position, char color)
+    public Queen(Position position, PieceColor color)
     {
         this.pieceColor = color;
         this.position = position;

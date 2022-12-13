@@ -1,6 +1,6 @@
 package pieces;
 
-public class Coordinate {
+public class Position {
     private int row;
     private char col;
 
@@ -19,7 +19,7 @@ public class Coordinate {
     public void setCol(char col) {
         this.col = col;
     }
-    public Coordinate(char col, int row)
+    public Position(char col, int row)
     {
         this.col = col;
         this.row = row;

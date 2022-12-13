@@ -4,11 +4,11 @@ import java.util.List;
 
 public class Knight extends ChessPiece {
     @Override
-    List<Coordinate> calculateMoves()
+    List<Position> calculateMoves()
     {
         return null;
     }
-    public Knight(Coordinate position, char color)
+    public Knight(Position position, PieceColor color)
     {
         this.pieceColor = color;
         this.position = position;

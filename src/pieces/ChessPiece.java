@@ -4,24 +4,24 @@ import java.util.List;
 
 public abstract class ChessPiece {
 
-    protected char pieceColor;
-    protected Coordinate position;
-    public Coordinate getPosition()
+    protected PieceColor pieceColor;
+    protected Position position;
+    public Position getPosition()
     {
         return this.position;
     }
-    public char getPieceColor()
+    public PieceColor getPieceColor()
     {
         return this.pieceColor;
     }
-    public void setPieceColor(char color)
+    public void setPieceColor(PieceColor color)
     {
         this.pieceColor = color;
     }
-    public void setPosition(Coordinate position)
+    public void setPosition(Position position)
     {
         this.position = position;
     }
 
-    abstract List<Coordinate> calculateMoves();
+    abstract List<Position> calculateMoves();
 }

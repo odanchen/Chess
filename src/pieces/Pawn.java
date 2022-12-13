@@ -5,11 +5,11 @@ import java.util.List;
 public class Pawn extends ChessPiece {
     private boolean hasMoved;
     @Override
-    List<Coordinate> calculateMoves()
+    List<Position> calculateMoves()
     {
         return null;
     }
-    public Pawn(Coordinate position, char color, boolean hasMoved)
+    public Pawn(Position position, PieceColor color, boolean hasMoved)
     {
         this.pieceColor = color;
         this.position = position;
