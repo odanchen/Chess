@@ -8,4 +8,9 @@ public class Knight extends ChessPiece {
     {
         return null;
     }
+    public Knight(Coordinate position, char color)
+    {
+        this.pieceColor = color;
+        this.position = position;
+    }
 }

@@ -8,4 +8,9 @@ public class Castle extends ChessPiece {
     {
         return null;
     }
+    public Castle(Coordinate position, char color)
+    {
+        this.pieceColor = color;
+        this.position = position;
+    }
 }

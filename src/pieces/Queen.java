@@ -8,4 +8,9 @@ public class Queen extends ChessPiece {
     {
         return null;
     }
+    public Queen(Coordinate position, char color)
+    {
+        this.pieceColor = color;
+        this.position = position;
+    }
 }
