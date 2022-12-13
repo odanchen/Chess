@@ -19,4 +19,9 @@ public class Coordinate {
     public void setCol(char col) {
         this.col = col;
     }
+    public Coordinate(char col, int row)
+    {
+        this.col = col;
+        this.row = row;
+    }
 }
