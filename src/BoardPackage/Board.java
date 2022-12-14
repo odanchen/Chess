@@ -28,7 +28,7 @@ public class Board {
     }
     public void fillTestConfiguration()
     {
-        this.setPieceAt(new Position('b', 4), new Knight(new Position('b', 4), PieceColor.WHITE));
+        this.setPieceAt(new Position('e', 7), new Pawn(new Position('e', 7), PieceColor.BLACK));
     }
     public void fillStandardBoard()
     {
