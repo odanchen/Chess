@@ -3,7 +3,7 @@ package BoardPackage;
 import pieces.*;
 
 public class Board {
-    private final int BOARD_SIZE = 8;
+    private final static int BOARD_SIZE = 8;
     ColorPair boardColor = BoardColors.OPTION1;
     ChessPiece[][] configuration = new ChessPiece[BOARD_SIZE][BOARD_SIZE];
     Position whiteKing;
