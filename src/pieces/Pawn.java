@@ -7,6 +7,7 @@ import java.util.List;
 
 public class Pawn extends ChessPiece {
     private boolean hasMoved;
+
     @Override
     public void calculateMoves(Board board) {
         List<Position> moves = new ArrayList<>();
@@ -41,5 +42,17 @@ public class Pawn extends ChessPiece {
         this.pieceColor = color;
         this.position = position;
         this.hasMoved = false;
+    }
+
+    @Override
+    public ChessPiece copy() {
+        return new Pawn(this);
+    }
+
+    public Pawn(Pawn pawn) {
+        this.moves = new ArrayList<>(pawn.moves);
+        this.position = Position.copyOf(pawn.position);
+        this.pieceColor = pawn.pieceColor;
+        this.hasMoved = pawn.hasMoved;
     }
 }

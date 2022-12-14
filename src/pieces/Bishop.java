@@ -6,13 +6,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Bishop extends ChessPiece {
-    private List<Position> checkLine(Board board, int colDifference, int rowDifference)
-    {
+    private List<Position> checkLine(Board board, int colDifference, int rowDifference) {
         List<Position> moves = new ArrayList<>();
 
         Position curPosition = new Position(this.getPosition(), colDifference, rowDifference);
-        while (curPosition.isInsideBoard() && board.getPieceAt(curPosition) == null)
-        {
+        while (curPosition.isInsideBoard() && board.getPieceAt(curPosition) == null) {
             moves.add(curPosition);
             curPosition = new Position(curPosition, colDifference, rowDifference);
         }
@@ -21,9 +19,9 @@ public class Bishop extends ChessPiece {
 
         return moves;
     }
+
     @Override
-    public void calculateMoves(Board board)
-    {
+    public void calculateMoves(Board board) {
         List<Position> moves = new ArrayList<>();
 
         moves.addAll(checkLine(board, 1, 1));
@@ -33,9 +31,20 @@ public class Bishop extends ChessPiece {
 
         this.setMoves(moves);
     }
-    public Bishop(Position position, PieceColor color)
-    {
+
+    public Bishop(Position position, PieceColor color) {
         this.pieceColor = color;
         this.position = position;
+    }
+
+    @Override
+    public ChessPiece copy() {
+        return new Bishop(this);
+    }
+
+    public Bishop(Bishop bishop) {
+        this.moves = new ArrayList<>(bishop.moves);
+        this.position = Position.copyOf(bishop.position);
+        this.pieceColor = bishop.pieceColor;
     }
 }

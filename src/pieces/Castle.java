@@ -7,13 +7,12 @@ import java.util.List;
 
 public class Castle extends ChessPiece {
     private boolean hasMoved;
-    private List<Position> checkLine(Board board, int colDifference, int rowDifference)
-    {
+
+    private List<Position> checkLine(Board board, int colDifference, int rowDifference) {
         List<Position> moves = new ArrayList<>();
 
         Position curPosition = new Position(this.getPosition(), colDifference, rowDifference);
-        while (curPosition.isInsideBoard() && board.getPieceAt(curPosition) == null)
-        {
+        while (curPosition.isInsideBoard() && board.getPieceAt(curPosition) == null) {
             moves.add(curPosition);
             curPosition = new Position(curPosition, colDifference, rowDifference);
         }
@@ -22,9 +21,9 @@ public class Castle extends ChessPiece {
 
         return moves;
     }
+
     @Override
-    public void calculateMoves(Board board)
-    {
+    public void calculateMoves(Board board) {
         List<Position> moves = new ArrayList<>();
 
         moves.addAll(checkLine(board, 1, 0));
@@ -34,16 +33,28 @@ public class Castle extends ChessPiece {
 
         this.setMoves(moves);
     }
-    public Castle(Position position, PieceColor color, boolean hasMoved)
-    {
+
+    public Castle(Position position, PieceColor color, boolean hasMoved) {
         this.pieceColor = color;
         this.position = position;
         this.hasMoved = hasMoved;
     }
-    public Castle(Position position, PieceColor color)
-    {
+
+    public Castle(Position position, PieceColor color) {
         this.pieceColor = color;
         this.position = position;
         this.hasMoved = false;
+    }
+
+    @Override
+    public ChessPiece copy() {
+        return new Castle(this);
+    }
+
+    public Castle(Castle castle) {
+        this.moves = new ArrayList<>(castle.moves);
+        this.position = Position.copyOf(castle.position);
+        this.pieceColor = castle.pieceColor;
+        this.hasMoved = castle.hasMoved;
     }
 }

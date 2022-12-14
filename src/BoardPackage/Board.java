@@ -32,21 +32,20 @@ public class Board {
         return false;
     }
 
-    public Board makeMove(Position start, Position finish) {
+    public Board makeMove(ChessPiece piece, Position finish) {
         Board ans = new Board(this);
 
         if (ans.getPieceAt(finish) != null) {
-            if (ans.getPieceAt(start).getPieceColor() == PieceColor.WHITE)
-                ans.blackPieces.remove(ans.getPieceAt(finish));
+            if (piece.getPieceColor() == PieceColor.WHITE) ans.blackPieces.remove(ans.getPieceAt(finish));
             else ans.whitePieces.remove(ans.getPieceAt(finish));
         }
 
-        ans.setPieceAt(finish, this.getPieceAt(start));
-        ans.setPieceAt(start, null);
-        ans.getPieceAt(finish).setPosition(finish);
+        ans.setPieceAt(finish, piece);
+        ans.setPieceAt(piece.getPosition(), null);
+        piece.setPosition(finish);
 
-        if (ans.getPieceAt(finish) instanceof King) {
-            if (ans.getPieceAt(finish).getPieceColor() == PieceColor.WHITE) ans.whiteKing = finish;
+        if (piece instanceof King) {
+            if (piece.getPieceColor() == PieceColor.WHITE) ans.whiteKing = finish;
             else ans.blackKing = finish;
         }
 
@@ -68,7 +67,7 @@ public class Board {
     public void setPieceAt(Position position, ChessPiece piece) {
         int matrixRow = Math.abs(position.getRow() - BOARD_SIZE);
         int matrixCol = (int) position.getCol() - 'a';
-        configuration[matrixRow][matrixCol] = piece;
+        this.configuration[matrixRow][matrixCol] = piece;
     }
 
     public Board(Board board) {

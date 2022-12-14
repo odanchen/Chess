@@ -6,13 +6,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Queen extends ChessPiece {
-    private List<Position> checkLine(Board board, int colDifference, int rowDifference)
-    {
+    private List<Position> checkLine(Board board, int colDifference, int rowDifference) {
         List<Position> moves = new ArrayList<>();
 
         Position curPosition = new Position(this.getPosition(), colDifference, rowDifference);
-        while (curPosition.isInsideBoard() && board.getPieceAt(curPosition) == null)
-        {
+        while (curPosition.isInsideBoard() && board.getPieceAt(curPosition) == null) {
             moves.add(curPosition);
             curPosition = new Position(curPosition, colDifference, rowDifference);
         }
@@ -21,9 +19,9 @@ public class Queen extends ChessPiece {
 
         return moves;
     }
+
     @Override
-    public void calculateMoves(Board board)
-    {
+    public void calculateMoves(Board board) {
         List<Position> moves = new ArrayList<>();
 
         moves.addAll(checkLine(board, 1, 1));
@@ -38,8 +36,19 @@ public class Queen extends ChessPiece {
 
         this.setMoves(moves);
     }
-    public Queen(Position position, PieceColor color)
-    {
+
+    @Override
+    public ChessPiece copy() {
+        return new Queen(this);
+    }
+
+    public Queen(Queen queen) {
+        this.moves = new ArrayList<>(queen.moves);
+        this.position = Position.copyOf(queen.position);
+        this.pieceColor = queen.pieceColor;
+    }
+
+    public Queen(Position position, PieceColor color) {
         this.pieceColor = color;
         this.position = position;
     }
