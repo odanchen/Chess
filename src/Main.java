@@ -7,16 +7,7 @@ public class Main {
         board.fillTestConfiguration();
 
 
-        for (int digit = 1; digit <= 8; digit++)
-        {
-            for (char letter = 'a'; letter <= 'h'; letter++)
-            {
-                if (board.getPieceAt(letter, digit) != null)
-                {
-                    board.getPieceAt(letter, digit).calculateMoves(board);
-                }
-            }
-        }
+        board = board.makeMove(new Position('e', 7), new Position('d',6));
 
         System.out.print("finish");
     }

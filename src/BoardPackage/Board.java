@@ -2,12 +2,50 @@ package BoardPackage;
 
 import pieces.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Board {
     private final static int BOARD_SIZE = 8;
     ColorPair boardColor = BoardColors.OPTION1;
     ChessPiece[][] configuration = new ChessPiece[BOARD_SIZE][BOARD_SIZE];
     Position whiteKing;
     Position blackKing;
+    List<ChessPiece> whitePieces = new ArrayList<>();
+    List<ChessPiece> blackPieces = new ArrayList<>();
+    public boolean isCheck(PieceColor color) {
+        Position kingPosition = (color == PieceColor.WHITE) ? this.whiteKing : this.blackKing;
+        List<ChessPiece> pieces = (color == PieceColor.WHITE) ? this.blackPieces : this.whitePieces;
+
+        for (ChessPiece piece : pieces) {
+            piece.calculateMoves(this);
+            if (piece.getMoves().contains(kingPosition)) return true;
+        }
+
+        return false;
+    }
+    public Board makeMove(Position start, Position finish)
+    {
+        Board ans = this;
+
+        if (ans.getPieceAt(finish) != null)
+        {
+            if (ans.getPieceAt(start).getPieceColor() == PieceColor.WHITE) ans.blackPieces.remove(ans.getPieceAt(finish));
+            else ans.whitePieces.remove(ans.getPieceAt(finish));
+        }
+
+        ans.setPieceAt(finish, this.getPieceAt(start));
+        ans.setPieceAt(start, null);
+        ans.getPieceAt(finish).setPosition(finish);
+
+        if (ans.getPieceAt(finish) instanceof King)
+        {
+            if (ans.getPieceAt(finish).getPieceColor() == PieceColor.WHITE) ans.whiteKing = finish;
+            else ans.blackKing = finish;
+        }
+
+        return ans;
+    }
     public ChessPiece getPieceAt(Position position)
     {
         int matrixRow = Math.abs(position.getRow() - BOARD_SIZE);
@@ -28,7 +66,7 @@ public class Board {
     }
     public void fillTestConfiguration()
     {
-        this.setPieceAt(new Position('e', 7), new Pawn(new Position('e', 7), PieceColor.BLACK));
+        this.setPieceAt(new Position('e', 7), new Bishop(new Position('e', 7), PieceColor.BLACK));
     }
     public void fillStandardBoard()
     {

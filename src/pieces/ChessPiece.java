@@ -27,4 +27,8 @@ public abstract class ChessPiece {
         this.position = position;
     }
     abstract public void calculateMoves(Board board);
+    public void validateMoves(Board board)
+    {
+
+    }
 }
