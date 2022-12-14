@@ -17,4 +17,10 @@ public class King extends ChessPiece {
         this.position = position;
         this.hasMoved = hasMoved;
     }
+    public King(Position position, PieceColor color)
+    {
+        this.pieceColor = color;
+        this.position = position;
+        this.hasMoved = false;
+    }
 }

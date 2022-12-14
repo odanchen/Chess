@@ -17,4 +17,10 @@ public class Pawn extends ChessPiece {
         this.position = position;
         this.hasMoved = hasMoved;
     }
+    public Pawn(Position position, PieceColor color)
+    {
+        this.pieceColor = color;
+        this.position = position;
+        this.hasMoved = false;
+    }
 }

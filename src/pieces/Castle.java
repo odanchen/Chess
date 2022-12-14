@@ -40,4 +40,10 @@ public class Castle extends ChessPiece {
         this.position = position;
         this.hasMoved = hasMoved;
     }
+    public Castle(Position position, PieceColor color)
+    {
+        this.pieceColor = color;
+        this.position = position;
+        this.hasMoved = false;
+    }
 }
