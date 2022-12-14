@@ -1,11 +1,15 @@
 package pieces;
 
+import BoardPackage.Board;
+
 import java.util.List;
 
 public abstract class ChessPiece {
-
     protected PieceColor pieceColor;
     protected Position position;
+    protected List<Position> moves;
+    public List<Position> getMoves() {return this.moves;}
+    public void setMoves(List<Position> moves) {this.moves = moves;}
     public Position getPosition()
     {
         return this.position;
@@ -22,6 +26,5 @@ public abstract class ChessPiece {
     {
         this.position = position;
     }
-
-    abstract List<Position> calculateMoves();
+    abstract public void calculateMoves(Board board);
 }

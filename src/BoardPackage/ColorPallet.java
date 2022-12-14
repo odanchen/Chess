@@ -1,3 +1,5 @@
+package BoardPackage;
+
 import java.awt.Color;
 
 class ColorPair {

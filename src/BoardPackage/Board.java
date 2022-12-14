@@ -1,11 +1,13 @@
+package BoardPackage;
+
 import pieces.*;
 
 public class Board {
     private final int BOARD_SIZE = 8;
-
     ColorPair boardColor = BoardColors.OPTION1;
-
     ChessPiece[][] configuration = new ChessPiece[BOARD_SIZE][BOARD_SIZE];
+    Position whiteKing;
+    Position blackKing;
     public ChessPiece getPieceAt(Position position)
     {
         int matrixRow = Math.abs(position.getRow() - BOARD_SIZE);
@@ -24,10 +26,16 @@ public class Board {
         int matrixCol = (int) position.getCol() - 'a';
         configuration[matrixRow][matrixCol] = piece;
     }
+    public void fillTestConfiguration()
+    {
+        this.setPieceAt(new Position('b', 4), new Bishop(new Position('b', 4), PieceColor.WHITE));
+        this.setPieceAt(new Position('d', 6), new Bishop(new Position('d', 6), PieceColor.BLACK));
+        this.setPieceAt(new Position('d', 2), new Bishop(new Position('d', 2), PieceColor.WHITE));
+    }
     public void fillStandardBoard()
     {
-        this.setPieceAt(new Position('a', 1), new Castle(new Position('a', 1), PieceColor.WHITE));
-        this.setPieceAt(new Position('a', 8), new Castle(new Position('a', 8), PieceColor.BLACK));
+        this.setPieceAt(new Position('a', 1), new Castle(new Position('a', 1), PieceColor.WHITE, false));
+        this.setPieceAt(new Position('a', 8), new Castle(new Position('a', 8), PieceColor.BLACK, false));
 
         this.setPieceAt(new Position('b', 1), new Knight(new Position('b', 1), PieceColor.WHITE));
         this.setPieceAt(new Position('b', 8), new Knight(new Position('b', 8), PieceColor.BLACK));
@@ -38,8 +46,10 @@ public class Board {
         this.setPieceAt(new Position('d', 1), new Queen(new Position('d', 1), PieceColor.WHITE));
         this.setPieceAt(new Position('d', 8), new Queen(new Position('d', 8), PieceColor.BLACK));
 
-        this.setPieceAt(new Position('e', 1), new King(new Position('e', 1), PieceColor.WHITE));
-        this.setPieceAt(new Position('e', 8), new King(new Position('e', 8), PieceColor.BLACK));
+        this.setPieceAt(new Position('e', 1), new King(new Position('e', 1), PieceColor.WHITE, false));
+        this.setPieceAt(new Position('e', 8), new King(new Position('e', 8), PieceColor.BLACK, false));
+        this.whiteKing = new Position('e', 1);
+        this.blackKing = new Position('e', 8);
 
         this.setPieceAt(new Position('f', 1), new Bishop(new Position('f', 1), PieceColor.WHITE));
         this.setPieceAt(new Position('f', 8), new Bishop(new Position('f', 8), PieceColor.BLACK));
@@ -47,8 +57,8 @@ public class Board {
         this.setPieceAt(new Position('g', 1), new Knight(new Position('g', 1), PieceColor.WHITE));
         this.setPieceAt(new Position('g', 8), new Knight(new Position('g', 8), PieceColor.BLACK));
 
-        this.setPieceAt(new Position('h', 1), new Castle(new Position('h', 1), PieceColor.WHITE));
-        this.setPieceAt(new Position('h', 8), new Castle(new Position('h', 8), PieceColor.BLACK));
+        this.setPieceAt(new Position('h', 1), new Castle(new Position('h', 1), PieceColor.WHITE, false));
+        this.setPieceAt(new Position('h', 8), new Castle(new Position('h', 8), PieceColor.BLACK, false));
 
         for (char i = 'a'; i <= 'h'; i++)
         {

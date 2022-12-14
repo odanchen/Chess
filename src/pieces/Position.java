@@ -19,9 +19,18 @@ public class Position {
     public void setCol(char col) {
         this.col = col;
     }
+    public boolean isInsideBoard()
+    {
+        return (this.row >= 1 && this.row <= 8) && (this.col >= 'a' && this.col <= 'h');
+    }
     public Position(char col, int row)
     {
         this.col = col;
         this.row = row;
+    }
+    public Position(Position start, int colDifference, int rowDifference)
+    {
+        this.row = start.getRow() + rowDifference;
+        this.col = (char) (start.getCol() + colDifference);
     }
 }

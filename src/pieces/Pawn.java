@@ -1,13 +1,15 @@
 package pieces;
 
+import BoardPackage.Board;
+
 import java.util.List;
 
 public class Pawn extends ChessPiece {
     private boolean hasMoved;
     @Override
-    List<Position> calculateMoves()
+    public void calculateMoves(Board board)
     {
-        return null;
+
     }
     public Pawn(Position position, PieceColor color, boolean hasMoved)
     {
