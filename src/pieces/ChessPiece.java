@@ -2,6 +2,7 @@ package pieces;
 
 import BoardPackage.Board;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public abstract class ChessPiece {
@@ -36,6 +37,12 @@ public abstract class ChessPiece {
     abstract public void calculateMoves(Board board);
 
     public void validateMoves(Board board) {
-
+        List<Position> moves = new ArrayList<>(this.getMoves());
+        for (Position pos : moves) {
+            Board tempBoard = board.makeMove(this.copy(), pos);
+            if (tempBoard.isCheck(this.getPieceColor())) moves.remove(pos);
+        }
+        this.setMoves(moves);
     }
+
 }
