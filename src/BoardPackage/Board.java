@@ -1,5 +1,7 @@
 package BoardPackage;
 
+import assets.board_colors.BoardColors;
+import assets.board_colors.ColorPair;
 import pieces.*;
 
 import java.util.ArrayList;
