@@ -44,6 +44,7 @@ public class Board {
         ans.setPieceAt(piece.getPosition(), null);
         piece.setPosition(finish);
 
+
         if (piece instanceof King) {
             if (piece.getPieceColor() == PieceColor.WHITE) ans.whiteKing = finish;
             else ans.blackKing = finish;
