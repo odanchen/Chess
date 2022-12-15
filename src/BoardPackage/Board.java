@@ -88,36 +88,46 @@ public class Board {
         this.setPieceAt(new Position('e', 7), new Bishop(new Position('e', 7), BLACK));
     }
 
+    private void addPiece(ChessPiece piece) {
+        this.setPieceAt(piece.getPosition(), piece);
+
+        if (piece.getPieceColor() == WHITE) this.whitePieces.add(piece);
+        else this.blackPieces.add(piece);
+
+        if (piece instanceof King) {
+            if (piece.getPieceColor() == WHITE) this.whiteKing = piece.getPosition();
+            else this.blackKing = piece.getPosition();
+        }
+    }
+
     public void fillStandardBoard() {
-        this.setPieceAt(Position.at("a1"), new Castle(Position.at("a1"), WHITE));
-        this.setPieceAt(Position.at("a8"), new Castle(Position.at("a8"), BLACK));
+        this.addPiece(new Castle(Position.at("a1"), WHITE));
+        this.addPiece(new Castle(Position.at("a8"), BLACK));
 
-        this.setPieceAt(Position.at("b1"), new Knight(Position.at("b1"), WHITE));
-        this.setPieceAt(Position.at("b8"), new Knight(Position.at("b8"), BLACK));
+        this.addPiece(new Knight(Position.at("b1"), WHITE));
+        this.addPiece(new Knight(Position.at("b8"), BLACK));
 
-        this.setPieceAt(Position.at("c1"), new Bishop(Position.at("c1"), WHITE));
-        this.setPieceAt(Position.at("c8"), new Bishop(Position.at("c8"), BLACK));
+        this.addPiece(new Bishop(Position.at("c1"), WHITE));
+        this.addPiece(new Bishop(Position.at("c8"), BLACK));
 
-        this.setPieceAt(Position.at("d1"), new Queen(Position.at("d1"), WHITE));
-        this.setPieceAt(Position.at("d8"), new Queen(Position.at("d8"), BLACK));
+        this.addPiece(new Queen(Position.at("d1"), WHITE));
+        this.addPiece(new Queen(Position.at("d8"), BLACK));
 
         this.setPieceAt(Position.at("e1"), new King(Position.at("e1"), WHITE));
         this.setPieceAt(Position.at("e8"), new King(Position.at("e8"), BLACK));
-        this.whiteKing = Position.at("e1");
-        this.blackKing = Position.at("e8");
 
-        this.setPieceAt(Position.at("f1"), new Bishop(Position.at("f1"), WHITE));
-        this.setPieceAt(Position.at("f8"), new Bishop(Position.at("f8"), BLACK));
+        this.addPiece(new Bishop(Position.at("f1"), WHITE));
+        this.addPiece(new Bishop(Position.at("f8"), BLACK));
 
-        this.setPieceAt(Position.at("g1"), new Knight(Position.at("g1"), WHITE));
-        this.setPieceAt(Position.at("g8"), new Knight(Position.at("g8"), BLACK));
+        this.addPiece(new Knight(Position.at("g1"), WHITE));
+        this.addPiece(new Knight(Position.at("g8"), BLACK));
 
-        this.setPieceAt(Position.at("h1"), new Castle(Position.at("h1"), WHITE));
-        this.setPieceAt(Position.at("h8"), new Castle(Position.at("h8"), BLACK));
+        this.addPiece(new Castle(Position.at("h1"), WHITE));
+        this.addPiece(new Castle(Position.at("h8"), BLACK));
 
         for (char i = 'a'; i <= 'h'; i++) {
-            this.setPieceAt(new Position(i, 2), new Pawn(new Position(i, 2), WHITE));
-            this.setPieceAt(new Position(i, 7), new Pawn(new Position(i, 7), BLACK));
+            this.addPiece(new Pawn(new Position(i, 2), WHITE));
+            this.addPiece(new Pawn(new Position(i, 7), BLACK));
         }
     }
 }
