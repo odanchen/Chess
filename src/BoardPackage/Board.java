@@ -6,6 +6,7 @@ import pieces.*;
 import pieces.moves.AttackMove;
 import pieces.moves.CastlingMove;
 import pieces.moves.Move;
+import pieces.moves.RelocationMove;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -66,6 +67,24 @@ public class Board {
         return boardCopy;
     }
 
+    public void makeMove(Move move) {
+        if (move instanceof CastlingMove) {
+            //IMPLEMEEENT
+        } else if (move instanceof RelocationMove) {
+            this.setPieceAt(move.getEndPosition(), this.getPieceAt(move.getStartPiece().getPosition()));
+            this.setPieceAt(move.getStartPosition(), null);
+        } else if (move instanceof AttackMove) {
+            if (((AttackMove) move).getAttackedPiece().getPieceColor() == WHITE)
+                this.whitePieces.remove(this.getPieceAt(((AttackMove) move).getAttackedPiece().getPosition()));
+            else this.blackPieces.remove(this.getPieceAt(((AttackMove) move).getAttackedPiece().getPosition()));
+
+            this.setPieceAt(((AttackMove) move).getAttackedPiece().getPosition(), null);
+
+            this.setPieceAt(move.getEndPosition(), this.getPieceAt(move.getStartPiece().getPosition()));
+            this.setPieceAt(move.getStartPosition(), null);
+        }
+    }
+
     /**
      * @param position Position on the board.
      * @return The piece at the specified position.
@@ -78,7 +97,7 @@ public class Board {
 
     /**
      * @param letter The corresponding chess position for columns. (a,b,c...h)
-     * @param digit The corresponding chess position for rows. (1,2,3...8)
+     * @param digit  The corresponding chess position for rows. (1,2,3...8)
      * @return The piece at the specified position.
      */
     public ChessPiece getPieceAt(char letter, int digit) {
