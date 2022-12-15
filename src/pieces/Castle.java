@@ -39,27 +39,28 @@ public class Castle extends ChessPiece {
         this.setMoves(moves);
     }
 
+    public boolean getHasMoved() {
+        return this.hasMoved;
+    }
+
     public Castle(Position position, PieceColor color, boolean hasMoved) {
-        this.pieceColor = color;
-        this.position = position;
+        super(position, color);
         this.hasMoved = hasMoved;
     }
 
     public Castle(Position position, PieceColor color) {
-        this.pieceColor = color;
-        this.position = position;
+        super(position, color);
         this.hasMoved = false;
+    }
+
+    public Castle(Castle castle) {
+        super(Position.copyOf(castle.getPosition()), castle.getPieceColor());
+        this.moves = new ArrayList<>(castle.getMoves());
+        this.hasMoved = castle.getHasMoved();
     }
 
     @Override
     public ChessPiece copy() {
         return new Castle(this);
-    }
-
-    public Castle(Castle castle) {
-        this.moves = new ArrayList<>(castle.moves);
-        this.position = Position.copyOf(castle.position);
-        this.pieceColor = castle.pieceColor;
-        this.hasMoved = castle.hasMoved;
     }
 }

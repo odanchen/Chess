@@ -17,9 +17,9 @@ public class King extends ChessPiece {
                 (board.getPieceAt(endPosition) == null || board.getPieceAt(endPosition).getPieceColor() != this.getPieceColor()));
     }
 
-    private Move newMove(Position endPosition, Board board, Position start)
-    {
-        if (board.getPieceAt(endPosition) == null) return new RelocationMove(board.getPieceAt(start), start, endPosition);
+    private Move newMove(Position endPosition, Board board, Position start) {
+        if (board.getPieceAt(endPosition) == null)
+            return new RelocationMove(board.getPieceAt(start), start, endPosition);
         return new AttackMove(board.getPieceAt(start), board.getPieceAt(endPosition), start, endPosition);
     }
 
@@ -50,27 +50,28 @@ public class King extends ChessPiece {
         this.setMoves(moves);
     }
 
+    public boolean getHasMoved() {
+        return this.hasMoved;
+    }
+
     public King(Position position, PieceColor color, boolean hasMoved) {
-        this.pieceColor = color;
-        this.position = position;
+        super(position, color);
         this.hasMoved = hasMoved;
     }
 
     public King(Position position, PieceColor color) {
-        this.pieceColor = color;
-        this.position = position;
+        super(position, color);
         this.hasMoved = false;
+    }
+
+    public King(King king) {
+        super(Position.copyOf(king.getPosition()), king.getPieceColor());
+        this.moves = new ArrayList<>(king.getMoves());
+        this.hasMoved = king.getHasMoved();
     }
 
     @Override
     public ChessPiece copy() {
         return new King(this);
-    }
-
-    public King(King king) {
-        this.moves = new ArrayList<>(king.moves);
-        this.position = Position.copyOf(king.position);
-        this.pieceColor = king.pieceColor;
-        this.hasMoved = king.hasMoved;
     }
 }

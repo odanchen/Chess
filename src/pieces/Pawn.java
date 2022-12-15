@@ -36,27 +36,28 @@ public class Pawn extends ChessPiece {
         this.setMoves(moves);
     }
 
+    public boolean getHasMoved() {
+        return this.hasMoved;
+    }
+
     public Pawn(Position position, PieceColor color, boolean hasMoved) {
-        this.pieceColor = color;
-        this.position = position;
+        super(position, color);
         this.hasMoved = hasMoved;
     }
 
     public Pawn(Position position, PieceColor color) {
-        this.pieceColor = color;
-        this.position = position;
+        super(position, color);
         this.hasMoved = false;
+    }
+
+    public Pawn(Pawn pawn) {
+        super(Position.copyOf(pawn.getPosition()), pawn.getPieceColor());
+        this.moves = new ArrayList<>(pawn.getMoves());
+        this.hasMoved = pawn.getHasMoved();
     }
 
     @Override
     public ChessPiece copy() {
         return new Pawn(this);
-    }
-
-    public Pawn(Pawn pawn) {
-        this.moves = new ArrayList<>(pawn.moves);
-        this.position = Position.copyOf(pawn.position);
-        this.pieceColor = pawn.pieceColor;
-        this.hasMoved = pawn.hasMoved;
     }
 }

@@ -16,9 +16,9 @@ public class Knight extends ChessPiece {
                 (board.getPieceAt(endPosition) == null || board.getPieceAt(endPosition).getPieceColor() != this.getPieceColor()));
     }
 
-    private Move newMove(Position endPosition, Board board, Position start)
-    {
-        if (board.getPieceAt(endPosition) == null) return new RelocationMove(board.getPieceAt(start), start, endPosition);
+    private Move newMove(Position endPosition, Board board, Position start) {
+        if (board.getPieceAt(endPosition) == null)
+            return new RelocationMove(board.getPieceAt(start), start, endPosition);
         return new AttackMove(board.getPieceAt(start), board.getPieceAt(endPosition), start, endPosition);
     }
 
@@ -50,18 +50,16 @@ public class Knight extends ChessPiece {
     }
 
     public Knight(Position position, PieceColor color) {
-        this.pieceColor = color;
-        this.position = position;
+        super(position, color);
+    }
+
+    public Knight(Knight knight) {
+        super(Position.copyOf(knight.getPosition()), knight.getPieceColor());
+        this.moves = new ArrayList<>(knight.getMoves());
     }
 
     @Override
     public ChessPiece copy() {
         return new Knight(this);
-    }
-
-    public Knight(Knight knight) {
-        this.moves = new ArrayList<>(knight.moves);
-        this.position = Position.copyOf(knight.position);
-        this.pieceColor = knight.pieceColor;
     }
 }

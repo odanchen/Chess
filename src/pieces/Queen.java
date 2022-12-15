@@ -43,19 +43,17 @@ public class Queen extends ChessPiece {
         this.setMoves(moves);
     }
 
-    @Override
-    public ChessPiece copy() {
-        return new Queen(this);
-    }
-
     public Queen(Queen queen) {
+        super(Position.copyOf(queen.getPosition()), queen.getPieceColor());
         this.moves = new ArrayList<>(queen.moves);
-        this.position = Position.copyOf(queen.position);
-        this.pieceColor = queen.pieceColor;
     }
 
     public Queen(Position position, PieceColor color) {
-        this.pieceColor = color;
-        this.position = position;
+        super(position, color);
+    }
+
+    @Override
+    public ChessPiece copy() {
+        return new Queen(this);
     }
 }

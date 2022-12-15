@@ -39,18 +39,16 @@ public class Bishop extends ChessPiece {
     }
 
     public Bishop(Position position, PieceColor color) {
-        this.pieceColor = color;
-        this.position = position;
+        super(position, color);
+    }
+
+    public Bishop(Bishop bishop) {
+        super(Position.copyOf(bishop.getPosition()), bishop.getPieceColor());
+        this.moves = new ArrayList<>(bishop.getMoves());
     }
 
     @Override
     public ChessPiece copy() {
         return new Bishop(this);
-    }
-
-    public Bishop(Bishop bishop) {
-        this.moves = new ArrayList<>(bishop.moves);
-        this.position = Position.copyOf(bishop.position);
-        this.pieceColor = bishop.pieceColor;
     }
 }
