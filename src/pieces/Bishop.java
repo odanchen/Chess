@@ -6,6 +6,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Bishop extends ChessPiece {
+
+    // This method is used by the calculateMoves method. It calculates the moves for one line of direction of a bishop.
     private List<Position> checkLine(Board board, int colDifference, int rowDifference) {
         List<Position> moves = new ArrayList<>();
 

@@ -8,6 +8,7 @@ import java.util.List;
 public class King extends ChessPiece {
     private boolean hasMoved;
 
+    // Used by calculateMoves to make sure piece is not taking its own color, and it is inside the board.
     private boolean canMoveTo(Position position, Board board) {
         return (position.isInsideBoard() &&
                 (board.getPieceAt(position) == null || board.getPieceAt(position).getPieceColor() != this.getPieceColor()));

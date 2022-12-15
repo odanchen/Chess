@@ -6,6 +6,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Queen extends ChessPiece {
+
+    // Returns a line out of the 8 lines of possible movements for the queen.
     private List<Position> checkLine(Board board, int colDifference, int rowDifference) {
         List<Position> moves = new ArrayList<>();
 

@@ -8,6 +8,7 @@ import java.util.List;
 public class Castle extends ChessPiece {
     private boolean hasMoved;
 
+    // This method is used by the calculateMoves method. It calculates the moves for one line of direction of a castle.
     private List<Position> checkLine(Board board, int colDifference, int rowDifference) {
         List<Position> moves = new ArrayList<>();
 
