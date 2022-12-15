@@ -1,19 +1,16 @@
 package pieces.moves;
 
-import pieces.ChessPiece;
 import pieces.Position;
 
 public class AttackMove extends Move {
-    ChessPiece attackedPiece;
-    public ChessPiece getAttackedPiece()
-    {
-        return this.attackedPiece;
+    private final Position attackedPosition;
+
+    public Position getAttackedPosition() {
+        return this.attackedPosition;
     }
-    public AttackMove(ChessPiece startPiece, ChessPiece attackedPiece, Position startPosition, Position endPosition)
-    {
-        this.startPiece = startPiece;
-        this.startPosition = startPosition;
-        this.endPosition = endPosition;
-        this.attackedPiece = attackedPiece;
+
+    public AttackMove(Position startPosition, Position endPosition, Position attackedPosition) {
+        super(startPosition, endPosition);
+        this.attackedPosition = attackedPosition;
     }
 }

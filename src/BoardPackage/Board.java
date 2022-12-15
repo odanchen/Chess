@@ -1,7 +1,5 @@
 package BoardPackage;
 
-import assets.board_colors.BoardColors;
-import assets.board_colors.ColorPair;
 import pieces.*;
 import pieces.moves.AttackMove;
 import pieces.moves.CastlingMove;
@@ -16,12 +14,11 @@ import static pieces.PieceColor.BLACK;
 
 public class Board {
     private final static int BOARD_SIZE = 8;
-    ColorPair boardColor = BoardColors.OPTION1;
-    ChessPiece[][] configuration = new ChessPiece[BOARD_SIZE][BOARD_SIZE];
-    Position whiteKing;
-    Position blackKing;
-    List<ChessPiece> whitePieces = new ArrayList<>();
-    List<ChessPiece> blackPieces = new ArrayList<>();
+    private ChessPiece[][] configuration = new ChessPiece[BOARD_SIZE][BOARD_SIZE];
+    private Position whiteKingPosition;
+    private Position blackKingPosition;
+    private List<ChessPiece> whitePieces = new ArrayList<>();
+    private List<ChessPiece> blackPieces = new ArrayList<>();
 
     public Board() {
     }
@@ -30,8 +27,8 @@ public class Board {
      * @param color The side which is being checked for checks. (Black or white).
      */
     public boolean isCheck(PieceColor color) {
-        Position kingPosition = (color == PieceColor.WHITE) ? this.whiteKing : this.blackKing;
-        List<ChessPiece> pieces = (color == PieceColor.WHITE) ? this.blackPieces : this.whitePieces;
+        Position kingPosition = (color == PieceColor.WHITE) ? this.getWhiteKingPosition() : this.getBlackKingPosition();
+        List<ChessPiece> pieces = (color == PieceColor.WHITE) ? this.getBlackPieces() : this.getWhitePieces();
 
         for (ChessPiece piece : pieces) {
             piece.calculateMoves(this);
@@ -41,47 +38,37 @@ public class Board {
         return false;
     }
 
-    public Board makeTestMove(Move move) {
-        Board boardCopy = new Board(this);
+    private void makeRelocationMove(Move move) {
+        this.setPieceAt(move.getEndPosition(), this.getPieceAt(move.getEndPosition()));
+        this.setPieceAt(move.getStartPosition(), null);
+        this.getPieceAt(move.getEndPosition()).setPosition(move.getEndPosition());
 
-        if (move instanceof CastlingMove) {
-            return boardCopy;
-            // IMPLEMEEEEENT
-        } else {
-            if (move instanceof AttackMove) {
-                if (((AttackMove) move).getAttackedPiece().getPieceColor() == WHITE)
-                    boardCopy.whitePieces.remove(((AttackMove) move).getAttackedPiece());
-                else boardCopy.blackPieces.remove(((AttackMove) move).getAttackedPiece());
-            }
-
-            boardCopy.setPieceAt(move.getStartPosition(), null);
-            boardCopy.setPieceAt(move.getEndPosition(), move.getStartPiece());
-
-            if (move.getStartPiece() instanceof King) {
-                if (move.getStartPiece().getPieceColor() == PieceColor.WHITE)
-                    boardCopy.whiteKing = move.getEndPosition();
-                else boardCopy.blackKing = move.getEndPosition();
-            }
+        if (this.getPieceAt(move.getEndPosition()) instanceof King) {
+            ((King) this.getPieceAt(move.getEndPosition())).setHasMoved(true);
         }
+        if (this.getPieceAt(move.getEndPosition()) instanceof Castle) {
+            ((Castle) this.getPieceAt(move.getEndPosition())).setHasMoved(true);
+        }
+        if (this.getPieceAt(move.getEndPosition()) instanceof Pawn) {
+            ((Pawn) this.getPieceAt(move.getEndPosition())).setHasMoved(true);
+        }
+    }
 
-        return boardCopy;
+    private void makeAttackMove(AttackMove move) {
+        if (this.getPieceAt(move.getStartPosition()).getPieceColor() == WHITE) {
+            this.blackPieces.remove(this.getPieceAt(move.getAttackedPosition()));
+            this.makeRelocationMove(move);
+        } else {
+            this.whitePieces.remove(this.getPieceAt(move.getAttackedPosition()));
+            this.makeRelocationMove(move);
+        }
     }
 
     public void makeMove(Move move) {
-        if (move instanceof CastlingMove) {
-            //IMPLEMEEENT
-        } else if (move instanceof RelocationMove) {
-            this.setPieceAt(move.getEndPosition(), this.getPieceAt(move.getStartPiece().getPosition()));
-            this.setPieceAt(move.getStartPosition(), null);
+        if (move instanceof RelocationMove) {
+            this.makeRelocationMove(move);
         } else if (move instanceof AttackMove) {
-            if (((AttackMove) move).getAttackedPiece().getPieceColor() == WHITE)
-                this.whitePieces.remove(this.getPieceAt(((AttackMove) move).getAttackedPiece().getPosition()));
-            else this.blackPieces.remove(this.getPieceAt(((AttackMove) move).getAttackedPiece().getPosition()));
-
-            this.setPieceAt(((AttackMove) move).getAttackedPiece().getPosition(), null);
-
-            this.setPieceAt(move.getEndPosition(), this.getPieceAt(move.getStartPiece().getPosition()));
-            this.setPieceAt(move.getStartPosition(), null);
+            this.makeAttackMove((AttackMove) move);
         }
     }
 
@@ -112,30 +99,53 @@ public class Board {
         this.configuration[matrixRow][matrixCol] = piece;
     }
 
-    public Board(Board board) {
-        this.whiteKing = Position.copyOf(board.whiteKing);
-        this.blackKing = Position.copyOf(board.blackKing);
-        this.blackPieces = new ArrayList<>(board.blackPieces);
-        this.whitePieces = new ArrayList<>(board.whitePieces);
-
-        for (int i = 0; i < BOARD_SIZE; i++) {
-            this.configuration[i] = board.configuration[i].clone();
-        }
+    public void setPieceAt(char letter, int digit, ChessPiece piece) {
+        int matrixRow = Math.abs(digit - BOARD_SIZE);
+        int matrixCol = (int) letter - 'a';
+        this.configuration[matrixRow][matrixCol] = piece;
     }
 
-    public void fillTestConfiguration() {
-        this.setPieceAt(new Position('e', 7), new Bishop(new Position('e', 7), BLACK));
+    public Position getWhiteKingPosition() {
+        return whiteKingPosition;
+    }
+
+    public void setWhiteKingPosition(Position whiteKingPosition) {
+        this.whiteKingPosition = whiteKingPosition;
+    }
+
+    public Position getBlackKingPosition() {
+        return blackKingPosition;
+    }
+
+    public List<ChessPiece> getWhitePieces() {
+        return whitePieces;
+    }
+
+    public List<ChessPiece> getBlackPieces() {
+        return blackPieces;
+    }
+
+    public void setBlackKingPosition(Position blackKingPosition) {
+        this.blackKingPosition = blackKingPosition;
+    }
+
+    void addWhitePiece(ChessPiece piece) {
+        this.whitePieces.add(piece);
+    }
+
+    void addBlackPiece(ChessPiece piece) {
+        this.blackPieces.add(piece);
     }
 
     private void addPiece(ChessPiece piece) {
         this.setPieceAt(piece.getPosition(), piece);
 
-        if (piece.getPieceColor() == WHITE) this.whitePieces.add(piece);
-        else this.blackPieces.add(piece);
+        if (piece.getPieceColor() == WHITE) this.addWhitePiece(piece);
+        else this.addBlackPiece(piece);
 
         if (piece instanceof King) {
-            if (piece.getPieceColor() == WHITE) this.whiteKing = piece.getPosition();
-            else this.blackKing = piece.getPosition();
+            if (piece.getPieceColor() == WHITE) this.setWhiteKingPosition(piece.getPosition());
+            else this.setBlackKingPosition(piece.getPosition());
         }
     }
 
@@ -155,8 +165,8 @@ public class Board {
         this.addPiece(new Queen(Position.at("d1"), WHITE));
         this.addPiece(new Queen(Position.at("d8"), BLACK));
 
-        this.setPieceAt(Position.at("e1"), new King(Position.at("e1"), WHITE));
-        this.setPieceAt(Position.at("e8"), new King(Position.at("e8"), BLACK));
+        this.addPiece(new King(Position.at("e1"), WHITE));
+        this.addPiece(new King(Position.at("e8"), BLACK));
 
         this.addPiece(new Bishop(Position.at("f1"), WHITE));
         this.addPiece(new Bishop(Position.at("f8"), BLACK));
@@ -171,5 +181,23 @@ public class Board {
             this.addPiece(new Pawn(new Position(i, 2), WHITE));
             this.addPiece(new Pawn(new Position(i, 7), BLACK));
         }
+    }
+
+    private static List<ChessPiece> copyPiecesList(List<ChessPiece> originalPieces) {
+        List<ChessPiece> copy = new ArrayList<>();
+        for (ChessPiece piece : originalPieces) copy.add(piece.copy());
+
+        return copy;
+    }
+
+    public Board(Board board) {
+        this.whiteKingPosition = Position.copyOf(board.getWhiteKingPosition());
+        this.blackKingPosition = Position.copyOf(board.getBlackKingPosition());
+        this.blackPieces = Board.copyPiecesList(board.getBlackPieces());
+        this.whitePieces = Board.copyPiecesList(board.getWhitePieces());
+
+        this.configuration = new ChessPiece[BOARD_SIZE][BOARD_SIZE];
+        for (ChessPiece piece : this.getBlackPieces()) this.setPieceAt(piece.getPosition(), piece);
+        for (ChessPiece piece : this.getWhitePieces()) this.setPieceAt(piece.getPosition(), piece);
     }
 }

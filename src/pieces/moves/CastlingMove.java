@@ -1,4 +1,9 @@
 package pieces.moves;
 
-public class CastlingMove extends Move{
+import pieces.Position;
+
+public class CastlingMove extends Move {
+    public CastlingMove(Position startPosition, Position endPosition) {
+        super(startPosition, endPosition);
+    }
 }

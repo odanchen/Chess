@@ -69,8 +69,15 @@ public abstract class ChessPiece {
     abstract public void calculateMoves(Board board);
 
     private boolean isMovePossible(Move move, Board board) {
-        Board copyBoard = board.makeTestMove(move);
-        return !copyBoard.isCheck(move.getStartPiece().getPieceColor());
+        Board copyBoard = new Board(board);
+        copyBoard.makeMove(move);
+
+        return !copyBoard.isCheck(copyBoard.getPieceAt(move.getEndPosition()).getPieceColor());
+    }
+
+    public boolean notSameColorAs(ChessPiece piece)
+    {
+        return this.getPieceColor() != piece.getPieceColor();
     }
 
     /**
@@ -88,9 +95,8 @@ public abstract class ChessPiece {
     }
 
     public boolean attacks(Position position) {
-        for (Move move : moves) {
-            if (move instanceof AttackMove && ((AttackMove) move).getAttackedPiece().getPosition() == position)
-                return true;
+        for (Move move : this.getMoves()) {
+            if (move instanceof AttackMove && ((AttackMove) move).getAttackedPosition().equals(position)) return true;
         }
 
         return false;

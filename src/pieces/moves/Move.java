@@ -1,12 +1,10 @@
 package pieces.moves;
 
-import pieces.ChessPiece;
 import pieces.Position;
 
 public abstract class Move {
-    protected ChessPiece startPiece;
-    protected Position startPosition;
-    protected Position endPosition;
+    protected final Position startPosition;
+    protected final Position endPosition;
 
     public Position getStartPosition() {
         return this.startPosition;
@@ -16,7 +14,9 @@ public abstract class Move {
         return this.endPosition;
     }
 
-    public ChessPiece getStartPiece() {
-        return this.startPiece;
+    public Move(Position startPosition, Position endPosition)
+    {
+        this.startPosition = startPosition;
+        this.endPosition = endPosition;
     }
 }

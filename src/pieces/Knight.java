@@ -13,38 +13,38 @@ public class Knight extends ChessPiece {
     // Used by calculateMoves to make sure piece is not taking its own color, and it is inside the board.
     private boolean canMoveTo(Position endPosition, Board board) {
         return (endPosition.isInsideBoard() &&
-                (board.getPieceAt(endPosition) == null || board.getPieceAt(endPosition).getPieceColor() != this.getPieceColor()));
+                (board.getPieceAt(endPosition) == null || this.notSameColorAs(board.getPieceAt(endPosition))));
     }
 
-    private Move newMove(Position endPosition, Board board, Position start) {
-        if (board.getPieceAt(endPosition) == null)
-            return new RelocationMove(board.getPieceAt(start), start, endPosition);
-        return new AttackMove(board.getPieceAt(start), board.getPieceAt(endPosition), start, endPosition);
+    private Move newMove(Position startPosition, Position endPosition, Board board) {
+        if (board.getPieceAt(endPosition) == null) return new RelocationMove(startPosition, endPosition);
+        return new AttackMove(startPosition, endPosition, endPosition);
     }
 
     @Override
     public void calculateMoves(Board board) {
         List<Move> moves = new ArrayList<>();
+        Position endPosition;
 
-        Position endPosition = new Position(this.getPosition(), 2, 1);
-        if (canMoveTo(endPosition, board)) moves.add(newMove(endPosition, board, this.getPosition()));
+        endPosition = new Position(this.getPosition(), 2, 1);
+        if (canMoveTo(endPosition, board)) moves.add(newMove(this.getPosition(), endPosition, board));
         endPosition = new Position(this.getPosition(), 2, -1);
-        if (canMoveTo(endPosition, board)) moves.add(newMove(endPosition, board, this.getPosition()));
+        if (canMoveTo(endPosition, board)) moves.add(newMove(this.getPosition(), endPosition, board));
 
         endPosition = new Position(this.getPosition(), -2, 1);
-        if (canMoveTo(endPosition, board)) moves.add(newMove(endPosition, board, this.getPosition()));
+        if (canMoveTo(endPosition, board)) moves.add(newMove(this.getPosition(), endPosition, board));
         endPosition = new Position(this.getPosition(), -2, -1);
-        if (canMoveTo(endPosition, board)) moves.add(newMove(endPosition, board, this.getPosition()));
+        if (canMoveTo(endPosition, board)) moves.add(newMove(this.getPosition(), endPosition, board));
 
         endPosition = new Position(this.getPosition(), 1, 2);
-        if (canMoveTo(endPosition, board)) moves.add(newMove(endPosition, board, this.getPosition()));
+        if (canMoveTo(endPosition, board)) moves.add(newMove(this.getPosition(), endPosition, board));
         endPosition = new Position(this.getPosition(), -1, 2);
-        if (canMoveTo(endPosition, board)) moves.add(newMove(endPosition, board, this.getPosition()));
+        if (canMoveTo(endPosition, board)) moves.add(newMove(this.getPosition(), endPosition, board));
 
         endPosition = new Position(this.getPosition(), 1, -2);
-        if (canMoveTo(endPosition, board)) moves.add(newMove(endPosition, board, this.getPosition()));
+        if (canMoveTo(endPosition, board)) moves.add(newMove(this.getPosition(), endPosition, board));
         endPosition = new Position(this.getPosition(), -1, -2);
-        if (canMoveTo(endPosition, board)) moves.add(newMove(endPosition, board, this.getPosition()));
+        if (canMoveTo(endPosition, board)) moves.add(newMove(this.getPosition(), endPosition, board));
 
         this.setMoves(moves);
     }
