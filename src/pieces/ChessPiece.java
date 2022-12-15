@@ -1,6 +1,8 @@
 package pieces;
 
 import BoardPackage.Board;
+import pieces.moves.AttackMove;
+import pieces.moves.Move;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -8,12 +10,12 @@ import java.util.List;
 public abstract class ChessPiece {
     protected PieceColor pieceColor;
     protected Position position;
-    protected List<Position> moves;
+    protected List<Move> moves;
 
     /**
      * @return The list of possible moves for the piece.
      */
-    public List<Position> getMoves() {
+    public List<Move> getMoves() {
         return this.moves;
     }
 
@@ -21,7 +23,7 @@ public abstract class ChessPiece {
      * Changes the stored moves of the piece.
      * @param moves The new moves list.
      */
-    public void setMoves(List<Position> moves) {
+    public void setMoves(List<Move> moves) {
         this.moves = moves;
     }
 
@@ -66,17 +68,32 @@ public abstract class ChessPiece {
      */
     abstract public void calculateMoves(Board board);
 
+    private boolean isMovePossible(Move move, Board board)
+    {
+        Board copyBoard = board.makeTestMove(move);
+        return !copyBoard.isCheck(move.getStartPiece().getPieceColor());
+    }
+
     /**
      * Validates the movements of the piece by accounting for checks.
      * @param board The current chess board.
      */
+
     public void validateMoves(Board board) {
-        List<Position> moves = new ArrayList<>(this.getMoves());
-        for (Position pos : moves) {
-            Board tempBoard = board.makeMove(this.copy(), pos);
-            if (tempBoard.isCheck(this.getPieceColor())) moves.remove(pos);
-        }
+        List<Move> moves = new ArrayList<>(this.getMoves());
+
+        moves.removeIf(move -> !this.isMovePossible(move, board));
+
         this.setMoves(moves);
     }
 
+    public boolean attacks(Position position)
+    {
+        for (Move move : moves)
+        {
+            if (move instanceof AttackMove && ((AttackMove) move).getAttackedPiece().getPosition() == position) return true;
+        }
+
+        return false;
+    }
 }

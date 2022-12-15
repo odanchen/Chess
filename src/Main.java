@@ -6,7 +6,6 @@ public class Main {
         Board board = new Board();
         board.fillStandardBoard();
 
-
         System.out.print("finish");
     }
 }

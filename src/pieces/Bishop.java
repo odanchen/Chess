@@ -1,6 +1,9 @@
 package pieces;
 
 import BoardPackage.Board;
+import pieces.moves.AttackMove;
+import pieces.moves.Move;
+import pieces.moves.RelocationMove;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -8,28 +11,29 @@ import java.util.List;
 public class Bishop extends ChessPiece {
 
     // This method is used by the calculateMoves method. It calculates the moves for one line of direction of a bishop.
-    private List<Position> checkLine(Board board, int colDifference, int rowDifference) {
-        List<Position> moves = new ArrayList<>();
+    private List<Move> checkLine(Board board, int colDifference, int rowDifference, Position start) {
+        List<Move> moves = new ArrayList<>();
+        Position endPosition = new Position(this.getPosition(), colDifference, rowDifference);
 
-        Position curPosition = new Position(this.getPosition(), colDifference, rowDifference);
-        while (curPosition.isInsideBoard() && board.getPieceAt(curPosition) == null) {
-            moves.add(curPosition);
-            curPosition = new Position(curPosition, colDifference, rowDifference);
+        while (endPosition.isInsideBoard() && board.getPieceAt(endPosition) == null) {
+            moves.add(new RelocationMove(board.getPieceAt(start), start, endPosition));
+            endPosition = new Position(endPosition, colDifference, rowDifference);
         }
-        if (curPosition.isInsideBoard() && board.getPieceAt(curPosition).getPieceColor() != this.getPieceColor())
-            moves.add(curPosition);
+
+        if (endPosition.isInsideBoard() && board.getPieceAt(endPosition).getPieceColor() != this.getPieceColor())
+            moves.add(new AttackMove(board.getPieceAt(start), board.getPieceAt(endPosition), start, endPosition));
 
         return moves;
     }
 
     @Override
     public void calculateMoves(Board board) {
-        List<Position> moves = new ArrayList<>();
+        List<Move> moves = new ArrayList<>();
 
-        moves.addAll(checkLine(board, 1, 1));
-        moves.addAll(checkLine(board, -1, 1));
-        moves.addAll(checkLine(board, 1, -1));
-        moves.addAll(checkLine(board, -1, -1));
+        moves.addAll(checkLine(board, 1, 1, this.getPosition()));
+        moves.addAll(checkLine(board, -1, 1, this.getPosition()));
+        moves.addAll(checkLine(board, 1, -1, this.getPosition()));
+        moves.addAll(checkLine(board, -1, -1, this.getPosition()));
 
         this.setMoves(moves);
     }

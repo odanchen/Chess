@@ -3,6 +3,9 @@ package BoardPackage;
 import assets.board_colors.BoardColors;
 import assets.board_colors.ColorPair;
 import pieces.*;
+import pieces.moves.AttackMove;
+import pieces.moves.CastlingMove;
+import pieces.moves.Move;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,31 +31,36 @@ public class Board {
 
         for (ChessPiece piece : pieces) {
             piece.calculateMoves(this);
-            if (piece.getMoves().contains(kingPosition)) return true;
+            if (piece.attacks(kingPosition)) return true;
         }
 
         return false;
     }
 
-    public Board makeMove(ChessPiece piece, Position finish) {
-        Board ans = new Board(this);
+    public Board makeTestMove(Move move) {
+        Board boardCopy = new Board(this);
 
-        if (ans.getPieceAt(finish) != null) {
-            if (piece.getPieceColor() == PieceColor.WHITE) ans.blackPieces.remove(ans.getPieceAt(finish));
-            else ans.whitePieces.remove(ans.getPieceAt(finish));
+        if (move instanceof CastlingMove) {
+            return boardCopy;
+            // IMPLEMEEEEENT
+        } else {
+            if (move instanceof AttackMove) {
+                if (((AttackMove) move).getAttackedPiece().getPieceColor() == WHITE)
+                    boardCopy.whitePieces.remove(((AttackMove) move).getAttackedPiece());
+                else boardCopy.blackPieces.remove(((AttackMove) move).getAttackedPiece());
+            }
+
+            boardCopy.setPieceAt(move.getStartPosition(), null);
+            boardCopy.setPieceAt(move.getEndPosition(), move.getStartPiece());
+
+            if (move.getStartPiece() instanceof King) {
+                if (move.getStartPiece().getPieceColor() == PieceColor.WHITE)
+                    boardCopy.whiteKing = move.getEndPosition();
+                else boardCopy.blackKing = move.getEndPosition();
+            }
         }
 
-        ans.setPieceAt(finish, piece);
-        ans.setPieceAt(piece.getPosition(), null);
-        piece.setPosition(finish);
-
-
-        if (piece instanceof King) {
-            if (piece.getPieceColor() == PieceColor.WHITE) ans.whiteKing = finish;
-            else ans.blackKing = finish;
-        }
-
-        return ans;
+        return boardCopy;
     }
 
     public ChessPiece getPieceAt(Position position) {
