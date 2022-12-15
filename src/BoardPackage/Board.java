@@ -22,6 +22,9 @@ public class Board {
     public Board() {
     }
 
+    /**
+     * @param color The side which is being checked for checks. (Black or white).
+     */
     public boolean isCheck(PieceColor color) {
         Position kingPosition = (color == PieceColor.WHITE) ? this.whiteKing : this.blackKing;
         List<ChessPiece> pieces = (color == PieceColor.WHITE) ? this.blackPieces : this.whitePieces;
@@ -55,12 +58,21 @@ public class Board {
         return ans;
     }
 
+    /**
+     * @param position Position on the board.
+     * @return The piece at the specified position.
+     */
     public ChessPiece getPieceAt(Position position) {
         int matrixRow = Math.abs(position.getRow() - BOARD_SIZE);
         int matrixCol = (int) position.getCol() - 'a';
         return configuration[matrixRow][matrixCol];
     }
 
+    /**
+     * @param letter The corresponding chess position for columns. (a,b,c...h)
+     * @param digit The corresponding chess position for rows. (1,2,3...8)
+     * @return The piece at the specified position.
+     */
     public ChessPiece getPieceAt(char letter, int digit) {
         int matrixRow = Math.abs(digit - BOARD_SIZE);
         int matrixCol = (int) letter - 'a';
@@ -100,6 +112,9 @@ public class Board {
         }
     }
 
+    /**
+     * Fills board object with standard pieces and piece positions.
+     */
     public void fillStandardBoard() {
         this.addPiece(new Castle(Position.at("a1"), WHITE));
         this.addPiece(new Castle(Position.at("a8"), BLACK));
