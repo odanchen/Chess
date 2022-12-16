@@ -28,7 +28,7 @@ public class Castle extends ChessPiece {
     }
 
     @Override
-    public void calculateMoves(Board board) {
+    public void calculatePotentialMoves(Board board) {
         List<Move> moves = new ArrayList<>();
 
         moves.addAll(checkLine(this.getPosition(), 0, 1, board));

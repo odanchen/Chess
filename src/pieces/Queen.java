@@ -27,7 +27,7 @@ public class Queen extends ChessPiece {
     }
 
     @Override
-    public void calculateMoves(Board board) {
+    public void calculatePotentialMoves(Board board) {
         List<Move> moves = new ArrayList<>();
 
         moves.addAll(checkLine(this.getPosition(), 1, 1, board));

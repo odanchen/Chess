@@ -22,7 +22,7 @@ public class Knight extends ChessPiece {
     }
 
     @Override
-    public void calculateMoves(Board board) {
+    public void calculatePotentialMoves(Board board) {
         List<Move> moves = new ArrayList<>();
         Position endPosition;
 
