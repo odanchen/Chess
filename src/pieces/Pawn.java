@@ -1,6 +1,9 @@
 package pieces;
 
-import BoardPackage.Board;
+import board_package.Board;
+import pieces.moves.AttackMove;
+import pieces.moves.Move;
+import pieces.moves.RelocationMove;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -9,50 +12,56 @@ public class Pawn extends ChessPiece {
     private boolean hasMoved;
 
     @Override
-    public void calculateMoves(Board board) {
-        List<Position> moves = new ArrayList<>();
-        Position direction;
-        int colorCoef = (this.getPieceColor() == PieceColor.BLACK) ? -1 : 1;
+    public void calculatePotentialMoves(Board board) {
+        List<Move> moves = new ArrayList<>();
+        Position endPosition;
+        int direction = (this.getPieceColor() == PieceColor.BLACK) ? -1 : 1;
 
-        direction = new Position(this.getPosition(), 0, colorCoef);
-        if (board.getPieceAt(direction) == null) {
-            moves.add(direction);
+        endPosition = new Position(this.getPosition(), 0, direction);
+        if (board.getPieceAt(endPosition) == null) {
+            moves.add(new RelocationMove(this.getPosition(), endPosition));
 
-            direction = new Position(this.getPosition(), 0, 2 * colorCoef);
-            if (board.getPieceAt(direction) == null && !this.hasMoved) moves.add(direction);
+            endPosition = new Position(this.getPosition(), 0, 2 * direction);
+            if (board.getPieceAt(endPosition) == null && !this.hasMoved)
+                moves.add(new RelocationMove(this.getPosition(), endPosition));
         }
 
-        direction = new Position(this.getPosition(), 1, colorCoef);
-        if (board.getPieceAt(direction) != null && board.getPieceAt(direction).getPieceColor() != this.getPieceColor())
-            moves.add(direction);
-        direction = new Position(this.getPosition(), -1, colorCoef);
-        if (board.getPieceAt(direction) != null && board.getPieceAt(direction).getPieceColor() != this.getPieceColor())
-            moves.add(direction);
+        endPosition = new Position(this.getPosition(), 1, direction);
+        if (board.getPieceAt(endPosition) != null && this.notSameColorAs(board.getPieceAt(endPosition)))
+            moves.add(new AttackMove(this.getPosition(), endPosition, endPosition));
+        endPosition = new Position(this.getPosition(), -1, direction);
+        if (board.getPieceAt(endPosition) != null && this.notSameColorAs(board.getPieceAt(endPosition)))
+            moves.add(new AttackMove(this.getPosition(), endPosition, endPosition));
 
         this.setMoves(moves);
     }
 
+    public boolean getHasMoved() {
+        return this.hasMoved;
+    }
+
+    public void setHasMoved(boolean hasMoved) {
+        this.hasMoved = hasMoved;
+    }
+
     public Pawn(Position position, PieceColor color, boolean hasMoved) {
-        this.pieceColor = color;
-        this.position = position;
+        super(position, color);
         this.hasMoved = hasMoved;
     }
 
     public Pawn(Position position, PieceColor color) {
-        this.pieceColor = color;
-        this.position = position;
+        super(position, color);
         this.hasMoved = false;
+    }
+
+    public Pawn(Pawn pawn) {
+        super(Position.copyOf(pawn.getPosition()), pawn.getPieceColor());
+        this.moves = new ArrayList<>(pawn.getMoves());
+        this.hasMoved = pawn.getHasMoved();
     }
 
     @Override
     public ChessPiece copy() {
         return new Pawn(this);
-    }
-
-    public Pawn(Pawn pawn) {
-        this.moves = new ArrayList<>(pawn.moves);
-        this.position = Position.copyOf(pawn.position);
-        this.pieceColor = pawn.pieceColor;
-        this.hasMoved = pawn.hasMoved;
     }
 }

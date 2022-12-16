@@ -1,10 +1,8 @@
 package pieces;
 
-import java.util.Optional;
-
 public class Position {
-    private int row;
-    private char col;
+    private final int row;
+    private final char col;
 
     /**
      * @return Row of the position.
@@ -14,24 +12,10 @@ public class Position {
     }
 
     /**
-     * Sets new row.
-     */
-    public void setRow(int row) {
-        this.row = row;
-    }
-
-    /**
      * @return Column of the position.
      */
     public char getCol() {
         return col;
-    }
-
-    /**
-     * Sets new column.
-     */
-    public void setCol(char col) {
-        this.col = col;
     }
 
     /**
@@ -66,5 +50,9 @@ public class Position {
      */
     public static Position at(String pos) {
         return new Position(pos.charAt(0), Integer.parseInt(pos.substring(1)));
+    }
+
+    public boolean equals(Position position) {
+        return (this.getRow() == position.getRow() && this.getCol() == position.getCol());
     }
 }

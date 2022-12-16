@@ -1,6 +1,9 @@
 package pieces;
 
-import BoardPackage.Board;
+import board_package.Board;
+import pieces.moves.AttackMove;
+import pieces.moves.Move;
+import pieces.moves.RelocationMove;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -9,53 +12,59 @@ public class Castle extends ChessPiece {
     private boolean hasMoved;
 
     // This method is used by the calculateMoves method. It calculates the moves for one line of direction of a castle.
-    private List<Position> checkLine(Board board, int colDifference, int rowDifference) {
-        List<Position> moves = new ArrayList<>();
+    private List<Move> checkLine(Position startPosition, int colDifference, int rowDifference, Board board) {
+        List<Move> moves = new ArrayList<>();
+        Position endPosition = new Position(this.getPosition(), colDifference, rowDifference);
 
-        Position curPosition = new Position(this.getPosition(), colDifference, rowDifference);
-        while (curPosition.isInsideBoard() && board.getPieceAt(curPosition) == null) {
-            moves.add(curPosition);
-            curPosition = new Position(curPosition, colDifference, rowDifference);
+        while (endPosition.isInsideBoard() && board.getPieceAt(endPosition) == null) {
+            moves.add(new RelocationMove(startPosition, endPosition));
+            endPosition = new Position(endPosition, colDifference, rowDifference);
         }
-        if (curPosition.isInsideBoard() && board.getPieceAt(curPosition).getPieceColor() != this.getPieceColor())
-            moves.add(curPosition);
+
+        if (endPosition.isInsideBoard() && this.notSameColorAs(board.getPieceAt(endPosition)))
+            moves.add(new AttackMove(startPosition, endPosition, endPosition));
 
         return moves;
     }
 
     @Override
-    public void calculateMoves(Board board) {
-        List<Position> moves = new ArrayList<>();
+    public void calculatePotentialMoves(Board board) {
+        List<Move> moves = new ArrayList<>();
 
-        moves.addAll(checkLine(board, 1, 0));
-        moves.addAll(checkLine(board, 0, 1));
-        moves.addAll(checkLine(board, -1, 0));
-        moves.addAll(checkLine(board, 0, -1));
+        moves.addAll(checkLine(this.getPosition(), 0, 1, board));
+        moves.addAll(checkLine(this.getPosition(), 1, 0, board));
+        moves.addAll(checkLine(this.getPosition(), 0, -1, board));
+        moves.addAll(checkLine(this.getPosition(), -1, 0, board));
 
         this.setMoves(moves);
     }
 
+    public boolean getHasMoved() {
+        return this.hasMoved;
+    }
+
+    public void setHasMoved(boolean hasMoved) {
+        this.hasMoved = hasMoved;
+    }
+
     public Castle(Position position, PieceColor color, boolean hasMoved) {
-        this.pieceColor = color;
-        this.position = position;
+        super(position, color);
         this.hasMoved = hasMoved;
     }
 
     public Castle(Position position, PieceColor color) {
-        this.pieceColor = color;
-        this.position = position;
+        super(position, color);
         this.hasMoved = false;
+    }
+
+    public Castle(Castle castle) {
+        super(Position.copyOf(castle.getPosition()), castle.getPieceColor());
+        this.moves = new ArrayList<>(castle.getMoves());
+        this.hasMoved = castle.getHasMoved();
     }
 
     @Override
     public ChessPiece copy() {
         return new Castle(this);
-    }
-
-    public Castle(Castle castle) {
-        this.moves = new ArrayList<>(castle.moves);
-        this.position = Position.copyOf(castle.position);
-        this.pieceColor = castle.pieceColor;
-        this.hasMoved = castle.hasMoved;
     }
 }
