@@ -7,18 +7,18 @@ import java.awt.event.ActionListener;
 
 public class Display {
 
-    public static void MainMenu(){
+    public static void MainMenu() {
 
         JLabel Ltitle = new JLabel();
         Ltitle.setText("Chess Game");
         Ltitle.setFont(new Font("Serif", Font.PLAIN, 20));
 
         JPanel title = new JPanel();
-        title.setBounds(220,150,150,50);
+        title.setBounds(220, 150, 150, 50);
         //title.setBackground(Color.green);
         title.add(Ltitle);
 
-        Dimension BtnSize = new Dimension(130,50);
+        Dimension BtnSize = new Dimension(130, 50);
 
         JButton start = new JButton("   Start   ");
 
@@ -47,14 +47,14 @@ public class Display {
         quit.setContentAreaFilled(false);
 
         JPanel buttons = new JPanel();
-        buttons.setBounds(230,250,130,170);
+        buttons.setBounds(230, 250, 130, 170);
         //buttons.setBackground(Color.cyan);
         buttons.add(start);
         buttons.add(settings);
         buttons.add(quit);
 
-        JFrame f=new JFrame("Chess");
-        f.setSize(600,600);
+        JFrame f = new JFrame("Chess");
+        f.setSize(600, 600);
         f.setDefaultCloseOperation(3);
         f.setLayout(null);
         f.setVisible(true);
