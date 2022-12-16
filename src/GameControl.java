@@ -22,6 +22,9 @@ public class GameControl {
         this.movingSide = (this.movingSide == PieceColor.WHITE) ? PieceColor.BLACK : PieceColor.WHITE;
     }
 
+    /**
+     * Generates the valid moves for all pieces in given board object.
+     */
     private void generatePieceMoves() {
         List<ChessPiece> currentPieces = (movingSide == PieceColor.WHITE) ? this.board.getWhitePieces() : this.board.getBlackPieces();
 
@@ -30,6 +33,12 @@ public class GameControl {
         }
     }
 
+    /**
+     * Default way to run the game. Is usable at any starting position.
+     * @param board The given board.
+     * @param movingSide The side moving first.
+     * @return 1 If white has won, 0 if stalemated, and -1 if black has won.
+     */
     public int runTheGame(Board board, PieceColor movingSide) {
         this.setMovingSide(movingSide);
         this.setBoard(board);
