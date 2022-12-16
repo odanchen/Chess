@@ -29,7 +29,7 @@ public class GameControl {
         List<ChessPiece> currentPieces = (movingSide == PieceColor.WHITE) ? this.board.getWhitePieces() : this.board.getBlackPieces();
 
         for (ChessPiece piece : currentPieces) {
-            piece.generateValidMoves(this.board);
+            piece.calculateMoves(this.board);
         }
     }
 

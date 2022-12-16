@@ -101,7 +101,7 @@ public abstract class ChessPiece {
         return false;
     }
 
-    public void generateValidMoves(Board board) {
+    public void calculateMoves(Board board) {
         this.calculatePotentialMoves(board);
         this.validateMoves(board);
     }
