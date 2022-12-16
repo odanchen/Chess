@@ -1,4 +1,4 @@
-import BoardPackage.Board;
+import board_package.Board;
 import pieces.ChessPiece;
 import pieces.PieceColor;
 import pieces.moves.Move;

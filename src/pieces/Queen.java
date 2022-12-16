@@ -1,6 +1,6 @@
 package pieces;
 
-import BoardPackage.Board;
+import board_package.Board;
 import pieces.moves.AttackMove;
 import pieces.moves.Move;
 import pieces.moves.RelocationMove;

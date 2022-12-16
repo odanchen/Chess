@@ -1,4 +1,4 @@
-package BoardPackage;
+package board_package;
 
 import pieces.*;
 import pieces.moves.AttackMove;
