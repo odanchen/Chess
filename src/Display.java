@@ -1,6 +1,5 @@
 import board_package.Board;
 import pieces.PieceColor;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
