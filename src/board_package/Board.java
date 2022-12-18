@@ -40,7 +40,7 @@ public class Board {
     /**
      * Checks if the game should end or not (checks for stalemate or a checkmate)
      *
-     * @param currentSide
+     * @param currentSide this is not a real doc it was just giving warning
      * @return
      */
     public boolean isMate(PieceColor currentSide) {
