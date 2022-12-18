@@ -1,5 +1,4 @@
-import BoardPackage.Board;
-import pieces.*;
+import board_package.Board;
 
 public class Main {
     public static void main(String[] args) {

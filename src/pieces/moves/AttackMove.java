@@ -2,6 +2,9 @@ package pieces.moves;
 
 import pieces.Position;
 
+/**
+ * A type of move where the enemy piece is being taken. Includes an attacked position.
+ */
 public class AttackMove extends Move {
     private final Position attackedPosition;
 

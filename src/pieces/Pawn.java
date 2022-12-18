@@ -1,6 +1,6 @@
 package pieces;
 
-import BoardPackage.Board;
+import board_package.Board;
 import pieces.moves.AttackMove;
 import pieces.moves.Move;
 import pieces.moves.RelocationMove;
@@ -12,7 +12,7 @@ public class Pawn extends ChessPiece {
     private boolean hasMoved;
 
     @Override
-    public void calculateMoves(Board board) {
+    public void calculatePotentialMoves(Board board) {
         List<Move> moves = new ArrayList<>();
         Position endPosition;
         int direction = (this.getPieceColor() == PieceColor.BLACK) ? -1 : 1;

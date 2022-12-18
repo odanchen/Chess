@@ -1,6 +1,6 @@
 package pieces;
 
-import BoardPackage.Board;
+import board_package.Board;
 import pieces.moves.AttackMove;
 import pieces.moves.Move;
 
@@ -66,7 +66,7 @@ public abstract class ChessPiece {
      *
      * @param board The current chess board.
      */
-    abstract public void calculateMoves(Board board);
+    abstract public void calculatePotentialMoves(Board board);
 
     private boolean isMovePossible(Move move, Board board) {
         Board copyBoard = new Board(board);
@@ -75,8 +75,7 @@ public abstract class ChessPiece {
         return !copyBoard.isCheck(copyBoard.getPieceAt(move.getEndPosition()).getPieceColor());
     }
 
-    public boolean notSameColorAs(ChessPiece piece)
-    {
+    public boolean notSameColorAs(ChessPiece piece) {
         return this.getPieceColor() != piece.getPieceColor();
     }
 
@@ -100,5 +99,10 @@ public abstract class ChessPiece {
         }
 
         return false;
+    }
+
+    public void calculateMoves(Board board) {
+        this.calculatePotentialMoves(board);
+        this.validateMoves(board);
     }
 }

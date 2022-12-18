@@ -14,6 +14,8 @@ public class ColorPair {
         return blackCell;
     }
 
+
+
     ColorPair(Color whiteCell, Color blackCell) {
         this.whiteCell = whiteCell;
         this.blackCell = blackCell;

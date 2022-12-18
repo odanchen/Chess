@@ -1,8 +1,7 @@
-package BoardPackage;
+package board_package;
 
 import pieces.*;
 import pieces.moves.AttackMove;
-import pieces.moves.CastlingMove;
 import pieces.moves.Move;
 import pieces.moves.RelocationMove;
 
@@ -31,11 +30,24 @@ public class Board {
         List<ChessPiece> pieces = (color == PieceColor.WHITE) ? this.getBlackPieces() : this.getWhitePieces();
 
         for (ChessPiece piece : pieces) {
-            piece.calculateMoves(this);
+            piece.calculatePotentialMoves(this);
             if (piece.attacks(kingPosition)) return true;
         }
 
         return false;
+    }
+
+    /**
+     * Checks if the game should end or not (checks for stalemate or a checkmate)
+     *
+     * @param currentSide
+     * @return
+     */
+    public boolean isMate(PieceColor currentSide) {
+        List<ChessPiece> currentPieces = (currentSide == PieceColor.WHITE) ? this.getWhitePieces() : this.getBlackPieces();
+
+        for (ChessPiece piece : currentPieces) if (!piece.getMoves().isEmpty()) return false;
+        return true;
     }
 
     private void makeRelocationMove(Move move) {

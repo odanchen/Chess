@@ -2,6 +2,9 @@ package pieces.moves;
 
 import pieces.Position;
 
+/**
+ * Abstract move class. Includes a starting position and ending position.
+ */
 public abstract class Move {
     protected final Position startPosition;
     protected final Position endPosition;
