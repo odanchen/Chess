@@ -69,9 +69,84 @@ public class Display {
 
     }
 
-    public void drawBoard(){
+    public static void drawBoard(String textFamily ) throws IOException {
+        Image imgs[] = new Image[12];
+        String[] pieceText = {"bb.png", "bk.png", "bn.png", "bp.png", "bq.png", "br.png", "wb.png", "wk.png", "wn.png", "wp.png", "wq.png", "wr.png"};
+        for(int i = 0; i<12; i++){
+            BufferedImage image = ImageIO.read(new File("src/assets/pieces_textures/" + textFamily + "/" + pieceText[i]));
+            imgs[i] = image.getSubimage(45, 45, 45,45);
+        }
+
+
+        JFrame frame = new JFrame();
+        frame.setBounds(10,10,528,550);
+        JPanel pn = new JPanel(){
+            @Override
+            public void paint(Graphics g){
+                boolean white = true;
+                for(int y = 0; y<8; y++){
+                    for(int x = 0; x<8; x++){
+                        if(white){
+                            g.setColor(Color.lightGray);
+                        }else {
+                            g.setColor(Color.darkGray);
+                        }
+                        g.fillRect(x*64, y*64, 64,64);
+                        white=!white;
+                    }
+                    white=!white;
+                }
+                // draw piece img here
+            }
+        };
+        frame.add(pn);
+        frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        frame.setVisible(true);
+
+        frame.addMouseListener(new MouseListener() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mousePressed(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mouseReleased(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mouseEntered(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+
+            }
+        });
+        frame.addMouseMotionListener(new MouseMotionListener() {
+            @Override
+            public void mouseDragged(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mouseMoved(MouseEvent e) {
+
+            }
+        });
 
     }
+
+    public static void main(String[] args) {
+        MainMenu();
+    }
+}
 
     public static void main(String[] args) {
         MainMenu();
