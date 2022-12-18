@@ -30,8 +30,7 @@ public class Board {
         List<ChessPiece> pieces = (color == PieceColor.WHITE) ? this.getBlackPieces() : this.getWhitePieces();
 
         for (ChessPiece piece : pieces) {
-            piece.calculatePotentialMoves(this);
-            if (piece.attacks(kingPosition)) return true;
+            if (piece.attacks(kingPosition, this)) return true;
         }
 
         return false;
@@ -46,7 +45,7 @@ public class Board {
     public boolean isMate(PieceColor currentSide) {
         List<ChessPiece> currentPieces = (currentSide == PieceColor.WHITE) ? this.getWhitePieces() : this.getBlackPieces();
 
-        for (ChessPiece piece : currentPieces) if (!piece.getMoves().isEmpty()) return false;
+        for (ChessPiece piece : currentPieces) if (!piece.calculateMoves(this).isEmpty()) return false;
         return true;
     }
 

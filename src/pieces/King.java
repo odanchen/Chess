@@ -23,7 +23,7 @@ public class King extends ChessPiece {
     }
 
     @Override
-    public void calculatePotentialMoves(Board board) {
+    public List<Move> calculatePotentialMoves(Board board) {
         List<Move> moves = new ArrayList<>();
         Position endPosition;
 
@@ -47,7 +47,7 @@ public class King extends ChessPiece {
         endPosition = new Position(this.getPosition(), 0, -1);
         if (canMoveTo(endPosition, board)) moves.add(newMove(this.getPosition(), endPosition, board));
 
-        this.setMoves(moves);
+        return moves;
     }
 
     public boolean getHasMoved() {
@@ -70,7 +70,6 @@ public class King extends ChessPiece {
 
     public King(King king) {
         super(Position.copyOf(king.getPosition()), king.getPieceColor());
-        this.moves = new ArrayList<>(king.getMoves());
         this.hasMoved = king.getHasMoved();
     }
 

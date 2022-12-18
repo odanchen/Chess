@@ -10,27 +10,10 @@ import java.util.List;
 public abstract class ChessPiece {
     protected final PieceColor pieceColor;
     protected Position position;
-    protected List<Move> moves;
 
     ChessPiece(Position position, PieceColor color) {
         this.pieceColor = color;
         this.position = position;
-    }
-
-    /**
-     * @return The list of possible moves for the piece.
-     */
-    public List<Move> getMoves() {
-        return this.moves;
-    }
-
-    /**
-     * Changes the stored moves of the piece.
-     *
-     * @param moves The new moves list.
-     */
-    public void setMoves(List<Move> moves) {
-        this.moves = moves;
     }
 
     /**
@@ -66,7 +49,7 @@ public abstract class ChessPiece {
      *
      * @param board The current chess board.
      */
-    abstract public void calculatePotentialMoves(Board board);
+    abstract public List<Move> calculatePotentialMoves(Board board);
 
     private boolean isMovePossible(Move move, Board board) {
         Board copyBoard = new Board(board);
@@ -85,24 +68,24 @@ public abstract class ChessPiece {
      * @param board The current chess board.
      */
 
-    public void validateMoves(Board board) {
-        List<Move> moves = new ArrayList<>(this.getMoves());
+    private List<Move> validateMoves(Board board, List<Move> allMoves) {
+        List<Move> moves = new ArrayList<>(allMoves);
 
         moves.removeIf(move -> !this.isMovePossible(move, board));
 
-        this.setMoves(moves);
+        return moves;
     }
 
-    public boolean attacks(Position position) {
-        for (Move move : this.getMoves()) {
+    public boolean attacks(Position position, Board board) {
+        List<Move> moves = this.calculatePotentialMoves(board);
+        for (Move move : moves) {
             if (move instanceof AttackMove && ((AttackMove) move).getAttackedPosition().equals(position)) return true;
         }
 
         return false;
     }
 
-    public void calculateMoves(Board board) {
-        this.calculatePotentialMoves(board);
-        this.validateMoves(board);
+    public List<Move> calculateMoves(Board board) {
+        return validateMoves(board, this.calculatePotentialMoves(board));
     }
 }

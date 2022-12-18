@@ -27,7 +27,7 @@ public class Queen extends ChessPiece {
     }
 
     @Override
-    public void calculatePotentialMoves(Board board) {
+    public List<Move> calculatePotentialMoves(Board board) {
         List<Move> moves = new ArrayList<>();
 
         moves.addAll(checkLine(this.getPosition(), 1, 1, board));
@@ -40,12 +40,11 @@ public class Queen extends ChessPiece {
         moves.addAll(checkLine(this.getPosition(), 0, -1, board));
         moves.addAll(checkLine(this.getPosition(), -1, 0, board));
 
-        this.setMoves(moves);
+        return moves;
     }
 
     public Queen(Queen queen) {
         super(Position.copyOf(queen.getPosition()), queen.getPieceColor());
-        this.moves = new ArrayList<>(queen.moves);
     }
 
     public Queen(Position position, PieceColor color) {

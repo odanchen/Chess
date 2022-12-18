@@ -28,7 +28,7 @@ public class Castle extends ChessPiece {
     }
 
     @Override
-    public void calculatePotentialMoves(Board board) {
+    public List<Move> calculatePotentialMoves(Board board) {
         List<Move> moves = new ArrayList<>();
 
         moves.addAll(checkLine(this.getPosition(), 0, 1, board));
@@ -36,7 +36,7 @@ public class Castle extends ChessPiece {
         moves.addAll(checkLine(this.getPosition(), 0, -1, board));
         moves.addAll(checkLine(this.getPosition(), -1, 0, board));
 
-        this.setMoves(moves);
+        return moves;
     }
 
     public boolean getHasMoved() {
@@ -59,7 +59,6 @@ public class Castle extends ChessPiece {
 
     public Castle(Castle castle) {
         super(Position.copyOf(castle.getPosition()), castle.getPieceColor());
-        this.moves = new ArrayList<>(castle.getMoves());
         this.hasMoved = castle.getHasMoved();
     }
 

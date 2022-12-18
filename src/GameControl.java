@@ -23,35 +23,22 @@ public class GameControl {
     }
 
     /**
-     * Generates the valid moves for all pieces in given board object.
-     */
-    private void generatePieceMoves() {
-        List<ChessPiece> currentPieces = (movingSide == PieceColor.WHITE) ? this.board.getWhitePieces() : this.board.getBlackPieces();
-
-        for (ChessPiece piece : currentPieces) {
-            piece.calculateMoves(this.board);
-        }
-    }
-
-    /**
      * Default way to run the game. Is usable at any starting position.
      * @param board The given board.
      * @param movingSide The side moving first.
      * @return 1 If white has won, 0 if stalemated, and -1 if black has won.
      */
-    public int runTheGame(Board board, PieceColor movingSide) {
+    public GameResult runTheGame(Board board, PieceColor movingSide) {
         this.setMovingSide(movingSide);
         this.setBoard(board);
 
-        generatePieceMoves();
         while (!this.board.isMate(this.movingSide)) {
             //The player picks the move
             //this.board.makeMove(move);
             //this.gameLog.add(move);
             this.swapPlayer();
-            this.generatePieceMoves();
         }
 
-        return 0;
+        return GameResult.PLAYER_WHITE_WON_BY_CHECKMATE;
     }
 }

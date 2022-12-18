@@ -12,7 +12,7 @@ public class Pawn extends ChessPiece {
     private boolean hasMoved;
 
     @Override
-    public void calculatePotentialMoves(Board board) {
+    public List<Move> calculatePotentialMoves(Board board) {
         List<Move> moves = new ArrayList<>();
         Position endPosition;
         int direction = (this.getPieceColor() == PieceColor.BLACK) ? -1 : 1;
@@ -33,7 +33,7 @@ public class Pawn extends ChessPiece {
         if (board.getPieceAt(endPosition) != null && this.notSameColorAs(board.getPieceAt(endPosition)))
             moves.add(new AttackMove(this.getPosition(), endPosition, endPosition));
 
-        this.setMoves(moves);
+        return moves;
     }
 
     public boolean getHasMoved() {
@@ -56,7 +56,6 @@ public class Pawn extends ChessPiece {
 
     public Pawn(Pawn pawn) {
         super(Position.copyOf(pawn.getPosition()), pawn.getPieceColor());
-        this.moves = new ArrayList<>(pawn.getMoves());
         this.hasMoved = pawn.getHasMoved();
     }
 

@@ -27,7 +27,7 @@ public class Bishop extends ChessPiece {
     }
 
     @Override
-    public void calculatePotentialMoves(Board board) {
+    public List<Move> calculatePotentialMoves(Board board) {
         List<Move> moves = new ArrayList<>();
 
         moves.addAll(checkLine(this.getPosition(), 1, 1, board));
@@ -35,7 +35,7 @@ public class Bishop extends ChessPiece {
         moves.addAll(checkLine(this.getPosition(), 1, -1, board));
         moves.addAll(checkLine(this.getPosition(), -1, -1, board));
 
-        this.setMoves(moves);
+        return moves;
     }
 
     public Bishop(Position position, PieceColor color) {
@@ -44,7 +44,6 @@ public class Bishop extends ChessPiece {
 
     public Bishop(Bishop bishop) {
         super(Position.copyOf(bishop.getPosition()), bishop.getPieceColor());
-        this.moves = new ArrayList<>(bishop.getMoves());
     }
 
     @Override

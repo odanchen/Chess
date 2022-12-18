@@ -22,7 +22,7 @@ public class Knight extends ChessPiece {
     }
 
     @Override
-    public void calculatePotentialMoves(Board board) {
+    public List<Move> calculatePotentialMoves(Board board) {
         List<Move> moves = new ArrayList<>();
         Position endPosition;
 
@@ -46,7 +46,7 @@ public class Knight extends ChessPiece {
         endPosition = new Position(this.getPosition(), -1, -2);
         if (canMoveTo(endPosition, board)) moves.add(newMove(this.getPosition(), endPosition, board));
 
-        this.setMoves(moves);
+        return moves;
     }
 
     public Knight(Position position, PieceColor color) {
@@ -55,7 +55,6 @@ public class Knight extends ChessPiece {
 
     public Knight(Knight knight) {
         super(Position.copyOf(knight.getPosition()), knight.getPieceColor());
-        this.moves = new ArrayList<>(knight.getMoves());
     }
 
     @Override
