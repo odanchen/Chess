@@ -1,3 +1,15 @@
+import board_package.Board;
+import pieces.PieceColor;
+
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+public class Display {
+
+    public static void MainMenu() {
+
         JLabel Ltitle = new JLabel();
         Ltitle.setText("Chess Game");
         Ltitle.setFont(new Font("Serif", Font.PLAIN, 20));
@@ -53,3 +65,15 @@
         f.setResizable(false);
         f.add(buttons);
         f.add(title);
+
+
+    }
+
+    public void drawBoard(){
+
+    }
+
+    public static void main(String[] args) {
+        MainMenu();
+    }
+}
