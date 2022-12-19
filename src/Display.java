@@ -22,7 +22,7 @@ public class Display {
         JButton start = new JButton("   Start   ");
 
         start.addActionListener(e -> { // uncomment the call for draw board for the start button to work
-            //drawBoard();
+            drawBoard();
             System.out.println("You started the game");
             GameControl gameRuner = new GameControl();
             gameRuner.runTheGame(new Board()/*I have no clue what to put here but when I find out I will put it here :)*/, PieceColor.WHITE);
