@@ -10,7 +10,8 @@ import java.io.File;
 import java.io.IOException;
 
 public class Display {
-    private String textFamily;
+    private String chessPieceTextureFolder = "cburnett";
+    private int boardSideSize = 800;
 
     public static void MainMenu() {
 
@@ -75,7 +76,7 @@ public class Display {
     private BufferedImage getTextureOfPiece(ChessPiece piece) throws IOException {
         String color = (piece.getPieceColor() == PieceColor.WHITE) ? "w" : "b";
         String pieceLetter = "";
-        String root = ("src/assets/pieces_textures/" + this.textFamily + "/" + color);
+        String root = ("src/assets/pieces_textures/" + this.chessPieceTextureFolder + "/" + color);
 
         if (piece instanceof Pawn) {
             pieceLetter = "p";

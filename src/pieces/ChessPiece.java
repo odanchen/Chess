@@ -4,14 +4,19 @@ import board_package.Board;
 import pieces.moves.AttackMove;
 import pieces.moves.Move;
 
-import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.List;
 
 public abstract class ChessPiece {
     protected final PieceColor pieceColor;
     protected Position position;
-    protected BufferedImage texture;
+
+    /**
+     * constructor of the chess piece with the given color and position
+     *
+     * @param position the position of the new piece
+     * @param color    the color of the new piece
+     */
 
     ChessPiece(Position position, PieceColor color) {
         this.pieceColor = color;
@@ -53,12 +58,27 @@ public abstract class ChessPiece {
      */
     abstract public List<Move> calculatePotentialMoves(Board board);
 
+    /**
+     * checks if the move is possible to perform with the current configuration of the board
+     *
+     * @param move  the move to be checked
+     * @param board the current configuration of the board
+     * @return a boolean value, representing whether the move is possible
+     */
+
     private boolean isMovePossible(Move move, Board board) {
         Board copyBoard = new Board(board);
         copyBoard.makeMove(move);
 
         return !copyBoard.isCheck(copyBoard.getPieceAt(move.getEndPosition()).getPieceColor());
     }
+
+    /**
+     * checks if the current piece is different in color from the piece passed through parameters
+     *
+     * @param piece the piece to compare colors with
+     * @return a boolean value representing whether the colors of the pieces are different
+     */
 
     public boolean notSameColorAs(ChessPiece piece) {
         return this.getPieceColor() != piece.getPieceColor();
@@ -78,6 +98,14 @@ public abstract class ChessPiece {
         return moves;
     }
 
+    /**
+     * checks if the current piece has a given position in its potential moves
+     *
+     * @param position the checked position
+     * @param board    the current configuration of the board
+     * @return a boolean value which represents whether the current position could be attacked
+     */
+
     public boolean attacks(Position position, Board board) {
         List<Move> moves = this.calculatePotentialMoves(board);
         for (Move move : moves) {
@@ -87,15 +115,14 @@ public abstract class ChessPiece {
         return false;
     }
 
+    /**
+     * returns the list of moves which are actually possible to perform
+     *
+     * @param board the current configuration of the board
+     * @return a list of Move class objects, which are actually possible
+     */
+
     public List<Move> calculateMoves(Board board) {
         return validateMoves(board, this.calculatePotentialMoves(board));
-    }
-
-    public BufferedImage getTexture() {
-        return texture;
-    }
-
-    public void setTexture(BufferedImage texture) {
-        this.texture = texture;
     }
 }

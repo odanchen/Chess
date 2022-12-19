@@ -77,6 +77,7 @@ public class Board {
 
     /**
      * mutates the current state of the board to the state after the move have been performed
+     *
      * @param move the move to be performed
      */
 
@@ -121,6 +122,12 @@ public class Board {
         this.configuration[matrixRow][matrixCol] = piece;
     }
 
+    /**
+     * gets the position of the white king on the board
+     *
+     * @return the position of the white king on the board
+     */
+
     public Position getWhiteKingPosition() {
         return whiteKingPosition;
     }
@@ -129,16 +136,46 @@ public class Board {
         this.whiteKingPosition = whiteKingPosition;
     }
 
+    /**
+     * gets the position of the black king on the board
+     *
+     * @return the position of the black king on the board
+     */
+
     public Position getBlackKingPosition() {
         return blackKingPosition;
     }
+
+    /**
+     * gets all the white pieces on the board
+     *
+     * @return all white pieces present on the board
+     */
 
     public List<ChessPiece> getWhitePieces() {
         return whitePieces;
     }
 
+    /**
+     * gets all the black pieces on the board
+     *
+     * @return all black pieces present on the board
+     */
+
     public List<ChessPiece> getBlackPieces() {
         return blackPieces;
+    }
+
+    /**
+     * Gets all the pieces on the board
+     *
+     * @return a list of all pieces present on the board
+     */
+
+    public List<ChessPiece> getAllPieces() {
+        List<ChessPiece> ans = new ArrayList<>(this.getWhitePieces());
+        ans.addAll(this.getBlackPieces());
+        return ans;
     }
 
     public void setBlackKingPosition(Position blackKingPosition) {
@@ -205,6 +242,11 @@ public class Board {
 
         return copy;
     }
+
+    /**
+     * creates the copy of the board passed through the arguments
+     * @param board the instance of the board copied
+     */
 
     public Board(Board board) {
         this.whiteKingPosition = Position.copyOf(board.getWhiteKingPosition());
