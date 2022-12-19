@@ -4,12 +4,14 @@ import board_package.Board;
 import pieces.moves.AttackMove;
 import pieces.moves.Move;
 
+import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.List;
 
 public abstract class ChessPiece {
     protected final PieceColor pieceColor;
     protected Position position;
+    protected BufferedImage texture;
 
     ChessPiece(Position position, PieceColor color) {
         this.pieceColor = color;
@@ -87,5 +89,13 @@ public abstract class ChessPiece {
 
     public List<Move> calculateMoves(Board board) {
         return validateMoves(board, this.calculatePotentialMoves(board));
+    }
+
+    public BufferedImage getTexture() {
+        return texture;
+    }
+
+    public void setTexture(BufferedImage texture) {
+        this.texture = texture;
     }
 }

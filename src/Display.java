@@ -1,10 +1,16 @@
 import board_package.Board;
-import pieces.PieceColor;
+import pieces.*;
+
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 
 public class Display {
+    private String textFamily;
 
     public static void MainMenu() {
 
@@ -66,27 +72,50 @@ public class Display {
 
     }
 
-    public static void drawBoard(){
+    private BufferedImage getTextureOfPiece(ChessPiece piece) throws IOException {
+        String color = (piece.getPieceColor() == PieceColor.WHITE) ? "w" : "b";
+        String pieceLetter = "";
+        String root = ("src/assets/pieces_textures/" + this.textFamily + "/" + color);
+
+        if (piece instanceof Pawn) {
+            pieceLetter = "p";
+        } else if (piece instanceof Bishop) {
+            pieceLetter = "b";
+        } else if (piece instanceof Queen) {
+            pieceLetter = "q";
+        } else if (piece instanceof Castle) {
+            pieceLetter = "r";
+        } else if (piece instanceof King) {
+            pieceLetter = "k";
+        } else if (piece instanceof Knight) {
+            pieceLetter = "n";
+        }
+
+        return ImageIO.read(new File(root + pieceLetter + ".png"));
+    }
+
+    public static void drawBoard() {
+
 
         JFrame frame = new JFrame();
-        frame.setBounds(10,10,528,550);
-        JPanel pn = new JPanel(){
+        frame.setBounds(10, 10, 528, 550);
+        JPanel pn = new JPanel() {
             @Override
-            public void paint(Graphics g){
+            public void paint(Graphics g) {
                 boolean white = true;
-                for(int y = 0; y<8; y++){
-                    for(int x = 0; x<8; x++){
-                        if(white){
+                for (int y = 0; y < 8; y++) {
+                    for (int x = 0; x < 8; x++) {
+                        if (white) {
                             g.setColor(Color.lightGray);
-                        }else {
+                        } else {
                             g.setColor(Color.darkGray);
                         }
-                        g.fillRect(x*64, y*64, 64,64);
-                        white=!white;
+                        g.fillRect(x * 64, y * 64, 64, 64);
+                        white = !white;
                     }
-                    white=!white;
+                    white = !white;
                 }
-                // draw piece img here
+
             }
         };
         frame.add(pn);
@@ -127,7 +156,7 @@ public class Display {
 
             @Override
             public void mouseMoved(MouseEvent e) {
-
+                GameControl game = new GameControl();
             }
         });
 
