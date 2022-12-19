@@ -110,12 +110,21 @@ public class Board {
         return configuration[matrixRow][matrixCol];
     }
 
+    /**
+     * @param position Position on the board.
+     * @return The piece at the specified position.
+     */
     public void setPieceAt(Position position, ChessPiece piece) {
         int matrixRow = Math.abs(position.getRow() - BOARD_SIZE);
         int matrixCol = (int) position.getCol() - 'a';
         this.configuration[matrixRow][matrixCol] = piece;
     }
 
+    /**
+     * @param letter The corresponding chess position for columns. (a,b,c...h)
+     * @param digit  The corresponding chess position for rows. (1,2,3...8)
+     * @return The piece at the specified position.
+     */
     public void setPieceAt(char letter, int digit, ChessPiece piece) {
         int matrixRow = Math.abs(digit - BOARD_SIZE);
         int matrixCol = (int) letter - 'a';
@@ -123,11 +132,9 @@ public class Board {
     }
 
     /**
-     * gets the position of the white king on the board
-     *
+     * Gets the position of the white king on the board
      * @return the position of the white king on the board
      */
-
     public Position getWhiteKingPosition() {
         return whiteKingPosition;
     }

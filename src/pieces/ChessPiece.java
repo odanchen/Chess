@@ -115,6 +115,8 @@ public abstract class ChessPiece {
         return false;
     }
 
+    public abstract String getPieceLetter();
+
     /**
      * returns the list of moves which are actually possible to perform
      *

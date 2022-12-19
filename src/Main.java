@@ -1,3 +1,5 @@
+/*
+
 import board_package.Board;
 
 public class Main {
@@ -8,3 +10,4 @@ public class Main {
         System.out.print("finish");
     }
 }
+*/
