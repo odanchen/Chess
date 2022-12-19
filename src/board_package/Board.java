@@ -40,7 +40,7 @@ public class Board {
      * Checks if the game should end or not (checks for stalemate or a checkmate)
      *
      * @param currentSide this is not a real doc it was just giving warning
-     * @return
+     * @return returns a boolean value of whether a current side could not perform any moves
      */
     public boolean isMate(PieceColor currentSide) {
         List<ChessPiece> currentPieces = (currentSide == PieceColor.WHITE) ? this.getWhitePieces() : this.getBlackPieces();
@@ -74,6 +74,11 @@ public class Board {
             this.makeRelocationMove(move);
         }
     }
+
+    /**
+     * mutates the current state of the board to the state after the move have been performed
+     * @param move the move to be performed
+     */
 
     public void makeMove(Move move) {
         if (move instanceof RelocationMove) {
