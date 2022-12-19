@@ -1,3 +1,5 @@
+import assets.board_colors.BoardColors;
+import assets.board_colors.ColorPair;
 import board_package.Board;
 import pieces.*;
 
@@ -12,8 +14,9 @@ import java.io.IOException;
 public class Display {
     private String chessPieceTextureFolder = "cburnett";
     private int boardSideSize = 800;
+    private ColorPair boardColors = BoardColors.OPTION1;
 
-    public static void MainMenu() {
+    public void MainMenu() {
 
         JLabel lTitle = new JLabel();
         lTitle.setText("Chess Game");
@@ -74,9 +77,10 @@ public class Display {
     }
 
     private BufferedImage getTextureOfPiece(ChessPiece piece) throws IOException {
+        String root = ("src/assets/pieces_textures/" + this.chessPieceTextureFolder + "/");
+
         String color = (piece.getPieceColor() == PieceColor.WHITE) ? "w" : "b";
         String pieceLetter = "";
-        String root = ("src/assets/pieces_textures/" + this.chessPieceTextureFolder + "/" + color);
 
         if (piece instanceof Pawn) {
             pieceLetter = "p";
@@ -92,10 +96,10 @@ public class Display {
             pieceLetter = "n";
         }
 
-        return ImageIO.read(new File(root + pieceLetter + ".png"));
+        return ImageIO.read(new File(root + color + pieceLetter + ".png"));
     }
 
-    public static void drawBoard() {
+    public void drawBoard() {
 
 
         JFrame frame = new JFrame();
@@ -107,9 +111,9 @@ public class Display {
                 for (int y = 0; y < 8; y++) {
                     for (int x = 0; x < 8; x++) {
                         if (white) {
-                            g.setColor(Color.lightGray);
+                            g.setColor(boardColors.getWhiteCell());
                         } else {
-                            g.setColor(Color.darkGray);
+                            g.setColor(boardColors.getBlackCell());
                         }
                         g.fillRect(x * 64, y * 64, 64, 64);
                         white = !white;
@@ -164,6 +168,7 @@ public class Display {
     }
 
     public static void main(String[] args) {
-        MainMenu();
+        Display display = new Display();
+        display.drawBoard();
     }
 }
