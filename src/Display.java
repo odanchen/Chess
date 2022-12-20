@@ -196,11 +196,18 @@ public class Display {
                         if (getPositionOnTheBoard(0, 0, e.getX(), e.getY()).equals(move.getEndPosition())) {
                             System.out.println("moved");
                             board.makeMove(move);
+                            Display display = new Display(board);
+                            try {
+                                display.drawPieces();
+                            } catch (IOException ex) {
+                                throw new RuntimeException(ex);
+                            }
                             break;
                         }
                     }
                     selected = null;
                 }
+
 
             }
 
