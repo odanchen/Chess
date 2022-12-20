@@ -2,6 +2,7 @@ import assets.board_colors.BoardColors;
 import assets.board_colors.ColorPair;
 import board_package.Board;
 import pieces.*;
+import pieces.moves.Move;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -10,6 +11,7 @@ import java.awt.event.*;
 import java.awt.image.BufferedImage;
 import java.io.*;
 import java.nio.file.Paths;
+import java.util.List;
 
 public class Display {
     private final double SQUARE_TO_PIECE_RATIO = 0.875;
@@ -18,6 +20,7 @@ public class Display {
     private ColorPair boardColors = BoardColors.OPTION1;
     private PieceColor bottomSideColor = PieceColor.WHITE;
     private final Board board;
+    ChessPiece selected = null;
 
     public Display(Board board) {
         this.board = board;
@@ -103,7 +106,7 @@ public class Display {
         return bimage;
     }
 
-    private String getImageFile(ChessPiece piece) {
+    private String getImageName(ChessPiece piece) {
         String color = (piece.getPieceColor() == PieceColor.WHITE) ? "w" : "b";
 
         return (color + piece.getPieceLetter() + ".png");
@@ -111,7 +114,7 @@ public class Display {
 
     private BufferedImage getTextureOfPiece(ChessPiece piece) throws IOException {
         String root = Paths.get("").toAbsolutePath().toString();
-        String[] fullPath = {root, "src", "assets", "pieces_textures", this.pieceTextureFolder, getImageFile(piece)};
+        String[] fullPath = {root, "src", "assets", "pieces_textures", this.pieceTextureFolder, getImageName(piece)};
 
         return ImageIO.read(new File(String.join(File.separator, fullPath)));
     }
@@ -128,11 +131,23 @@ public class Display {
         return (int) (getSquareSize() * (idx + (1 - this.SQUARE_TO_PIECE_RATIO)));
     }
 
+    private Position getPositionOnTheBoard(int leftCornerX, int leftCornerY, int x, int y) {
+        int row = (y - leftCornerY) / getSquareSize();
+        int col = (x - leftCornerX) / getSquareSize();
+
+        return new Position((char) (col + 'a'), (8 - row));
+    }
+
+    private boolean isClickInsideBoard(int leftCornerX, int leftCornerY, int x, int y) {
+        return (x - leftCornerX >= 0 && x - leftCornerX <= boardSideSize) && (y - leftCornerY >= 0 && y - leftCornerY <= boardSideSize);
+    }
+
     public void drawBoard() throws IOException {
 
 
         JFrame frame = new JFrame();
-        frame.setBounds(10, 10, 528, 550);
+        frame.setBounds(10, 10, boardSideSize, boardSideSize);
+        frame.setUndecorated(true);
         JPanel pn = new JPanel() {
             @Override
             public void paint(Graphics g) {
@@ -144,7 +159,7 @@ public class Display {
                         } else {
                             g.setColor(boardColors.getBlackCell());
                         }
-                        g.fillRect(x * 64, y * 64, 64, 64);
+                        g.fillRect(x * getSquareSize(), y * getSquareSize(), getSquareSize(), getSquareSize());
                         white = !white;
                     }
                     white = !white;
@@ -155,8 +170,8 @@ public class Display {
 
                     try {
                         BufferedImage image = getTextureOfPiece(piece);
-                        image = toBufferedImage(image.getScaledInstance(56, 56, Image.SCALE_SMOOTH));
-                        g.drawImage(image, col * 64 + 4, row * 64 + 4, null);
+                        image = toBufferedImage(image.getScaledInstance(getPieceSize(), getPieceSize(), Image.SCALE_SMOOTH));
+                        g.drawImage(image, getPieceCoordinate(col), getPieceCoordinate(row), null);
                     } catch (IOException e) {
                         throw new RuntimeException(e);
                     }
@@ -170,11 +185,31 @@ public class Display {
         frame.addMouseListener(new MouseListener() {
             @Override
             public void mouseClicked(MouseEvent e) {
+                if (selected == null) {
+                    if (board.getPieceAt(getPositionOnTheBoard(0, 0, e.getX(), e.getY())) != null) {
+                        selected = board.getPieceAt(getPositionOnTheBoard(0, 0, e.getX(), e.getY()));
+                        System.out.println("selected");
+                    }
+                } else {
+                    for (var move : selected.calculateMoves(board)) {
+                        System.out.println(move.getEndPosition().getCol() + move.getEndPosition().getRow());
+                    }
+                    for (var move : selected.calculateMoves(board)) {
+                        if (getPositionOnTheBoard(0, 0, e.getX(), e.getY()).equals(move.getEndPosition())) {
+                            System.out.println("moved");
+                            board.makeMove(move);
+                            //drawBoard();
+                            break;
+                        }
+                    }
+                    selected = null;
+                }
 
             }
 
             @Override
             public void mousePressed(MouseEvent e) {
+
 
             }
 
@@ -196,7 +231,7 @@ public class Display {
         frame.addMouseMotionListener(new MouseMotionListener() {
             @Override
             public void mouseDragged(MouseEvent e) {
-
+                System.out.println("you clicked annd dragged");
             }
 
             @Override
@@ -210,7 +245,10 @@ public class Display {
     public static void main(String[] args) throws IOException {
         Board board = new Board();
         board.fillStandardBoard();
-        Display display = new Display(board);
-        display.drawBoard();
+        ChessPiece piece = board.getPieceAt(new Position('e', 2));
+        List<Move> moves = piece.calculatePotentialMoves(board);
+
+
+        System.out.print("i");
     }
 }

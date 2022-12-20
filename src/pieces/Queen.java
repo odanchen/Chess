@@ -58,6 +58,6 @@ public class Queen extends ChessPiece {
 
     @Override
     public String getPieceLetter() {
-        return "n";
+        return "q";
     }
 }
