@@ -66,4 +66,9 @@ public class Castle extends ChessPiece {
     public ChessPiece copy() {
         return new Castle(this);
     }
+
+    @Override
+    public String getPieceLetter() {
+        return "r";
+    }
 }

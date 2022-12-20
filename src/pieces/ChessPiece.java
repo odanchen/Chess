@@ -125,4 +125,6 @@ public abstract class ChessPiece {
     public List<Move> calculateMoves(Board board) {
         return validateMoves(board, this.calculatePotentialMoves(board));
     }
+
+    public abstract String getPieceLetter();
 }

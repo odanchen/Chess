@@ -50,4 +50,9 @@ public class Bishop extends ChessPiece {
     public ChessPiece copy() {
         return new Bishop(this);
     }
+
+    @Override
+    public String getPieceLetter() {
+        return "b";
+    }
 }

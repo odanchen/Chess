@@ -77,4 +77,9 @@ public class King extends ChessPiece {
     public ChessPiece copy() {
         return new King(this);
     }
+
+    @Override
+    public String getPieceLetter() {
+        return "k";
+    }
 }

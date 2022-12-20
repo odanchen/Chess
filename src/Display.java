@@ -105,16 +105,8 @@ public class Display {
 
     private String getImageFile(ChessPiece piece) {
         String color = (piece.getPieceColor() == PieceColor.WHITE) ? "w" : "b";
-        String letter = "";
 
-        if (piece instanceof Pawn) letter = "p";
-        else if (piece instanceof Bishop) letter = "b";
-        else if (piece instanceof Knight) letter = "n";
-        else if (piece instanceof Castle) letter = "r";
-        else if (piece instanceof Queen) letter = "q";
-        else if (piece instanceof King) letter = "k";
-
-        return (color + letter + ".png");
+        return (color + piece.getPieceLetter() + ".png");
     }
 
     private BufferedImage getTextureOfPiece(ChessPiece piece) throws IOException {

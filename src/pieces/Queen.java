@@ -55,4 +55,9 @@ public class Queen extends ChessPiece {
     public ChessPiece copy() {
         return new Queen(this);
     }
+
+    @Override
+    public String getPieceLetter() {
+        return "n";
+    }
 }
