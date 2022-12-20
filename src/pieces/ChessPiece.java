@@ -69,7 +69,6 @@ public abstract class ChessPiece {
     private boolean isMovePossible(Move move, Board board) {
         Board copyBoard = new Board(board);
         copyBoard.makeMove(move);
-
         return !copyBoard.isCheck(copyBoard.getPieceAt(move.getEndPosition()).getPieceColor());
     }
 

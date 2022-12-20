@@ -246,7 +246,7 @@ public class Display {
         Board board = new Board();
         board.fillStandardBoard();
         ChessPiece piece = board.getPieceAt(new Position('e', 2));
-        List<Move> moves = piece.calculatePotentialMoves(board);
+        List<Move> moves = piece.calculateMoves(board);
 
 
         System.out.print("i");

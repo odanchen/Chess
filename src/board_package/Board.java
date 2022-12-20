@@ -50,7 +50,7 @@ public class Board {
     }
 
     private void makeRelocationMove(Move move) {
-        this.setPieceAt(move.getEndPosition(), this.getPieceAt(move.getEndPosition()));
+        this.setPieceAt(move.getEndPosition(), this.getPieceAt(move.getStartPosition()));
         this.setPieceAt(move.getStartPosition(), null);
         this.getPieceAt(move.getEndPosition()).setPosition(move.getEndPosition());
 
