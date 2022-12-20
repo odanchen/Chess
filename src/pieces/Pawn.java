@@ -63,7 +63,4 @@ public class Pawn extends ChessPiece {
     public ChessPiece copy() {
         return new Pawn(this);
     }
-
-    @Override
-    public String getPieceLetter() {return  "p";}
 }

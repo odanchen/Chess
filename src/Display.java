@@ -8,13 +8,13 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.awt.image.BufferedImage;
-import java.awt.image.ImageObserver;
 import java.io.*;
+import java.nio.file.Paths;
 
 public class Display {
-    private final double SQUARE_TO_PIECE_RATIO = 0.8;
-    private String chessPieceTextureFolder = "cburnett";
-    private int boardSideSize = 800;
+    private final double SQUARE_TO_PIECE_RATIO = 0.875;
+    private String pieceTextureFolder = "cburnett";
+    private int boardSideSize = 512;
     private ColorPair boardColors = BoardColors.OPTION1;
     private PieceColor bottomSideColor = PieceColor.WHITE;
     private final Board board;
@@ -22,7 +22,6 @@ public class Display {
     public Display(Board board) {
         this.board = board;
     }
-
 
     public void MainMenu() {
 
@@ -88,14 +87,56 @@ public class Display {
 
     }
 
-    private BufferedImage getTextureOfPiece(ChessPiece piece) throws IOException {
+    private static BufferedImage toBufferedImage(Image img) {
+        if (img instanceof BufferedImage) {
+            return (BufferedImage) img;
+        }
 
-        String root = ("src\\assets\\pieces_textures\\" + this.chessPieceTextureFolder + "\\");
+        // Create a buffered image with transparency
+        BufferedImage bimage = new BufferedImage(img.getWidth(null), img.getHeight(null), BufferedImage.TYPE_INT_ARGB);
 
+        // Draw the image on to the buffered image
+        Graphics2D bGr = bimage.createGraphics();
+        bGr.drawImage(img, 0, 0, null);
+        bGr.dispose();
+
+        return bimage;
+    }
+
+    private String getImageFile(ChessPiece piece) {
         String color = (piece.getPieceColor() == PieceColor.WHITE) ? "w" : "b";
-        String pieceLetter = "";
+        String letter = "";
 
-        return ImageIO.read(new File(root + color + piece.getPieceLetter() + ".png"));
+        if (piece instanceof Pawn) letter = "p";
+        else if (piece instanceof Bishop) letter = "b";
+        else if (piece instanceof Knight) letter = "n";
+        else if (piece instanceof Castle) letter = "r";
+        else if (piece instanceof Queen) letter = "q";
+        else if (piece instanceof King) letter = "k";
+
+        return (color + letter + ".png");
+    }
+
+    private BufferedImage getTextureOfPiece(ChessPiece piece) throws IOException {
+        String root = Paths.get("").toAbsolutePath().toString();
+        String[] fullPath = {root, "src", "assets", "pieces_textures", this.pieceTextureFolder, getImageFile(piece)};
+
+        return ImageIO.read(new File(String.join(File.separator, fullPath)));
+    }
+
+    private int getSquareSize()
+    {
+        return this.boardSideSize / 8;
+    }
+
+    private int getPieceSize()
+    {
+        return (int) (getSquareSize() * this.SQUARE_TO_PIECE_RATIO);
+    }
+
+    private int getPieceCoordinate(int idx)
+    {
+        return (int) (getSquareSize() * (idx + (1 - this.SQUARE_TO_PIECE_RATIO)));
     }
 
     public void drawBoard() throws IOException {
@@ -119,16 +160,14 @@ public class Display {
                     }
                     white = !white;
                 }
-                for (ChessPiece piece : board.getAllPieces())
-                {
+                for (ChessPiece piece : board.getAllPieces()) {
                     int row = Math.abs(piece.getPosition().getRow() - 8);
                     int col = (int) piece.getPosition().getCol() - 'a';
 
-                    //x = col * squareSize;
-                    //y = row * squareSize;
                     try {
                         BufferedImage image = getTextureOfPiece(piece);
-                        g.drawImage(image, col *64 , row *64, null);
+                        image = toBufferedImage(image.getScaledInstance(56, 56, Image.SCALE_SMOOTH));
+                        g.drawImage(image, col * 64 + 4, row * 64 + 4, null);
                     } catch (IOException e) {
                         throw new RuntimeException(e);
                     }

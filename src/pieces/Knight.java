@@ -61,9 +61,4 @@ public class Knight extends ChessPiece {
     public ChessPiece copy() {
         return new Knight(this);
     }
-
-    @Override
-    public String getPieceLetter() {
-        return "n";
-    }
 }
