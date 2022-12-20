@@ -18,7 +18,7 @@ public class Pawn extends ChessPiece {
         int direction = (this.getPieceColor() == PieceColor.BLACK) ? -1 : 1;
 
         endPosition = new Position(this.getPosition(), 0, direction);
-        if (board.getPieceAt(endPosition) == null) {
+        if (endPosition.isInsideBoard() && board.getPieceAt(endPosition) == null) {
             moves.add(new RelocationMove(this.getPosition(), endPosition));
 
             endPosition = new Position(this.getPosition(), 0, 2 * direction);
@@ -27,13 +27,20 @@ public class Pawn extends ChessPiece {
         }
 
         endPosition = new Position(this.getPosition(), 1, direction);
-        if (board.getPieceAt(endPosition) != null && this.notSameColorAs(board.getPieceAt(endPosition)))
+        if (canAttack(endPosition, board))
             moves.add(new AttackMove(this.getPosition(), endPosition, endPosition));
         endPosition = new Position(this.getPosition(), -1, direction);
-        if (board.getPieceAt(endPosition) != null && this.notSameColorAs(board.getPieceAt(endPosition)))
+        if (canAttack(endPosition, board))
             moves.add(new AttackMove(this.getPosition(), endPosition, endPosition));
 
         return moves;
+    }
+
+    private boolean canAttack(Position endPosition, Board board)
+    {
+        return endPosition.isInsideBoard() &&
+                board.getPieceAt(endPosition) != null &&
+                this.notSameColorAs(board.getPieceAt(endPosition));
     }
 
     public boolean getHasMoved() {

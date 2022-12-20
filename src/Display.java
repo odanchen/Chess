@@ -2,7 +2,6 @@ import assets.board_colors.BoardColors;
 import assets.board_colors.ColorPair;
 import board_package.Board;
 import pieces.*;
-import pieces.moves.Move;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -11,7 +10,6 @@ import java.awt.event.*;
 import java.awt.image.BufferedImage;
 import java.io.*;
 import java.nio.file.Paths;
-import java.util.List;
 
 public class Display {
     private final double SQUARE_TO_PIECE_RATIO = 0.875;
@@ -43,7 +41,7 @@ public class Display {
 
         start.addActionListener(e -> { // uncomment the call for draw board for the start button to work
             try {
-                drawBoard();
+                drawPieces();
             } catch (IOException ex) {
                 throw new RuntimeException(ex);
             }
@@ -142,7 +140,7 @@ public class Display {
         return (x - leftCornerX >= 0 && x - leftCornerX <= boardSideSize) && (y - leftCornerY >= 0 && y - leftCornerY <= boardSideSize);
     }
 
-    public void drawBoard() throws IOException {
+    public void drawPieces() throws IOException {
 
 
         JFrame frame = new JFrame();
@@ -198,7 +196,6 @@ public class Display {
                         if (getPositionOnTheBoard(0, 0, e.getX(), e.getY()).equals(move.getEndPosition())) {
                             System.out.println("moved");
                             board.makeMove(move);
-                            //drawBoard();
                             break;
                         }
                     }
@@ -245,8 +242,8 @@ public class Display {
     public static void main(String[] args) throws IOException {
         Board board = new Board();
         board.fillStandardBoard();
-        ChessPiece piece = board.getPieceAt(new Position('e', 2));
-        List<Move> moves = piece.calculateMoves(board);
+        Display display = new Display(board);
+        display.drawPieces();
 
 
         System.out.print("i");
