@@ -124,18 +124,15 @@ public class Display {
         return ImageIO.read(new File(String.join(File.separator, fullPath)));
     }
 
-    private int getSquareSize()
-    {
+    private int getSquareSize() {
         return this.boardSideSize / 8;
     }
 
-    private int getPieceSize()
-    {
+    private int getPieceSize() {
         return (int) (getSquareSize() * this.SQUARE_TO_PIECE_RATIO);
     }
 
-    private int getPieceCoordinate(int idx)
-    {
+    private int getPieceCoordinate(int idx) {
         return (int) (getSquareSize() * (idx + (1 - this.SQUARE_TO_PIECE_RATIO)));
     }
 
