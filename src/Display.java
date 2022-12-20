@@ -19,9 +19,74 @@ public class Display {
     private PieceColor bottomSideColor = PieceColor.WHITE;
     private final Board board;
     ChessPiece selected = null;
+    private BoardPanel boardPanel;
+    private PiecePanel piecePanel;
+    private JPanel baseGamePanel;
+    private JFrame gameFrame;
+
+
+    private class BoardPanel extends JPanel {
+        @Override
+        public void paint(Graphics g) {
+            for (int y = 0; y < 8; y++) {
+                for (int x = 0; x < 8; x++) {
+
+                    if ((x + y) % 2 == 0) g.setColor(boardColors.getWhiteCell());
+                    else g.setColor(boardColors.getBlackCell());
+
+                    g.fillRect(x * getSquareSize(), y * getSquareSize(), getSquareSize(), getSquareSize());
+                }
+            }
+        }
+    }
+
+    private class PiecePanel extends JPanel {
+        @Override
+        public void paint(Graphics g) {
+            for (ChessPiece piece : board.getAllPieces()) {
+
+                int row = Math.abs(piece.getPosition().getRow() - 8);
+                int col = (int) piece.getPosition().getCol() - 'a';
+
+                try {
+                    BufferedImage image = getTextureOfPiece(piece);
+                    image = toBufferedImage(image.getScaledInstance(getPieceSize(), getPieceSize(), Image.SCALE_SMOOTH));
+                    g.drawImage(image, getPieceCoordinate(col), getPieceCoordinate(row), null);
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        }
+    }
 
     public Display(Board board) {
         this.board = board;
+
+        gameFrame = new JFrame();
+        gameFrame.setBounds(10, 10, boardSideSize, boardSideSize);
+        gameFrame.setUndecorated(true);
+
+        baseGamePanel = new JPanel();
+        baseGamePanel.setLayout(null);
+
+
+
+        boardPanel = new BoardPanel();
+        piecePanel = new PiecePanel();
+
+        boardPanel.setBounds(0, 0, boardSideSize, boardSideSize);
+        piecePanel.setBounds(0, 0, boardSideSize, boardSideSize);
+
+        piecePanel.setOpaque(false);
+        boardPanel.setOpaque(true);
+
+        baseGamePanel.add(piecePanel);
+        baseGamePanel.add(boardPanel);
+
+        gameFrame.setContentPane(baseGamePanel);
+
+        gameFrame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        gameFrame.setVisible(true);
     }
 
     public void MainMenu() {
@@ -41,7 +106,7 @@ public class Display {
 
         start.addActionListener(e -> { // uncomment the call for draw board for the start button to work
             try {
-                drawPieces();
+                listenToTurns();
             } catch (IOException ex) {
                 throw new RuntimeException(ex);
             }
@@ -140,47 +205,8 @@ public class Display {
         return (x - leftCornerX >= 0 && x - leftCornerX <= boardSideSize) && (y - leftCornerY >= 0 && y - leftCornerY <= boardSideSize);
     }
 
-    public void drawPieces() throws IOException {
-
-
-        JFrame frame = new JFrame();
-        frame.setBounds(10, 10, boardSideSize, boardSideSize);
-        frame.setUndecorated(true);
-        JPanel pn = new JPanel() {
-            @Override
-            public void paint(Graphics g) {
-                boolean white = true;
-                for (int y = 0; y < 8; y++) {
-                    for (int x = 0; x < 8; x++) {
-                        if (white) {
-                            g.setColor(boardColors.getWhiteCell());
-                        } else {
-                            g.setColor(boardColors.getBlackCell());
-                        }
-                        g.fillRect(x * getSquareSize(), y * getSquareSize(), getSquareSize(), getSquareSize());
-                        white = !white;
-                    }
-                    white = !white;
-                }
-                for (ChessPiece piece : board.getAllPieces()) {
-                    int row = Math.abs(piece.getPosition().getRow() - 8);
-                    int col = (int) piece.getPosition().getCol() - 'a';
-
-                    try {
-                        BufferedImage image = getTextureOfPiece(piece);
-                        image = toBufferedImage(image.getScaledInstance(getPieceSize(), getPieceSize(), Image.SCALE_SMOOTH));
-                        g.drawImage(image, getPieceCoordinate(col), getPieceCoordinate(row), null);
-                    } catch (IOException e) {
-                        throw new RuntimeException(e);
-                    }
-                }
-            }
-        };
-        frame.add(pn);
-        frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        frame.setVisible(true);
-
-        frame.addMouseListener(new MouseListener() {
+    public void listenToTurns() throws IOException {
+        gameFrame.addMouseListener(new MouseListener() {
             @Override
             public void mouseClicked(MouseEvent e) {
                 if (selected == null) {
@@ -190,24 +216,14 @@ public class Display {
                     }
                 } else {
                     for (var move : selected.calculateMoves(board)) {
-                        System.out.println(move.getEndPosition().getCol() + move.getEndPosition().getRow());
-                    }
-                    for (var move : selected.calculateMoves(board)) {
                         if (getPositionOnTheBoard(0, 0, e.getX(), e.getY()).equals(move.getEndPosition())) {
                             System.out.println("moved");
                             board.makeMove(move);
-                            Display display = new Display(board);
-                            try {
-                                display.drawPieces();
-                            } catch (IOException ex) {
-                                throw new RuntimeException(ex);
-                            }
-                            break;
+                            piecePanel.repaint();
                         }
                     }
                     selected = null;
                 }
-
 
             }
 
@@ -232,7 +248,7 @@ public class Display {
 
             }
         });
-        frame.addMouseMotionListener(new MouseMotionListener() {
+        gameFrame.addMouseMotionListener(new MouseMotionListener() {
             @Override
             public void mouseDragged(MouseEvent e) {
                 System.out.println("you clicked annd dragged");
@@ -250,9 +266,8 @@ public class Display {
         Board board = new Board();
         board.fillStandardBoard();
         Display display = new Display(board);
-        display.drawPieces();
 
+        display.listenToTurns();
 
-        System.out.print("i");
     }
 }
