@@ -8,13 +8,21 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
+import java.awt.image.ImageObserver;
+import java.io.*;
 
 public class Display {
+    private final double SQUARE_TO_PIECE_RATIO = 0.8;
     private String chessPieceTextureFolder = "cburnett";
     private int boardSideSize = 800;
     private ColorPair boardColors = BoardColors.OPTION1;
+    private PieceColor bottomSideColor = PieceColor.WHITE;
+    private final Board board;
+
+    public Display(Board board) {
+        this.board = board;
+    }
+
 
     public void MainMenu() {
 
@@ -32,7 +40,11 @@ public class Display {
         JButton start = new JButton("   Start   ");
 
         start.addActionListener(e -> { // uncomment the call for draw board for the start button to work
-            drawBoard();
+            try {
+                drawBoard();
+            } catch (IOException ex) {
+                throw new RuntimeException(ex);
+            }
             System.out.println("You started the game");
             GameControl gameRuner = new GameControl();
             gameRuner.runTheGame(new Board()/*I have no clue what to put here but when I find out I will put it here :)*/, PieceColor.WHITE);
@@ -77,29 +89,16 @@ public class Display {
     }
 
     private BufferedImage getTextureOfPiece(ChessPiece piece) throws IOException {
-        String root = ("src/assets/pieces_textures/" + this.chessPieceTextureFolder + "/");
+
+        String root = ("src\\assets\\pieces_textures\\" + this.chessPieceTextureFolder + "\\");
 
         String color = (piece.getPieceColor() == PieceColor.WHITE) ? "w" : "b";
         String pieceLetter = "";
 
-        if (piece instanceof Pawn) {
-            pieceLetter = "p";
-        } else if (piece instanceof Bishop) {
-            pieceLetter = "b";
-        } else if (piece instanceof Queen) {
-            pieceLetter = "q";
-        } else if (piece instanceof Castle) {
-            pieceLetter = "r";
-        } else if (piece instanceof King) {
-            pieceLetter = "k";
-        } else if (piece instanceof Knight) {
-            pieceLetter = "n";
-        }
-
-        return ImageIO.read(new File(root + color + pieceLetter + ".png"));
+        return ImageIO.read(new File(root + color + piece.getPieceLetter() + ".png"));
     }
 
-    public void drawBoard() {
+    public void drawBoard() throws IOException {
 
 
         JFrame frame = new JFrame();
@@ -120,7 +119,20 @@ public class Display {
                     }
                     white = !white;
                 }
+                for (ChessPiece piece : board.getAllPieces())
+                {
+                    int row = Math.abs(piece.getPosition().getRow() - 8);
+                    int col = (int) piece.getPosition().getCol() - 'a';
 
+                    //x = col * squareSize;
+                    //y = row * squareSize;
+                    try {
+                        BufferedImage image = getTextureOfPiece(piece);
+                        g.drawImage(image, col *64 , row *64, null);
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
+                }
             }
         };
         frame.add(pn);
@@ -167,8 +179,10 @@ public class Display {
 
     }
 
-    public static void main(String[] args) {
-        Display display = new Display();
+    public static void main(String[] args) throws IOException {
+        Board board = new Board();
+        board.fillStandardBoard();
+        Display display = new Display(board);
         display.drawBoard();
     }
 }
