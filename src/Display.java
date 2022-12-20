@@ -80,6 +80,11 @@ public class Display {
 
         JFrame frame = new JFrame();
         frame.setBounds(10,10,528,550);
+        /*
+        this will re-render just the board without the title bar at the top with the close,full screen and minimise
+        frame.setBounds(10,10,512,512);
+        frame.setUnDecorated(true);
+        */
         JPanel pn = new JPanel(){
             @Override
             public void paint(Graphics g){
