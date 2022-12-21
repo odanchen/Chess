@@ -1,93 +1,18 @@
-import assets.board_colors.BoardColors;
-import assets.board_colors.ColorPair;
 import board_package.Board;
+import game_frame.GameFrame;
 import pieces.*;
 
-import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
-import java.awt.image.BufferedImage;
 import java.io.*;
-import java.nio.file.Paths;
 
 public class Display {
-    private final double SQUARE_TO_PIECE_RATIO = 0.875;
-    private String pieceTextureFolder = "cburnett";
     private int boardSideSize = 512;
-    private ColorPair boardColors = BoardColors.OPTION1;
     private PieceColor bottomSideColor = PieceColor.WHITE;
     private final Board board;
     ChessPiece selected = null;
-    private BoardPanel boardPanel;
-    private PiecePanel piecePanel;
-    private JPanel baseGamePanel;
-    private JFrame gameFrame;
-
-
-    private class BoardPanel extends JPanel {
-        @Override
-        public void paint(Graphics g) {
-            for (int y = 0; y < 8; y++) {
-                for (int x = 0; x < 8; x++) {
-
-                    if ((x + y) % 2 == 0) g.setColor(boardColors.getWhiteCell());
-                    else g.setColor(boardColors.getBlackCell());
-
-                    g.fillRect(x * getSquareSize(), y * getSquareSize(), getSquareSize(), getSquareSize());
-                }
-            }
-        }
-    }
-
-    private class PiecePanel extends JPanel {
-        @Override
-        public void paint(Graphics g) {
-            for (ChessPiece piece : board.getAllPieces()) {
-
-                int row = Math.abs(piece.getPosition().getRow() - 8);
-                int col = (int) piece.getPosition().getCol() - 'a';
-
-                try {
-                    BufferedImage image = getTextureOfPiece(piece);
-                    image = toBufferedImage(image.getScaledInstance(getPieceSize(), getPieceSize(), Image.SCALE_SMOOTH));
-                    g.drawImage(image, getPieceCoordinate(col), getPieceCoordinate(row), null);
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
-                }
-            }
-        }
-    }
-
-    public Display(Board board) {
-        this.board = board;
-
-        gameFrame = new JFrame();
-        gameFrame.setBounds(10, 10, boardSideSize, boardSideSize);
-        gameFrame.setUndecorated(true);
-
-        baseGamePanel = new JPanel();
-        baseGamePanel.setLayout(null);
-
-
-
-        boardPanel = new BoardPanel();
-        piecePanel = new PiecePanel();
-
-        boardPanel.setBounds(0, 0, boardSideSize, boardSideSize);
-        piecePanel.setBounds(0, 0, boardSideSize, boardSideSize);
-
-        piecePanel.setOpaque(false);
-        boardPanel.setOpaque(true);
-
-        baseGamePanel.add(piecePanel);
-        baseGamePanel.add(boardPanel);
-
-        gameFrame.setContentPane(baseGamePanel);
-
-        gameFrame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        gameFrame.setVisible(true);
-    }
+    private final GameFrame gameFrame;
 
     public void MainMenu() {
 
@@ -153,45 +78,8 @@ public class Display {
 
     }
 
-    private static BufferedImage toBufferedImage(Image img) {
-        if (img instanceof BufferedImage) {
-            return (BufferedImage) img;
-        }
-
-        // Create a buffered image with transparency
-        BufferedImage bimage = new BufferedImage(img.getWidth(null), img.getHeight(null), BufferedImage.TYPE_INT_ARGB);
-
-        // Draw the image on to the buffered image
-        Graphics2D bGr = bimage.createGraphics();
-        bGr.drawImage(img, 0, 0, null);
-        bGr.dispose();
-
-        return bimage;
-    }
-
-    private String getImageName(ChessPiece piece) {
-        String color = (piece.getPieceColor() == PieceColor.WHITE) ? "w" : "b";
-
-        return (color + piece.getPieceLetter() + ".png");
-    }
-
-    private BufferedImage getTextureOfPiece(ChessPiece piece) throws IOException {
-        String root = Paths.get("").toAbsolutePath().toString();
-        String[] fullPath = {root, "src", "assets", "pieces_textures", this.pieceTextureFolder, getImageName(piece)};
-
-        return ImageIO.read(new File(String.join(File.separator, fullPath)));
-    }
-
     private int getSquareSize() {
         return this.boardSideSize / 8;
-    }
-
-    private int getPieceSize() {
-        return (int) (getSquareSize() * this.SQUARE_TO_PIECE_RATIO);
-    }
-
-    private int getPieceCoordinate(int idx) {
-        return (int) (getSquareSize() * (idx + (1 - this.SQUARE_TO_PIECE_RATIO)));
     }
 
     private Position getPositionOnTheBoard(int leftCornerX, int leftCornerY, int x, int y) {
@@ -206,7 +94,7 @@ public class Display {
     }
 
     public void listenToTurns() throws IOException {
-        gameFrame.addMouseListener(new MouseListener() {
+        this.gameFrame.addMouseListener(new MouseListener() {
             @Override
             public void mouseClicked(MouseEvent e) {
                 if (selected == null) {
@@ -219,7 +107,7 @@ public class Display {
                         if (getPositionOnTheBoard(0, 0, e.getX(), e.getY()).equals(move.getEndPosition())) {
                             System.out.println("moved");
                             board.makeMove(move);
-                            piecePanel.repaint();
+                            gameFrame.updatePieces();
                         }
                     }
                     selected = null;
@@ -260,6 +148,14 @@ public class Display {
             }
         });
 
+    }
+
+    public Display(Board board) {
+        this.board = board;
+        gameFrame = new GameFrame(50, 50, boardSideSize, board);
+
+        gameFrame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        gameFrame.setVisible(true);
     }
 
     public static void main(String[] args) throws IOException {
