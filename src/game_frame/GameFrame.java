@@ -5,10 +5,14 @@ import assets.board_colors.ColorPair;
 import board_package.Board;
 import pieces.ChessPiece;
 import pieces.PieceColor;
+import pieces.Position;
+import pieces.moves.Move;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -94,13 +98,14 @@ class PiecePanel extends JPanel {
             int row = Math.abs(piece.getPosition().getRow() - 8);
             int col = (int) piece.getPosition().getCol() - 'a';
 
+            BufferedImage image = null;
             try {
-                BufferedImage image = getTextureOfPiece(piece);
-                image = toBufferedImage(image.getScaledInstance(getPieceSize(), getPieceSize(), Image.SCALE_SMOOTH));
-                g.drawImage(image, getPieceCoordinate(col), getPieceCoordinate(row), null);
+                image = getTextureOfPiece(piece);
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
+            image = toBufferedImage(image.getScaledInstance(getPieceSize(), getPieceSize(), Image.SCALE_SMOOTH));
+            g.drawImage(image, getPieceCoordinate(col), getPieceCoordinate(row), null);
         }
     }
 
@@ -116,12 +121,15 @@ public class GameFrame extends JFrame {
     private final BoardPanel boardPanel;
     private final PiecePanel piecePanel;
     private final Board board;
+    private int boardSize;
+    private Move ans = null;
 
     public GameFrame(int x, int y, int boardSize, Board board) {
         this.setBounds(x, y, boardSize, boardSize);
         this.setUndecorated(true);
 
         this.board = board;
+        this.boardSize = boardSize;
         this.boardPanel = new BoardPanel(boardSize);
         this.piecePanel = new PiecePanel(boardSize, board);
 
@@ -132,5 +140,69 @@ public class GameFrame extends JFrame {
     public void updatePieces()
     {
         this.piecePanel.repaint();
+    }
+    private int squareSize() {
+        return this.boardSize / 8;
+    }
+
+
+    private Position getPositionOnTheBoard(int x, int y) {
+        int row = y / squareSize();
+        int col = x / squareSize();
+
+        return new Position((char) (col + 'a'), (8 - row));
+    }
+
+    public Move listenUserMove(PieceColor currentSide)
+    {
+        ans = null;
+
+        this.addMouseListener(new MouseListener() {
+            ChessPiece selected = null;
+
+
+            @Override
+            public void mouseClicked(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mousePressed(MouseEvent e) {
+
+                if (selected == null) {
+                    ChessPiece clickedPiece = board.getPieceAt(getPositionOnTheBoard(e.getX(), e.getY()));
+
+                    if (clickedPiece != null && clickedPiece.getPieceColor() == currentSide) {
+                        selected = clickedPiece;
+                        System.out.println("selected");
+                    }
+                } else {
+                    for (var move : selected.calculateMoves(board)) {
+                        if (getPositionOnTheBoard(e.getX(), e.getY()).equals(move.getEndPosition())) {
+                            System.out.println("moved");
+                            ans = move;
+                        }
+                    }
+                    selected = null;
+                }
+            }
+
+            @Override
+            public void mouseReleased(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mouseEntered(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+
+            }
+        });
+
+        return ans;
     }
 }

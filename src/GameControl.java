@@ -9,6 +9,14 @@ public class GameControl {
     private PieceColor movingSide;
     private Board board;
     private List<Move> gameLog;
+    private Display display;
+
+    public GameControl(Board board) {
+        this.display = new Display(board);
+        this.movingSide = PieceColor.WHITE;
+        this.board = board;
+    }
+
 
     private void setMovingSide(PieceColor movingSide) {
         this.movingSide = movingSide;
@@ -22,20 +30,24 @@ public class GameControl {
         this.movingSide = (this.movingSide == PieceColor.WHITE) ? PieceColor.BLACK : PieceColor.WHITE;
     }
 
+    private void performMove(Move move)
+    {
+        board.makeMove(move);
+        display.updatePieces();
+    }
+
     /**
      * Default way to run the game. Is usable at any starting position.
      * @param board The given board.
      * @param movingSide The side moving first.
-     * @return 1 If white has won, 0 if stalemated, and -1 if black has won.
+     * @return Enum for different outcomes of game.
      */
     public GameResult runTheGame(Board board, PieceColor movingSide) {
         this.setMovingSide(movingSide);
         this.setBoard(board);
 
         while (!this.board.isMate(this.movingSide)) {
-            //The player picks the move
-            //this.board.makeMove(move);
-            //this.gameLog.add(move);
+            performMove(display.pickTheMove(this.movingSide));
             this.swapPlayer();
         }
 

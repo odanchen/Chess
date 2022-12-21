@@ -92,6 +92,7 @@ public abstract class ChessPiece {
     private List<Move> validateMoves(Board board, List<Move> allMoves) {
         List<Move> moves = new ArrayList<>(allMoves);
 
+
         moves.removeIf(move -> !this.isMovePossible(move, board));
 
         return moves;
