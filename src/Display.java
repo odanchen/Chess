@@ -9,7 +9,6 @@ import java.io.*;
 
 public class Display {
     private int boardSideSize = 512;
-    private PieceColor bottomSideColor = PieceColor.WHITE;
     private final Board board;
     ChessPiece selected = null;
     private final GameFrame gameFrame;
@@ -78,19 +77,15 @@ public class Display {
 
     }
 
-    private int getSquareSize() {
+    private int squareSize() {
         return this.boardSideSize / 8;
     }
 
-    private Position getPositionOnTheBoard(int leftCornerX, int leftCornerY, int x, int y) {
-        int row = (y - leftCornerY) / getSquareSize();
-        int col = (x - leftCornerX) / getSquareSize();
+    private Position getPositionOnTheBoard(int x, int y) {
+        int row = y / squareSize();
+        int col = x / squareSize();
 
         return new Position((char) (col + 'a'), (8 - row));
-    }
-
-    private boolean isClickInsideBoard(int leftCornerX, int leftCornerY, int x, int y) {
-        return (x - leftCornerX >= 0 && x - leftCornerX <= boardSideSize) && (y - leftCornerY >= 0 && y - leftCornerY <= boardSideSize);
     }
 
     public void listenToTurns() throws IOException {
@@ -98,13 +93,13 @@ public class Display {
             @Override
             public void mouseClicked(MouseEvent e) {
                 if (selected == null) {
-                    if (board.getPieceAt(getPositionOnTheBoard(0, 0, e.getX(), e.getY())) != null) {
-                        selected = board.getPieceAt(getPositionOnTheBoard(0, 0, e.getX(), e.getY()));
+                    if (board.getPieceAt(getPositionOnTheBoard(e.getX(), e.getY())) != null) {
+                        selected = board.getPieceAt(getPositionOnTheBoard(e.getX(), e.getY()));
                         System.out.println("selected");
                     }
                 } else {
                     for (var move : selected.calculateMoves(board)) {
-                        if (getPositionOnTheBoard(0, 0, e.getX(), e.getY()).equals(move.getEndPosition())) {
+                        if (getPositionOnTheBoard(e.getX(), e.getY()).equals(move.getEndPosition())) {
                             System.out.println("moved");
                             board.makeMove(move);
                             gameFrame.updatePieces();
@@ -144,7 +139,7 @@ public class Display {
 
             @Override
             public void mouseMoved(MouseEvent e) {
-                GameControl game = new GameControl();
+                //GameControl game = new GameControl();
             }
         });
 
@@ -152,10 +147,10 @@ public class Display {
 
     public Display(Board board) {
         this.board = board;
-        gameFrame = new GameFrame(50, 50, boardSideSize, board);
+        this.gameFrame = new GameFrame(50, 100, boardSideSize, board);
 
-        gameFrame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        gameFrame.setVisible(true);
+        this.gameFrame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        this.gameFrame.setVisible(true);
     }
 
     public static void main(String[] args) throws IOException {
