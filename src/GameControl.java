@@ -3,6 +3,7 @@ import pieces.ChessPiece;
 import pieces.PieceColor;
 import pieces.moves.Move;
 
+import java.io.IOException;
 import java.util.List;
 
 public class GameControl {
@@ -42,7 +43,7 @@ public class GameControl {
      * @param movingSide The side moving first.
      * @return Enum for different outcomes of game.
      */
-    public GameResult runTheGame(Board board, PieceColor movingSide) {
+    public GameResult runTheGame(Board board, PieceColor movingSide) throws IOException {
         this.setMovingSide(movingSide);
         this.setBoard(board);
 

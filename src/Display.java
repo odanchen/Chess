@@ -86,7 +86,7 @@ public class Display {
         return this.boardSideSize / 8;
     }
 
-    public Move pickTheMove(PieceColor movingSide) {
+    public Move pickTheMove(PieceColor movingSide) throws IOException {
         return gameFrame.listenUserMove(movingSide);
     }
 
@@ -97,16 +97,10 @@ public class Display {
         this.gameFrame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         this.gameFrame.setVisible(true);
     }
+    public static void main(String[] args)  {
+    }
 }
 
-    /*
 
-    public static void main(String[] args) throws IOException {
-        Board board = new Board();
-        board.fillStandardBoard();
-        Display display = new Display(board);
 
-        //display.listenToTurns();
 
-    }
-}*/

@@ -153,7 +153,7 @@ public class GameFrame extends JFrame {
         return new Position((char) (col + 'a'), (8 - row));
     }
 
-    public Move listenUserMove(PieceColor currentSide)
+    public Move listenUserMove(PieceColor currentSide) throws IOException
     {
         ans = null;
 
