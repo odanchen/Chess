@@ -61,7 +61,7 @@ class PiecePanel extends JPanel {
     }
 
     private int getPieceCoordinate(int idx) {
-        return (int) (getSquareSize() * (idx + (1 - this.SQUARE_TO_PIECE_RATIO)));
+        return (int) ((getSquareSize() * idx) + (getSquareSize()-getPieceSize())/2);
     }
 
     private static BufferedImage toBufferedImage(Image img) {
