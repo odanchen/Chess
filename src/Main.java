@@ -7,7 +7,7 @@ public class Main {
         Board board = new Board();
         board.fillStandardBoard();
 
-        GameControl control = new GameControl(board);
-        control.runTheGame(PieceColor.WHITE);
+        GameControl control = new GameControl(board, PieceColor.WHITE);
+        control.runTheGame();
     }
 }

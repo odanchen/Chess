@@ -2,69 +2,62 @@ package chessRoot.user_interface.frames.game_frame;
 
 import chessRoot.assets.board_colors.BoardColors;
 import chessRoot.assets.board_colors.ColorSet;
-import chessRoot.logic.Board;
 import chessRoot.user_interface.game_flow.GameControl;
-import chessRoot.user_interface.game_flow.GameStates;
 import chessRoot.logic.pieces.ChessPiece;
 import chessRoot.logic.pieces.PieceColor;
 import chessRoot.logic.pieces.Position;
 import chessRoot.logic.moves.Move;
+import chessRoot.user_interface.game_flow.GameStatus;
 
 import javax.swing.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.util.Optional;
+
+import static chessRoot.logic.pieces.PieceColor.WHITE;
+import static chessRoot.user_interface.game_flow.GameStates.*;
 
 public class GameFrame extends JFrame {
     private final BoardPanel boardPanel;
     private final PiecePanel piecePanel;
     private final IndicationPanel indicPanel;
-
-    private final Board board;
     private int boardSize = 512;
     private ColorSet colorSet = BoardColors.OPTION1;
-    private GameControl gameControl;
-    private GameStates gameStatus;
-    private ChessPiece selectedPiece = null;
+    private final GameStatus gameStatus;
+    private final GameControl gameControl;
 
-    public GameFrame(Board board, GameControl gameControl) {
-        this.setUndecorated(true);
+    public GameFrame(GameStatus gameStatus, GameControl gameControl) {
+        setUndecorated(true);
+        setBounds(0, 0, boardSize, boardSize);
 
-        this.setBounds(0, 0, boardSize, boardSize);
+        this.gameStatus = gameStatus;
         this.gameControl = gameControl;
-        this.gameStatus = gameControl.getGameStatus();
-        this.board = board;
-        this.boardPanel = new BoardPanel(boardSize, colorSet);
-        this.piecePanel = new PiecePanel(boardSize, board);
-        this.indicPanel = new IndicationPanel(boardSize, board, colorSet);
+        boardPanel = new BoardPanel(boardSize, colorSet);
+        piecePanel = new PiecePanel(boardSize, gameStatus, gameControl);
+        indicPanel = new IndicationPanel(boardSize, gameStatus, gameControl, colorSet);
 
-        this.add(indicPanel);
-        this.add(piecePanel);
-        this.add(boardPanel);
+        add(piecePanel);
+        add(indicPanel);
+        add(boardPanel);
 
-        indicPanel.setSize(boardSize, boardSize);
-        indicPanel.setOpaque(false);
-
-        this.createMouseListener();
-
-        this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        this.setVisible(true);
+        createMouseListener();
+        setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        setVisible(true);
     }
 
     private void playerWhiteTurnEvent(MouseEvent e) {
-        ChessPiece clickedPiece = board.getPieceAt(getPositionOnTheBoard(e.getX(), e.getY()));
-        if (clickedPiece != null && clickedPiece.getPieceColor() == PieceColor.WHITE) {
-            gameStatus = GameStates.PLAYER_WHITE_SELECTED_PIECE;
-            selectedPiece = clickedPiece;
+        ChessPiece clickedPiece = gameStatus.getBoard().getPieceAt(getPositionOnTheBoard(e.getX(), e.getY()));
+        if (clickedPiece != null && clickedPiece.isWhite()) {
+            gameStatus.setGameState(PLAYER_WHITE_SELECTED_PIECE);
+            gameStatus.selectPiece(clickedPiece);
             indicPanel.updateSelectedPiece(clickedPiece);
         }
     }
 
     private void playerBlackTurnEvent(MouseEvent e) {
-        ChessPiece clickedPiece = board.getPieceAt(getPositionOnTheBoard(e.getX(), e.getY()));
-        if (clickedPiece != null && clickedPiece.getPieceColor() == PieceColor.BLACK) {
-            gameStatus = GameStates.PLAYER_BLACK_SELECTED_PIECE;
-            selectedPiece = clickedPiece;
+        ChessPiece clickedPiece = gameStatus.getBoard().getPieceAt(getPositionOnTheBoard(e.getX(), e.getY()));
+        if (clickedPiece != null && clickedPiece.isBlack()) {
+            gameStatus.setGameState(PLAYER_BLACK_SELECTED_PIECE);
+            gameStatus.selectPiece(clickedPiece);
             indicPanel.updateSelectedPiece(clickedPiece);
         }
     }
@@ -72,48 +65,60 @@ public class GameFrame extends JFrame {
     private void playerWhiteSelectedAPieceEvent(MouseEvent e) {
         Position clickedPosition = getPositionOnTheBoard(e.getX(), e.getY());
 
-        Move moveToMake = selectedPiece.calculateMoves(board).stream()
+        Move moveToMake = gameStatus.getSelectedPieceMoves().stream()
                 .filter(move -> move.getEndPosition().equals(clickedPosition))
                 .findFirst().orElse(null);
 
         if (moveToMake != null) {
-            board.makeMove(moveToMake);
+            gameControl.performMove(moveToMake);
             piecePanel.repaint();
-            if(board.isMate(PieceColor.BLACK)){
-                System.out.println("black you lose bitch");
+            if (gameStatus.getBoard().isMate(PieceColor.BLACK)) {
+                System.out.println("player black lost");
             }
-            gameStatus = GameStates.PLAYER_BLACK_TURN;
-        } else gameStatus = GameStates.PLAYER_WHITE_TURN;
+            gameStatus.setGameState(PLAYER_BLACK_TURN);
+        } else gameStatus.setGameState(PLAYER_WHITE_TURN);
 
-        indicPanel.removeAll(); piecePanel.repaint();
-        selectedPiece = null;
+        indicPanel.removeAll();
+        piecePanel.repaint();
+        gameStatus.deselectPiece();
     }
 
     private void playerBlackSelectedAPieceEvent(MouseEvent e) {
         Position clickedPosition = getPositionOnTheBoard(e.getX(), e.getY());
 
-        Move moveToMake = selectedPiece.calculateMoves(board).stream()
+        Move moveToMake = gameStatus.getSelectedPieceMoves().stream()
                 .filter(move -> move.getEndPosition().equals(clickedPosition))
                 .findFirst().orElse(null);
 
         if (moveToMake != null) {
-            board.makeMove(moveToMake);
+            gameControl.performMove(moveToMake);
             piecePanel.repaint();
-            if(board.isMate(PieceColor.WHITE)){
-                System.out.println("white you lose bitch");
+            if (gameStatus.getBoard().isMate(WHITE)) {
+                System.out.println("player white lost");
             }
-            gameStatus = GameStates.PLAYER_WHITE_TURN;
-        } else gameStatus = GameStates.PLAYER_BLACK_TURN;
+            gameStatus.setGameState(PLAYER_WHITE_TURN);
+        } else gameStatus.setGameState(PLAYER_BLACK_TURN);
 
-        indicPanel.removeAll(); piecePanel.repaint();
-        selectedPiece = null;
+        indicPanel.removeAll();
+        piecePanel.repaint();
+        gameStatus.deselectPiece();
     }
 
     private void onMousePress(MouseEvent e) {
-        if (gameStatus == GameStates.PLAYER_WHITE_TURN) playerWhiteTurnEvent(e);
-        else if (gameStatus == GameStates.PLAYER_BLACK_TURN) playerBlackTurnEvent(e);
-        else if (gameStatus == GameStates.PLAYER_BLACK_SELECTED_PIECE) playerBlackSelectedAPieceEvent(e);
-        else if (gameStatus == GameStates.PLAYER_WHITE_SELECTED_PIECE) playerWhiteSelectedAPieceEvent(e);
+        switch (gameStatus.getState()) {
+            case PLAYER_WHITE_TURN:
+                playerWhiteTurnEvent(e);
+                break;
+            case PLAYER_BLACK_TURN:
+                playerBlackTurnEvent(e);
+                break;
+            case PLAYER_BLACK_SELECTED_PIECE:
+                playerBlackSelectedAPieceEvent(e);
+                break;
+            case PLAYER_WHITE_SELECTED_PIECE:
+                playerWhiteSelectedAPieceEvent(e);
+                break;
+        }
     }
 
     private void createMouseListener() {

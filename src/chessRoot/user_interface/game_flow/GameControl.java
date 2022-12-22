@@ -5,38 +5,27 @@ import chessRoot.logic.Board;
 import chessRoot.logic.pieces.PieceColor;
 import chessRoot.logic.moves.Move;
 
-import java.util.List;
+import static chessRoot.logic.pieces.PieceColor.WHITE;
+import static chessRoot.user_interface.game_flow.GameStates.PLAYER_BLACK_TURN;
+import static chessRoot.user_interface.game_flow.GameStates.PLAYER_WHITE_TURN;
 
 public class GameControl {
-    private Board board;
-    private List<Move> gameLog;
-    private GameStates gameStatus;
     private GameFrame gameFrame;
+    private final GameStatus gameStatus;
 
-    public GameControl(Board board) {
-        this.board = board;
+    public GameControl(Board board, PieceColor movingSide) {
+        GameStates state = movingSide == WHITE ? PLAYER_WHITE_TURN : PLAYER_BLACK_TURN;
+        gameStatus = new GameStatus(state, board);
     }
 
-    public GameStates getGameStatus()
-    {
-        return this.gameStatus;
-    }
-
-    private void performMove(Move move)
-    {
-        board.makeMove(move);
+    public void performMove(Move move) {
+        gameStatus.getBoard().makeMove(move);
     }
 
     /**
      * Default way to run the game. Is usable at any starting position.
-     * @param movingSide The side moving first.
-     * @return Enum for different outcomes of game.
      */
-    public GameResult runTheGame(PieceColor movingSide) {
-        gameStatus = movingSide == PieceColor.WHITE ? GameStates.PLAYER_WHITE_TURN : GameStates.PLAYER_BLACK_TURN;
-        gameFrame = new GameFrame(board, this);
-
-
-        return GameResult.PLAYER_WHITE_WON_BY_CHECKMATE;
+    public void runTheGame() {
+        gameFrame = new GameFrame(gameStatus, this);
     }
 }

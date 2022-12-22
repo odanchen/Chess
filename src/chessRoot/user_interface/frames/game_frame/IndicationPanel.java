@@ -4,6 +4,8 @@ import chessRoot.assets.board_colors.ColorSet;
 import chessRoot.logic.Board;
 import chessRoot.logic.moves.AttackMove;
 import chessRoot.logic.pieces.ChessPiece;
+import chessRoot.user_interface.game_flow.GameControl;
+import chessRoot.user_interface.game_flow.GameStatus;
 
 
 import javax.swing.*;
@@ -16,10 +18,15 @@ public class IndicationPanel extends JPanel {
     private int boardSize;
     private Board board;
     private ColorSet colorSet;
+    private final GameStatus gameStatus;
+    private final GameControl gameControl;
 
-    public IndicationPanel(int boardSize, Board board, ColorSet colorSet) {
+    public IndicationPanel(int boardSize, GameStatus gameStatus, GameControl gameControl, ColorSet colorSet) {
+        setSize(boardSize, boardSize);
+        setOpaque(false);
         this.boardSize = boardSize;
-        this.board = board;
+        this.gameStatus = gameStatus;
+        this.gameControl = gameControl;
         this.colorSet = colorSet;
     }
 
@@ -60,5 +67,4 @@ public class IndicationPanel extends JPanel {
     private int getAttackingCoordinate(int idx) {
         return (getSquareSize() * idx) + (getSquareSize()-getAttackingOvalSize())/2;
     }
-
 }

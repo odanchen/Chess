@@ -14,11 +14,10 @@ public class ColorSet {
     public Color getBlackCell() {
         return blackCell;
     }
+
     public Color getCellSelection() {
         return cellSelection;
     }
-
-
 
 
     ColorSet(Color whiteCell, Color blackCell, Color whiteCellSelection) {

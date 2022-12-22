@@ -3,6 +3,8 @@ package chessRoot.user_interface.frames.game_frame;
 import chessRoot.logic.Board;
 import chessRoot.logic.pieces.ChessPiece;
 import chessRoot.logic.pieces.PieceColor;
+import chessRoot.user_interface.game_flow.GameControl;
+import chessRoot.user_interface.game_flow.GameStatus;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -13,10 +15,11 @@ import java.io.IOException;
 import java.nio.file.Paths;
 
 public class PiecePanel extends JPanel {
-    private final Board board;
     private int boardSize;
     private String pieceTextureFolder = "cburnett";
     private final double SQUARE_TO_PIECE_RATIO = 0.875;
+    private final GameStatus gameStatus;
+    private final GameControl gameControl;
 
     private int getSquareSize() {
         return this.boardSize / 8;
@@ -63,7 +66,7 @@ public class PiecePanel extends JPanel {
 
     @Override
     public void paint(Graphics g) {
-        for (ChessPiece piece : board.getAllPieces()) {
+        for (ChessPiece piece : gameStatus.getBoard().getAllPieces()) {
 
             int row = Math.abs(piece.getPosition().getRow() - 8);
             int col = (int) piece.getPosition().getCol() - 'a';
@@ -77,10 +80,11 @@ public class PiecePanel extends JPanel {
         }
     }
 
-    PiecePanel(int boardSideSize, Board board) {
+    PiecePanel(int boardSideSize, GameStatus gameStatus, GameControl gameControl) {
         this.setSize(boardSideSize, boardSideSize);
         this.setOpaque(false);
-        this.board = board;
+        this.gameStatus = gameStatus;
+        this.gameControl = gameControl;
         this.boardSize = boardSideSize;
     }
 }

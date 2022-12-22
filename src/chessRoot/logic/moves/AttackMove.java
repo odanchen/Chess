@@ -9,11 +9,15 @@ public class AttackMove extends Move {
     private final Position attackedPosition;
 
     public Position getAttackedPosition() {
-        return this.attackedPosition;
+        return attackedPosition;
     }
 
     public AttackMove(Position startPosition, Position endPosition, Position attackedPosition) {
         super(startPosition, endPosition);
         this.attackedPosition = attackedPosition;
+    }
+
+    public boolean isAttackedPosition(Position position) {
+        return attackedPosition.equals(position);
     }
 }

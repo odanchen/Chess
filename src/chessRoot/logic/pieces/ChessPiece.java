@@ -17,7 +17,6 @@ public abstract class ChessPiece {
      * @param position the position of the new piece
      * @param color    the color of the new piece
      */
-
     ChessPiece(Position position, PieceColor color) {
         this.pieceColor = color;
         this.position = position;
@@ -32,14 +31,14 @@ public abstract class ChessPiece {
      * @return The position of the piece.
      */
     public Position getPosition() {
-        return this.position;
+        return position;
     }
 
     /**
      * @return The color of the piece (black or white).
      */
     public PieceColor getPieceColor() {
-        return this.pieceColor;
+        return pieceColor;
     }
 
     /**
@@ -65,7 +64,6 @@ public abstract class ChessPiece {
      * @param board the current configuration of the board
      * @return a boolean value, representing whether the move is possible
      */
-
     private boolean isMovePossible(Move move, Board board) {
         Board copyBoard = new Board(board);
         copyBoard.makeMove(move);
@@ -78,9 +76,8 @@ public abstract class ChessPiece {
      * @param piece the piece to compare colors with
      * @return a boolean value representing whether the colors of the pieces are different
      */
-
     public boolean notSameColorAs(ChessPiece piece) {
-        return this.getPieceColor() != piece.getPieceColor();
+        return getPieceColor() != piece.getPieceColor();
     }
 
     /**
@@ -88,13 +85,9 @@ public abstract class ChessPiece {
      *
      * @param board The current chess board.
      */
-
     private List<Move> validateMoves(Board board, List<Move> allMoves) {
         List<Move> moves = new ArrayList<>(allMoves);
-
-
-        moves.removeIf(move -> !this.isMovePossible(move, board));
-
+        moves.removeIf(move -> !isMovePossible(move, board));
         return moves;
     }
 
@@ -105,14 +98,9 @@ public abstract class ChessPiece {
      * @param board    the current configuration of the board
      * @return a boolean value which represents whether the current position could be attacked
      */
-
     public boolean attacks(Position position, Board board) {
-        List<Move> moves = this.calculatePotentialMoves(board);
-        for (Move move : moves) {
-            if (move instanceof AttackMove && ((AttackMove) move).getAttackedPosition().equals(position)) return true;
-        }
-
-        return false;
+        List<Move> moves = calculatePotentialMoves(board);
+        return moves.stream().anyMatch(move -> move instanceof AttackMove && ((AttackMove) move).isAttackedPosition(position));
     }
 
     /**
@@ -121,10 +109,17 @@ public abstract class ChessPiece {
      * @param board the current configuration of the board
      * @return a list of Move class objects, which are actually possible
      */
-
     public List<Move> calculateMoves(Board board) {
-        return validateMoves(board, this.calculatePotentialMoves(board));
+        return validateMoves(board, calculatePotentialMoves(board));
     }
 
     public abstract String getPieceLetter();
+
+    public boolean isWhite() {
+        return pieceColor == PieceColor.WHITE;
+    }
+
+    public boolean isBlack() {
+        return pieceColor == PieceColor.BLACK;
+    }
 }

@@ -22,7 +22,7 @@ public class Position {
      * @return If the current position is inside the board or not. (Assumes 8 by 8 board)
      */
     public boolean isInsideBoard() {
-        return (this.row >= 1 && this.row <= 8) && (this.col >= 'a' && this.col <= 'h');
+        return (row >= 1 && row <= 8) && (col >= 'a' && col <= 'h');
     }
 
     public Position(char col, int row) {
