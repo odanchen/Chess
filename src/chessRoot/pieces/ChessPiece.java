@@ -76,7 +76,7 @@ public abstract class ChessPiece {
      * checks if the current piece is different in color from the piece passed through parameters
      *
      * @param piece the piece to compare colors with
-     * @return a boolean value representing whether the colors of the chessRoot.pieces are different
+     * @return a boolean value representing whether the colors of the pieces are different
      */
 
     public boolean notSameColorAs(ChessPiece piece) {

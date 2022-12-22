@@ -11,6 +11,7 @@ import chessRoot.pieces.moves.Move;
 import javax.swing.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.util.Optional;
 
 public class GameFrame extends JFrame {
     private final BoardPanel boardPanel;
@@ -58,16 +59,11 @@ public class GameFrame extends JFrame {
     private void playerWhiteSelectedAPieceEvent(MouseEvent e) {
         Position clickedPosition = getPositionOnTheBoard(e.getX(), e.getY());
 
-        boolean isMatch = false;
-        Move moveToMake = null;
-        for (var move : selectedPiece.calculateMoves(board)) {
-            if (move.getEndPosition().equals(clickedPosition)) {
-                isMatch = true;
-                moveToMake = move;
-            }
-        }
+        Move moveToMake = selectedPiece.calculateMoves(board).stream()
+                                .filter(move -> move.getEndPosition().equals(clickedPosition))
+                                .findFirst().orElse(null);
 
-        if (isMatch) {
+        if (moveToMake != null) {
             board.makeMove(moveToMake);
             piecePanel.repaint();
             gameStatus = GameStates.PLAYER_BLACK_TURN;
@@ -79,16 +75,11 @@ public class GameFrame extends JFrame {
     private void playerBlackSelectedAPieceEvent(MouseEvent e) {
         Position clickedPosition = getPositionOnTheBoard(e.getX(), e.getY());
 
-        boolean isMatch = false;
-        Move moveToMake = null;
-        for (var move : selectedPiece.calculateMoves(board)) {
-            if (move.getEndPosition().equals(clickedPosition)) {
-                isMatch = true;
-                moveToMake = move;
-            }
-        }
+        Move moveToMake = selectedPiece.calculateMoves(board).stream()
+                .filter(move -> move.getEndPosition().equals(clickedPosition))
+                .findFirst().orElse(null);
 
-        if (isMatch) {
+        if (moveToMake != null) {
             board.makeMove(moveToMake);
             piecePanel.repaint();
             gameStatus = GameStates.PLAYER_WHITE_TURN;
