@@ -1,5 +1,7 @@
 package chessRoot.user_interface.frames.game_frame;
 
+import chessRoot.assets.board_colors.BoardColors;
+import chessRoot.assets.board_colors.ColorSet;
 import chessRoot.logic.Board;
 import chessRoot.user_interface.game_flow.GameControl;
 import chessRoot.user_interface.game_flow.GameStates;
@@ -36,9 +38,13 @@ public class GameFrame extends JFrame {
         this.piecePanel = new PiecePanel(boardSize, board);
         this.indicPanel = new IndicationPanel(boardSize, board, colorSet);
 
+        this.add(indicPanel);
         this.add(piecePanel);
         this.add(boardPanel);
-        this.add(indicPanel);
+
+        indicPanel.setSize(boardSize, boardSize);
+        indicPanel.setOpaque(false);
+
         this.createMouseListener();
 
         this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
