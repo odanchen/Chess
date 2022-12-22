@@ -2,9 +2,10 @@ package chessRoot.assets.board_colors;
 
 import java.awt.*;
 
-public class ColorPair {
+public class ColorSet {
     private final Color whiteCell;
     private final Color blackCell;
+    private final Color cellSelection;
 
     public Color getWhiteCell() {
         return whiteCell;
@@ -13,11 +14,16 @@ public class ColorPair {
     public Color getBlackCell() {
         return blackCell;
     }
+    public Color getCellSelection() {
+        return cellSelection;
+    }
 
 
 
-    ColorPair(Color whiteCell, Color blackCell) {
+
+    ColorSet(Color whiteCell, Color blackCell, Color whiteCellSelection) {
         this.whiteCell = whiteCell;
         this.blackCell = blackCell;
+        this.cellSelection = whiteCellSelection;
     }
 }

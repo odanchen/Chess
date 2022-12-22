@@ -3,6 +3,8 @@ package chessRoot.game_frame;
 import chessRoot.Board;
 import chessRoot.GameControl;
 import chessRoot.GameStates;
+import chessRoot.assets.board_colors.BoardColors;
+import chessRoot.assets.board_colors.ColorSet;
 import chessRoot.pieces.ChessPiece;
 import chessRoot.pieces.PieceColor;
 import chessRoot.pieces.Position;
@@ -20,6 +22,7 @@ public class GameFrame extends JFrame {
 
     private final Board board;
     private int boardSize = 512;
+    private ColorSet colorSet = BoardColors.OPTION1;
     private GameControl gameControl;
     private GameStates gameStatus;
     private ChessPiece selectedPiece = null;
@@ -31,12 +34,13 @@ public class GameFrame extends JFrame {
         this.gameControl = gameControl;
         this.gameStatus = gameControl.getGameStatus();
         this.board = board;
-        this.boardPanel = new BoardPanel(boardSize);
+        this.boardPanel = new BoardPanel(boardSize, colorSet);
         this.piecePanel = new PiecePanel(boardSize, board);
-        this.indicPanel = new IndicationPanel(boardSize, board);
+        this.indicPanel = new IndicationPanel(boardSize, board, colorSet);
 
         this.add(piecePanel);
         this.add(boardPanel);
+        this.add(indicPanel);
         this.createMouseListener();
 
         this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
@@ -48,6 +52,7 @@ public class GameFrame extends JFrame {
         if (clickedPiece != null && clickedPiece.getPieceColor() == PieceColor.WHITE) {
             gameStatus = GameStates.PLAYER_WHITE_SELECTED_PIECE;
             selectedPiece = clickedPiece;
+            indicPanel.updateSelectedPiece(clickedPiece);
         }
     }
 
@@ -56,6 +61,7 @@ public class GameFrame extends JFrame {
         if (clickedPiece != null && clickedPiece.getPieceColor() == PieceColor.BLACK) {
             gameStatus = GameStates.PLAYER_BLACK_SELECTED_PIECE;
             selectedPiece = clickedPiece;
+            indicPanel.updateSelectedPiece(clickedPiece);
         }
     }
 
@@ -68,10 +74,11 @@ public class GameFrame extends JFrame {
 
         if (moveToMake != null) {
             board.makeMove(moveToMake);
-            piecePanel.repaint();
+            //piecePanel.repaint();
             gameStatus = GameStates.PLAYER_BLACK_TURN;
         } else gameStatus = GameStates.PLAYER_WHITE_TURN;
 
+        indicPanel.removeAll(); piecePanel.repaint();
         selectedPiece = null;
     }
 
@@ -84,10 +91,11 @@ public class GameFrame extends JFrame {
 
         if (moveToMake != null) {
             board.makeMove(moveToMake);
-            piecePanel.repaint();
+            //piecePanel.repaint();
             gameStatus = GameStates.PLAYER_WHITE_TURN;
         } else gameStatus = GameStates.PLAYER_BLACK_TURN;
 
+        indicPanel.removeAll(); piecePanel.repaint();
         selectedPiece = null;
     }
 
