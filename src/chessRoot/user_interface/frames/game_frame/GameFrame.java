@@ -1,17 +1,16 @@
-package chessRoot.game_frame;
+package chessRoot.user_interface.frames.game_frame;
 
-import chessRoot.Board;
-import chessRoot.GameControl;
-import chessRoot.GameStates;
-import chessRoot.pieces.ChessPiece;
-import chessRoot.pieces.PieceColor;
-import chessRoot.pieces.Position;
-import chessRoot.pieces.moves.Move;
+import chessRoot.logic.Board;
+import chessRoot.user_interface.game_flow.GameControl;
+import chessRoot.user_interface.game_flow.GameStates;
+import chessRoot.logic.pieces.ChessPiece;
+import chessRoot.logic.pieces.PieceColor;
+import chessRoot.logic.pieces.Position;
+import chessRoot.logic.moves.Move;
 
 import javax.swing.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.util.Optional;
 
 public class GameFrame extends JFrame {
     private final BoardPanel boardPanel;

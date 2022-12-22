@@ -1,6 +1,7 @@
-package chessRoot;
+package chessRoot.user_interface.game_flow;
 
-import chessRoot.pieces.ChessPiece;
+import chessRoot.logic.Board;
+import chessRoot.logic.pieces.ChessPiece;
 
 public class GameStatus {
     ChessPiece selectedPiece;

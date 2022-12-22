@@ -1,8 +1,9 @@
-package chessRoot;
+package chessRoot.user_interface.game_flow;
 
-import chessRoot.game_frame.GameFrame;
-import chessRoot.pieces.PieceColor;
-import chessRoot.pieces.moves.Move;
+import chessRoot.user_interface.frames.game_frame.GameFrame;
+import chessRoot.logic.Board;
+import chessRoot.logic.pieces.PieceColor;
+import chessRoot.logic.moves.Move;
 
 import java.util.List;
 

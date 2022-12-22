@@ -1,9 +1,9 @@
-package chessRoot.pieces.moves;
+package chessRoot.logic.moves;
 
-import chessRoot.pieces.Position;
+import chessRoot.logic.pieces.Position;
 
 /**
- * If the pawn has reached the last tile. While not attacking any chessRoot.pieces.
+ * If the pawn has reached the last tile. While not attacking any chessRoot.logic.pieces.
  */
 public class PromotionMove extends Move {
     public PromotionMove(Position startPosition, Position endPosition) {

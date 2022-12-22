@@ -1,6 +1,6 @@
-package chessRoot;
-
-import chessRoot.pieces.PieceColor;
+import chessRoot.logic.Board;
+import chessRoot.logic.pieces.PieceColor;
+import chessRoot.user_interface.game_flow.GameControl;
 
 public class Main {
     public static void main(String[] args) {

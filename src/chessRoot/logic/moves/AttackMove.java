@@ -1,6 +1,6 @@
-package chessRoot.pieces.moves;
+package chessRoot.logic.moves;
 
-import chessRoot.pieces.Position;
+import chessRoot.logic.pieces.Position;
 
 /**
  * A type of move where the enemy piece is being taken. Includes an attacked position.

@@ -1,8 +1,8 @@
-package chessRoot.game_frame;
+package chessRoot.user_interface.frames.game_frame;
 
-import chessRoot.Board;
-import chessRoot.pieces.ChessPiece;
-import chessRoot.pieces.PieceColor;
+import chessRoot.logic.Board;
+import chessRoot.logic.pieces.ChessPiece;
+import chessRoot.logic.pieces.PieceColor;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;

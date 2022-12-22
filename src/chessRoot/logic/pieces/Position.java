@@ -1,4 +1,4 @@
-package chessRoot.pieces;
+package chessRoot.logic.pieces;
 
 public class Position {
     private final int row;

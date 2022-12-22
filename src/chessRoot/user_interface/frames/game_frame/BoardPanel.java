@@ -1,4 +1,4 @@
-package chessRoot.game_frame;
+package chessRoot.user_interface.frames.game_frame;
 
 import chessRoot.assets.board_colors.BoardColors;
 import chessRoot.assets.board_colors.ColorPair;
