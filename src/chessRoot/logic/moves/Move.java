@@ -1,6 +1,6 @@
-package chessRoot.pieces.moves;
+package chessRoot.logic.moves;
 
-import chessRoot.pieces.Position;
+import chessRoot.logic.pieces.Position;
 
 /**
  * Abstract move class. Includes a starting position and ending position.

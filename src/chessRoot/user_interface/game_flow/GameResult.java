@@ -1,4 +1,4 @@
-package chessRoot;
+package chessRoot.user_interface.game_flow;
 
 public enum GameResult {
     PLAYER_WHITE_WON_BY_CHECKMATE,

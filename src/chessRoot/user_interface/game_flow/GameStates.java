@@ -1,4 +1,4 @@
-package chessRoot;
+package chessRoot.user_interface.game_flow;
 
 public enum GameStates {
     PLAYER_WHITE_TURN,

@@ -1,6 +1,6 @@
-package chessRoot.pieces.moves;
+package chessRoot.logic.moves;
 
-import chessRoot.pieces.Position;
+import chessRoot.logic.pieces.Position;
 
 /**
  * A standard piece where a chess piece is moving from one place to another.

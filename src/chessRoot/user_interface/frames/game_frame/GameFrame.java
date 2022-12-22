@@ -1,14 +1,12 @@
-package chessRoot.game_frame;
+package chessRoot.user_interface.frames.game_frame;
 
-import chessRoot.Board;
-import chessRoot.GameControl;
-import chessRoot.GameStates;
-import chessRoot.assets.board_colors.BoardColors;
-import chessRoot.assets.board_colors.ColorSet;
-import chessRoot.pieces.ChessPiece;
-import chessRoot.pieces.PieceColor;
-import chessRoot.pieces.Position;
-import chessRoot.pieces.moves.Move;
+import chessRoot.logic.Board;
+import chessRoot.user_interface.game_flow.GameControl;
+import chessRoot.user_interface.game_flow.GameStates;
+import chessRoot.logic.pieces.ChessPiece;
+import chessRoot.logic.pieces.PieceColor;
+import chessRoot.logic.pieces.Position;
+import chessRoot.logic.moves.Move;
 
 import javax.swing.*;
 import java.awt.event.MouseEvent;
@@ -69,12 +67,15 @@ public class GameFrame extends JFrame {
         Position clickedPosition = getPositionOnTheBoard(e.getX(), e.getY());
 
         Move moveToMake = selectedPiece.calculateMoves(board).stream()
-                                .filter(move -> move.getEndPosition().equals(clickedPosition))
-                                .findFirst().orElse(null);
+                .filter(move -> move.getEndPosition().equals(clickedPosition))
+                .findFirst().orElse(null);
 
         if (moveToMake != null) {
             board.makeMove(moveToMake);
-            //piecePanel.repaint();
+            piecePanel.repaint();
+            if(board.isMate(PieceColor.BLACK)){
+                System.out.println("black you lose bitch");
+            }
             gameStatus = GameStates.PLAYER_BLACK_TURN;
         } else gameStatus = GameStates.PLAYER_WHITE_TURN;
 
@@ -91,7 +92,10 @@ public class GameFrame extends JFrame {
 
         if (moveToMake != null) {
             board.makeMove(moveToMake);
-            //piecePanel.repaint();
+            piecePanel.repaint();
+            if(board.isMate(PieceColor.WHITE)){
+                System.out.println("white you lose bitch");
+            }
             gameStatus = GameStates.PLAYER_WHITE_TURN;
         } else gameStatus = GameStates.PLAYER_BLACK_TURN;
 

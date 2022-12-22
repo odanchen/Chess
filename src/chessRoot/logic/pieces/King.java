@@ -1,14 +1,15 @@
-package chessRoot.pieces;
+package chessRoot.logic.pieces;
 
-import chessRoot.Board;
-import chessRoot.pieces.moves.AttackMove;
-import chessRoot.pieces.moves.Move;
-import chessRoot.pieces.moves.RelocationMove;
+import chessRoot.logic.Board;
+import chessRoot.logic.moves.AttackMove;
+import chessRoot.logic.moves.Move;
+import chessRoot.logic.moves.RelocationMove;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class Knight extends ChessPiece {
+public class King extends ChessPiece {
+    private boolean hasMoved;
 
     // Used by calculateMoves to make sure piece is not taking its own color, and it is inside the board.
     private boolean canMoveTo(Position endPosition, Board board) {
@@ -26,44 +27,59 @@ public class Knight extends ChessPiece {
         List<Move> moves = new ArrayList<>();
         Position endPosition;
 
-        endPosition = new Position(this.getPosition(), 2, 1);
+        endPosition = new Position(this.getPosition(), 1, 0);
         if (canMoveTo(endPosition, board)) moves.add(newMove(this.getPosition(), endPosition, board));
-        endPosition = new Position(this.getPosition(), 2, -1);
-        if (canMoveTo(endPosition, board)) moves.add(newMove(this.getPosition(), endPosition, board));
-
-        endPosition = new Position(this.getPosition(), -2, 1);
-        if (canMoveTo(endPosition, board)) moves.add(newMove(this.getPosition(), endPosition, board));
-        endPosition = new Position(this.getPosition(), -2, -1);
+        endPosition = new Position(this.getPosition(), 1, 1);
         if (canMoveTo(endPosition, board)) moves.add(newMove(this.getPosition(), endPosition, board));
 
-        endPosition = new Position(this.getPosition(), 1, 2);
+        endPosition = new Position(this.getPosition(), 1, -1);
         if (canMoveTo(endPosition, board)) moves.add(newMove(this.getPosition(), endPosition, board));
-        endPosition = new Position(this.getPosition(), -1, 2);
+        endPosition = new Position(this.getPosition(), -1, 0);
         if (canMoveTo(endPosition, board)) moves.add(newMove(this.getPosition(), endPosition, board));
 
-        endPosition = new Position(this.getPosition(), 1, -2);
+        endPosition = new Position(this.getPosition(), -1, 1);
         if (canMoveTo(endPosition, board)) moves.add(newMove(this.getPosition(), endPosition, board));
-        endPosition = new Position(this.getPosition(), -1, -2);
+        endPosition = new Position(this.getPosition(), -1, -1);
+        if (canMoveTo(endPosition, board)) moves.add(newMove(this.getPosition(), endPosition, board));
+
+        endPosition = new Position(this.getPosition(), 0, 1);
+        if (canMoveTo(endPosition, board)) moves.add(newMove(this.getPosition(), endPosition, board));
+        endPosition = new Position(this.getPosition(), 0, -1);
         if (canMoveTo(endPosition, board)) moves.add(newMove(this.getPosition(), endPosition, board));
 
         return moves;
     }
 
-    public Knight(Position position, PieceColor color) {
-        super(position, color);
+    public boolean getHasMoved() {
+        return this.hasMoved;
     }
 
-    public Knight(Knight knight) {
-        super(Position.copyOf(knight.getPosition()), knight.getPieceColor());
+    public void setHasMoved(boolean hasMoved) {
+        this.hasMoved = hasMoved;
+    }
+
+    public King(Position position, PieceColor color, boolean hasMoved) {
+        super(position, color);
+        this.hasMoved = hasMoved;
+    }
+
+    public King(Position position, PieceColor color) {
+        super(position, color);
+        this.hasMoved = false;
+    }
+
+    public King(King king) {
+        super(Position.copyOf(king.getPosition()), king.getPieceColor());
+        this.hasMoved = king.getHasMoved();
     }
 
     @Override
     public ChessPiece copy() {
-        return new Knight(this);
+        return new King(this);
     }
 
     @Override
     public String getPieceLetter() {
-        return "n";
+        return "k";
     }
 }

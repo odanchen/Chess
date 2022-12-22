@@ -1,4 +1,4 @@
-package chessRoot.pieces;
+package chessRoot.logic.pieces;
 
 public enum PieceColor {
     WHITE,

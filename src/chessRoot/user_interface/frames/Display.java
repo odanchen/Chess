@@ -2,8 +2,8 @@
 package chessRoot;
 
 import chessRoot.game_frame.GameFrame;
-import chessRoot.pieces.PieceColor;
-import chessRoot.pieces.moves.Move;
+import chessRoot.logic.pieces.PieceColor;
+import chessRoot.logic.moves.Move;
 
 import javax.swing.*;
 import java.io.*;

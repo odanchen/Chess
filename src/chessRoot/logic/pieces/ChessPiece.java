@@ -1,8 +1,8 @@
-package chessRoot.pieces;
+package chessRoot.logic.pieces;
 
-import chessRoot.Board;
-import chessRoot.pieces.moves.AttackMove;
-import chessRoot.pieces.moves.Move;
+import chessRoot.logic.Board;
+import chessRoot.logic.moves.AttackMove;
+import chessRoot.logic.moves.Move;
 
 import java.util.ArrayList;
 import java.util.List;
