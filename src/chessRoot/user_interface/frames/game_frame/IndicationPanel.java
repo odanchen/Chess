@@ -1,7 +1,6 @@
 package chessRoot.user_interface.frames.game_frame;
 
 import chessRoot.assets.board_colors.ColorSet;
-import chessRoot.logic.Board;
 import chessRoot.logic.moves.AttackMove;
 import chessRoot.logic.pieces.ChessPiece;
 import chessRoot.user_interface.game_flow.GameControl;
@@ -16,7 +15,6 @@ public class IndicationPanel extends JPanel {
     private final double MOVE_SELECTION_TO_SQUARE_RATIO = 0.35;
     private final double ATTACK_SELECTION_TO_SQUARE_RATIO = 0.85;
     private int boardSize;
-    private Board board;
     private ColorSet colorSet;
     private final GameStatus gameStatus;
     private final GameControl gameControl;
@@ -32,8 +30,8 @@ public class IndicationPanel extends JPanel {
 
     @Override
     public void paint(Graphics g) {
-        if (selectedPiece != null) {
-            for (var move : selectedPiece.calculateMoves(board)) {
+        if (gameStatus.isPieceSelected()) {
+            for (var move : gameStatus.getSelectedPieceMoves()) {
                 int row = Math.abs(move.getEndPosition().getRow() - 8);
                 int col = (int) move.getEndPosition().getCol() - 'a';
                 Graphics2D g2 = (Graphics2D) g;

@@ -37,6 +37,10 @@ public class GameStatus {
         return selectedPiece.calculateMoves(board);
     }
 
+    public boolean isPieceSelected() {
+        return selectedPiece != null;
+    }
+
     public GameStatus(GameStates startingState, Board board) {
         this.selectedPiece = null;
         this.gameState = startingState;

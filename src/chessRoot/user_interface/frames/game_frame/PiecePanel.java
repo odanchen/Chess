@@ -1,6 +1,5 @@
 package chessRoot.user_interface.frames.game_frame;
 
-import chessRoot.logic.Board;
 import chessRoot.logic.pieces.ChessPiece;
 import chessRoot.logic.pieces.PieceColor;
 import chessRoot.user_interface.game_flow.GameControl;
