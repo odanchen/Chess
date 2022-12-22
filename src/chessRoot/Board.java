@@ -40,7 +40,7 @@ public class Board {
     public boolean isMate(PieceColor currentSide) {
         List<ChessPiece> currentPieces = (currentSide == PieceColor.WHITE) ? getWhitePieces() : getBlackPieces();
 
-        return currentPieces.stream().noneMatch(piece -> piece.calculateMoves(this).isEmpty());
+        return currentPieces.stream().allMatch(piece -> piece.calculateMoves(this).isEmpty());
     }
 
     private void makeRelocationMove(Move move) {
@@ -50,7 +50,7 @@ public class Board {
 
         if (this.getPieceAt(move.getEndPosition()) instanceof King) {
             ((King) this.getPieceAt(move.getEndPosition())).setHasMoved(true);
-            
+
             if (this.getPieceAt(move.getEndPosition()).getPieceColor() == WHITE)
                 this.setWhiteKingPosition(move.getEndPosition());
             else this.setBlackKingPosition(move.getEndPosition());

@@ -22,6 +22,7 @@ public class GameFrame extends JFrame {
     private GameStates gameStatus;
     private ChessPiece selectedPiece = null;
 
+
     public GameFrame(Board board, GameControl gameControl) {
         this.setUndecorated(true);
 
@@ -57,15 +58,19 @@ public class GameFrame extends JFrame {
     }
 
     private void playerWhiteSelectedAPieceEvent(MouseEvent e) {
+
         Position clickedPosition = getPositionOnTheBoard(e.getX(), e.getY());
 
         Move moveToMake = selectedPiece.calculateMoves(board).stream()
-                                .filter(move -> move.getEndPosition().equals(clickedPosition))
-                                .findFirst().orElse(null);
+                .filter(move -> move.getEndPosition().equals(clickedPosition))
+                .findFirst().orElse(null);
 
         if (moveToMake != null) {
             board.makeMove(moveToMake);
             piecePanel.repaint();
+            if(board.isMate(PieceColor.BLACK)){
+                System.out.println("black you lose bitch");
+            }
             gameStatus = GameStates.PLAYER_BLACK_TURN;
         } else gameStatus = GameStates.PLAYER_WHITE_TURN;
 
@@ -82,6 +87,9 @@ public class GameFrame extends JFrame {
         if (moveToMake != null) {
             board.makeMove(moveToMake);
             piecePanel.repaint();
+            if(board.isMate(PieceColor.WHITE)){
+                System.out.println("white you lose bitch");
+            }
             gameStatus = GameStates.PLAYER_WHITE_TURN;
         } else gameStatus = GameStates.PLAYER_BLACK_TURN;
 
