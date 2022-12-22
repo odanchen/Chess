@@ -16,6 +16,8 @@ import java.util.Optional;
 public class GameFrame extends JFrame {
     private final BoardPanel boardPanel;
     private final PiecePanel piecePanel;
+    private final IndicationPanel indicPanel;
+
     private final Board board;
     private int boardSize = 512;
     private GameControl gameControl;
@@ -31,6 +33,7 @@ public class GameFrame extends JFrame {
         this.board = board;
         this.boardPanel = new BoardPanel(boardSize);
         this.piecePanel = new PiecePanel(boardSize, board);
+        this.indicPanel = new IndicationPanel(boardSize, board);
 
         this.add(piecePanel);
         this.add(boardPanel);
