@@ -1,6 +1,10 @@
 package chessRoot.game_frame;
 
 import chessRoot.Board;
+import chessRoot.GameControl;
+import chessRoot.GameStates;
+import chessRoot.pieces.ChessPiece;
+import chessRoot.pieces.PieceColor;
 import chessRoot.pieces.Position;
 import chessRoot.pieces.moves.Move;
 
@@ -12,25 +16,95 @@ public class GameFrame extends JFrame {
     private final BoardPanel boardPanel;
     private final PiecePanel piecePanel;
     private final Board board;
-    private int boardSize;
-    private Move ans = null;
+    private int boardSize = 512;
+    private GameControl gameControl;
+    private GameStates gameStatus;
+    private ChessPiece selectedPiece = null;
 
-    public GameFrame(int x, int y, int boardSize, Board board) {
-        this.setBounds(x, y, boardSize, boardSize);
+    public GameFrame(Board board, GameControl gameControl) {
         this.setUndecorated(true);
 
+        this.setBounds(0, 0, boardSize, boardSize);
+        this.gameControl = gameControl;
+        this.gameStatus = gameControl.getGameStatus();
         this.board = board;
-        this.boardSize = boardSize;
         this.boardPanel = new BoardPanel(boardSize);
         this.piecePanel = new PiecePanel(boardSize, board);
 
         this.add(piecePanel);
         this.add(boardPanel);
         this.createMouseListener();
+
+        this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        this.setVisible(true);
     }
 
-    private void createMouseListener()
-    {
+    private void playerWhiteTurnEvent(MouseEvent e) {
+        ChessPiece clickedPiece = board.getPieceAt(getPositionOnTheBoard(e.getX(), e.getY()));
+        if (clickedPiece != null && clickedPiece.getPieceColor() == PieceColor.WHITE) {
+            gameStatus = GameStates.PLAYER_WHITE_SELECTED_PIECE;
+            selectedPiece = clickedPiece;
+        }
+    }
+
+    private void playerBlackTurnEvent(MouseEvent e) {
+        ChessPiece clickedPiece = board.getPieceAt(getPositionOnTheBoard(e.getX(), e.getY()));
+        if (clickedPiece != null && clickedPiece.getPieceColor() == PieceColor.BLACK) {
+            gameStatus = GameStates.PLAYER_BLACK_SELECTED_PIECE;
+            selectedPiece = clickedPiece;
+        }
+    }
+
+    private void playerWhiteSelectedAPieceEvent(MouseEvent e) {
+        Position clickedPosition = getPositionOnTheBoard(e.getX(), e.getY());
+
+        boolean isMatch = false;
+        Move moveToMake = null;
+        for (var move : selectedPiece.calculateMoves(board)) {
+            if (move.getEndPosition().equals(clickedPosition)) {
+                isMatch = true;
+                moveToMake = move;
+            }
+        }
+
+        if (isMatch) {
+            board.makeMove(moveToMake);
+            piecePanel.repaint();
+            gameStatus = GameStates.PLAYER_BLACK_TURN;
+        } else gameStatus = GameStates.PLAYER_WHITE_TURN;
+
+        selectedPiece = null;
+    }
+
+    private void playerBlackSelectedAPieceEvent(MouseEvent e) {
+        Position clickedPosition = getPositionOnTheBoard(e.getX(), e.getY());
+
+        boolean isMatch = false;
+        Move moveToMake = null;
+        for (var move : selectedPiece.calculateMoves(board)) {
+            if (move.getEndPosition().equals(clickedPosition)) {
+                isMatch = true;
+                moveToMake = move;
+            }
+        }
+
+        if (isMatch) {
+            board.makeMove(moveToMake);
+            piecePanel.repaint();
+            gameStatus = GameStates.PLAYER_WHITE_TURN;
+        } else gameStatus = GameStates.PLAYER_BLACK_TURN;
+
+        selectedPiece = null;
+    }
+
+    private void onMousePress(MouseEvent e) {
+        if (gameStatus == GameStates.PLAYER_WHITE_TURN) playerWhiteTurnEvent(e);
+        else if (gameStatus == GameStates.PLAYER_BLACK_TURN) playerBlackTurnEvent(e);
+        else if (gameStatus == GameStates.PLAYER_BLACK_SELECTED_PIECE) playerBlackSelectedAPieceEvent(e);
+        else if (gameStatus == GameStates.PLAYER_WHITE_SELECTED_PIECE) playerWhiteSelectedAPieceEvent(e);
+    }
+
+    private void createMouseListener() {
         this.addMouseListener(new MouseListener() {
             @Override
             public void mouseClicked(MouseEvent e) {
@@ -38,6 +112,7 @@ public class GameFrame extends JFrame {
 
             @Override
             public void mousePressed(MouseEvent e) {
+                onMousePress(e);
             }
 
             @Override
@@ -69,11 +144,4 @@ public class GameFrame extends JFrame {
 
         return new Position((char) (col + 'a'), (8 - row));
     }
-
-    //public Move listenUserMove(PieceColor currentSide) throws IOException {
-        //ans = null;
-
-
-      //  return ans;
-    //}
 }

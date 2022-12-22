@@ -1,3 +1,4 @@
+/*
 package chessRoot;
 
 import chessRoot.game_frame.GameFrame;
@@ -77,6 +78,7 @@ public class Display {
 
     }
 */
+/*
     public void updatePieces() {
         gameFrame.updatePieces();
     }
@@ -100,6 +102,6 @@ public class Display {
     }
 }
 
-
+*/
 
 
