@@ -1,6 +1,5 @@
 package chessRoot;
 
-import chessRoot.board_package.Board;
 import chessRoot.pieces.PieceColor;
 
 import java.io.IOException;

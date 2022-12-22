@@ -1,6 +1,6 @@
 package chessRoot.pieces;
 
-import chessRoot.board_package.Board;
+import chessRoot.Board;
 import chessRoot.pieces.moves.AttackMove;
 import chessRoot.pieces.moves.Move;
 

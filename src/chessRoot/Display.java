@@ -1,6 +1,5 @@
 package chessRoot;
 
-import chessRoot.board_package.Board;
 import chessRoot.game_frame.GameFrame;
 import chessRoot.pieces.PieceColor;
 import chessRoot.pieces.moves.Move;
@@ -86,9 +85,9 @@ public class Display {
         return this.boardSideSize / 8;
     }
 
-    public Move pickTheMove(PieceColor movingSide) throws IOException {
-        return gameFrame.listenUserMove(movingSide);
-    }
+    //public Move pickTheMove(PieceColor movingSide) throws IOException {
+      //  return gameFrame.listenUserMove(movingSide);
+    //}
 
     public Display(Board board) {
         this.board = board;

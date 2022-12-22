@@ -1,6 +1,5 @@
 package chessRoot;
 
-import chessRoot.board_package.Board;
 import chessRoot.pieces.PieceColor;
 import chessRoot.pieces.moves.Move;
 
@@ -49,7 +48,7 @@ public class GameControl {
         this.setBoard(board);
 
         while (!this.board.isMate(this.movingSide)) {
-            performMove(display.pickTheMove(this.movingSide));
+            //performMove(display.pickTheMove(this.movingSide));
             this.swapPlayer();
         }
 
