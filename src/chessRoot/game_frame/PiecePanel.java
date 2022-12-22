@@ -27,7 +27,7 @@ public class PiecePanel extends JPanel {
     }
 
     private int getPieceCoordinate(int idx) {
-        return (int) ((getSquareSize() * idx) + (getSquareSize()-getPieceSize())/2);
+        return (getSquareSize() * idx) + (getSquareSize()-getPieceSize())/2;
     }
 
     private static BufferedImage toBufferedImage(Image img) {
@@ -68,7 +68,7 @@ public class PiecePanel extends JPanel {
             int row = Math.abs(piece.getPosition().getRow() - 8);
             int col = (int) piece.getPosition().getCol() - 'a';
 
-            BufferedImage image = null;
+            BufferedImage image;
 
             image = getTextureOfPiece(piece);
 

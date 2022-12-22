@@ -28,7 +28,6 @@ public class Board {
     public boolean isCheck(PieceColor color) {
         Position kingPosition = (color == PieceColor.WHITE) ? this.getWhiteKingPosition() : this.getBlackKingPosition();
         List<ChessPiece> pieces = (color == PieceColor.WHITE) ? this.getBlackPieces() : this.getWhitePieces();
-
         return pieces.stream().anyMatch(piece -> piece.attacks(kingPosition, this));
     }
 
@@ -51,6 +50,10 @@ public class Board {
 
         if (this.getPieceAt(move.getEndPosition()) instanceof King) {
             ((King) this.getPieceAt(move.getEndPosition())).setHasMoved(true);
+            
+            if (this.getPieceAt(move.getEndPosition()).getPieceColor() == WHITE)
+                this.setWhiteKingPosition(move.getEndPosition());
+            else this.setBlackKingPosition(move.getEndPosition());
         }
         if (this.getPieceAt(move.getEndPosition()) instanceof Castle) {
             ((Castle) this.getPieceAt(move.getEndPosition())).setHasMoved(true);
