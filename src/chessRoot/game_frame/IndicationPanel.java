@@ -1,2 +1,6 @@
-package chessRoot.game_frame;public class IndicationPanel {
+package chessRoot.game_frame;
+
+import javax.swing.*;
+
+public class IndicationPanel extends JFrame {
 }
