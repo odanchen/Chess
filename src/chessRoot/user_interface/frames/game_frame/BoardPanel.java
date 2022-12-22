@@ -1,14 +1,15 @@
 package chessRoot.user_interface.frames.game_frame;
 
 import chessRoot.assets.board_colors.BoardColors;
-import chessRoot.assets.board_colors.ColorPair;
+import chessRoot.assets.board_colors.ColorSet;
 
 import javax.swing.*;
 import java.awt.*;
 
 public class BoardPanel extends JPanel {
-    private ColorPair boardColors = BoardColors.OPTION1;
     private int boardSize;
+    private ColorSet boardColors;
+
 
     private int squareSize() {
         return boardSize / 8;
@@ -27,9 +28,10 @@ public class BoardPanel extends JPanel {
         }
     }
 
-    BoardPanel(int boardSideSize) {
+    BoardPanel(int boardSideSize, ColorSet colorSet) {
         this.setSize(boardSideSize, boardSideSize);
         this.setOpaque(true);
         this.boardSize = boardSideSize;
+        this.boardColors = colorSet;
     }
 }

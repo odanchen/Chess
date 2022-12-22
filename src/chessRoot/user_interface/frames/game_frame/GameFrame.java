@@ -1,5 +1,7 @@
 package chessRoot.user_interface.frames.game_frame;
 
+import chessRoot.assets.board_colors.BoardColors;
+import chessRoot.assets.board_colors.ColorSet;
 import chessRoot.logic.Board;
 import chessRoot.user_interface.game_flow.GameControl;
 import chessRoot.user_interface.game_flow.GameStates;
@@ -11,16 +13,19 @@ import chessRoot.logic.moves.Move;
 import javax.swing.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.util.Optional;
 
 public class GameFrame extends JFrame {
     private final BoardPanel boardPanel;
     private final PiecePanel piecePanel;
+    private final IndicationPanel indicPanel;
+
     private final Board board;
     private int boardSize = 512;
+    private ColorSet colorSet = BoardColors.OPTION1;
     private GameControl gameControl;
     private GameStates gameStatus;
     private ChessPiece selectedPiece = null;
-
 
     public GameFrame(Board board, GameControl gameControl) {
         this.setUndecorated(true);
@@ -29,11 +34,17 @@ public class GameFrame extends JFrame {
         this.gameControl = gameControl;
         this.gameStatus = gameControl.getGameStatus();
         this.board = board;
-        this.boardPanel = new BoardPanel(boardSize);
+        this.boardPanel = new BoardPanel(boardSize, colorSet);
         this.piecePanel = new PiecePanel(boardSize, board);
+        this.indicPanel = new IndicationPanel(boardSize, board, colorSet);
 
+        this.add(indicPanel);
         this.add(piecePanel);
         this.add(boardPanel);
+
+        indicPanel.setSize(boardSize, boardSize);
+        indicPanel.setOpaque(false);
+
         this.createMouseListener();
 
         this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
@@ -45,6 +56,7 @@ public class GameFrame extends JFrame {
         if (clickedPiece != null && clickedPiece.getPieceColor() == PieceColor.WHITE) {
             gameStatus = GameStates.PLAYER_WHITE_SELECTED_PIECE;
             selectedPiece = clickedPiece;
+            indicPanel.updateSelectedPiece(clickedPiece);
         }
     }
 
@@ -53,11 +65,11 @@ public class GameFrame extends JFrame {
         if (clickedPiece != null && clickedPiece.getPieceColor() == PieceColor.BLACK) {
             gameStatus = GameStates.PLAYER_BLACK_SELECTED_PIECE;
             selectedPiece = clickedPiece;
+            indicPanel.updateSelectedPiece(clickedPiece);
         }
     }
 
     private void playerWhiteSelectedAPieceEvent(MouseEvent e) {
-
         Position clickedPosition = getPositionOnTheBoard(e.getX(), e.getY());
 
         Move moveToMake = selectedPiece.calculateMoves(board).stream()
@@ -73,6 +85,7 @@ public class GameFrame extends JFrame {
             gameStatus = GameStates.PLAYER_BLACK_TURN;
         } else gameStatus = GameStates.PLAYER_WHITE_TURN;
 
+        indicPanel.removeAll(); piecePanel.repaint();
         selectedPiece = null;
     }
 
@@ -92,6 +105,7 @@ public class GameFrame extends JFrame {
             gameStatus = GameStates.PLAYER_WHITE_TURN;
         } else gameStatus = GameStates.PLAYER_BLACK_TURN;
 
+        indicPanel.removeAll(); piecePanel.repaint();
         selectedPiece = null;
     }
 
