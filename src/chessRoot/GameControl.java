@@ -4,7 +4,6 @@ import chessRoot.game_frame.GameFrame;
 import chessRoot.pieces.PieceColor;
 import chessRoot.pieces.moves.Move;
 
-import java.io.IOException;
 import java.util.List;
 
 public class GameControl {

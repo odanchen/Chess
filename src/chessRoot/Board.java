@@ -29,11 +29,7 @@ public class Board {
         Position kingPosition = (color == PieceColor.WHITE) ? this.getWhiteKingPosition() : this.getBlackKingPosition();
         List<ChessPiece> pieces = (color == PieceColor.WHITE) ? this.getBlackPieces() : this.getWhitePieces();
 
-        for (ChessPiece piece : pieces) {
-            if (piece.attacks(kingPosition, this)) return true;
-        }
-
-        return false;
+        return pieces.stream().anyMatch(piece -> piece.attacks(kingPosition, this));
     }
 
     /**
@@ -43,10 +39,9 @@ public class Board {
      * @return returns a boolean value of whether a current side could not perform any moves
      */
     public boolean isMate(PieceColor currentSide) {
-        List<ChessPiece> currentPieces = (currentSide == PieceColor.WHITE) ? this.getWhitePieces() : this.getBlackPieces();
+        List<ChessPiece> currentPieces = (currentSide == PieceColor.WHITE) ? getWhitePieces() : getBlackPieces();
 
-        for (ChessPiece piece : currentPieces) if (!piece.calculateMoves(this).isEmpty()) return false;
-        return true;
+        return currentPieces.stream().noneMatch(piece -> piece.calculateMoves(this).isEmpty());
     }
 
     private void makeRelocationMove(Move move) {
@@ -100,19 +95,7 @@ public class Board {
     }
 
     /**
-     * @param letter The corresponding chess position for columns. (a,b,c...h)
-     * @param digit  The corresponding chess position for rows. (1,2,3...8)
-     * @return The piece at the specified position.
-     */
-    public ChessPiece getPieceAt(char letter, int digit) {
-        int matrixRow = Math.abs(digit - BOARD_SIZE);
-        int matrixCol = (int) letter - 'a';
-        return configuration[matrixRow][matrixCol];
-    }
-
-    /**
      * @param position Position on the board.
-     * @return The piece at the specified position.
      */
     public void setPieceAt(Position position, ChessPiece piece) {
         int matrixRow = Math.abs(position.getRow() - BOARD_SIZE);
@@ -121,18 +104,8 @@ public class Board {
     }
 
     /**
-     * @param letter The corresponding chess position for columns. (a,b,c...h)
-     * @param digit  The corresponding chess position for rows. (1,2,3...8)
-     * @return The piece at the specified position.
-     */
-    public void setPieceAt(char letter, int digit, ChessPiece piece) {
-        int matrixRow = Math.abs(digit - BOARD_SIZE);
-        int matrixCol = (int) letter - 'a';
-        this.configuration[matrixRow][matrixCol] = piece;
-    }
-
-    /**
      * Gets the position of the white king on the board
+     *
      * @return the position of the white king on the board
      */
     public Position getWhiteKingPosition() {
@@ -245,13 +218,15 @@ public class Board {
 
     private static List<ChessPiece> copyPiecesList(List<ChessPiece> originalPieces) {
         List<ChessPiece> copy = new ArrayList<>();
-        for (ChessPiece piece : originalPieces) copy.add(piece.copy());
+
+        originalPieces.forEach(piece -> copy.add(piece.copy()));
 
         return copy;
     }
 
     /**
      * creates the copy of the board passed through the arguments
+     *
      * @param board the instance of the board copied
      */
 
@@ -262,7 +237,6 @@ public class Board {
         this.whitePieces = Board.copyPiecesList(board.getWhitePieces());
 
         this.configuration = new ChessPiece[BOARD_SIZE][BOARD_SIZE];
-        for (ChessPiece piece : this.getBlackPieces()) this.setPieceAt(piece.getPosition(), piece);
-        for (ChessPiece piece : this.getWhitePieces()) this.setPieceAt(piece.getPosition(), piece);
+        this.getAllPieces().forEach(piece -> this.setPieceAt(piece.getPosition(), piece));
     }
 }

@@ -50,11 +50,15 @@ public class PiecePanel extends JPanel {
         return (color + piece.getPieceLetter() + ".png");
     }
 
-    private BufferedImage getTextureOfPiece(ChessPiece piece) throws IOException {
+    private BufferedImage getTextureOfPiece(ChessPiece piece) {
         String root = Paths.get("").toAbsolutePath().toString();
         String[] fullPath = {root, "src", "chessRoot", "assets", "pieces_textures", this.pieceTextureFolder, getImageName(piece)};
 
-        return ImageIO.read(new File(String.join(File.separator, fullPath)));
+        try {
+            return ImageIO.read(new File(String.join(File.separator, fullPath)));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Override
@@ -65,11 +69,9 @@ public class PiecePanel extends JPanel {
             int col = (int) piece.getPosition().getCol() - 'a';
 
             BufferedImage image = null;
-            try {
-                image = getTextureOfPiece(piece);
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
+
+            image = getTextureOfPiece(piece);
+
             image = toBufferedImage(image.getScaledInstance(getPieceSize(), getPieceSize(), Image.SCALE_SMOOTH));
             g.drawImage(image, getPieceCoordinate(col), getPieceCoordinate(row), null);
         }
