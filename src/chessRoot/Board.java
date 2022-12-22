@@ -127,9 +127,9 @@ public class Board {
     }
 
     /**
-     * gets all the white chessRoot.pieces on the board
+     * gets all the white pieces on the board
      *
-     * @return all white chessRoot.pieces present on the board
+     * @return all white pieces present on the board
      */
 
     public List<ChessPiece> getWhitePieces() {
@@ -137,9 +137,9 @@ public class Board {
     }
 
     /**
-     * gets all the black chessRoot.pieces on the board
+     * gets all the black pieces on the board
      *
-     * @return all black chessRoot.pieces present on the board
+     * @return all black pieces present on the board
      */
 
     public List<ChessPiece> getBlackPieces() {
@@ -147,9 +147,9 @@ public class Board {
     }
 
     /**
-     * Gets all the chessRoot.pieces on the board
+     * Gets all the pieces on the board
      *
-     * @return a list of all chessRoot.pieces present on the board
+     * @return a list of all pieces present on the board
      */
 
     public List<ChessPiece> getAllPieces() {
@@ -183,7 +183,7 @@ public class Board {
     }
 
     /**
-     * Fills board object with standard chessRoot.pieces and piece positions.
+     * Fills board object with standard pieces and piece positions.
      */
     public void fillStandardBoard() {
         this.addPiece(new Castle(Position.at("a1"), WHITE));
