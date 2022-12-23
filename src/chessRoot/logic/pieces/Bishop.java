@@ -20,7 +20,7 @@ public class Bishop extends ChessPiece {
             endPosition = new Position(endPosition, colDifference, rowDifference);
         }
 
-        if (endPosition.insideBoard() && this.differentColorFrom(board.getPieceAt(endPosition)))
+        if (endPosition.insideBoard() && differentColorFrom(board.getPieceAt(endPosition)))
             moves.add(new AttackMove(startPosition, endPosition, endPosition));
 
         return moves;
