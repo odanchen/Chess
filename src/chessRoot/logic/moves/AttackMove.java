@@ -13,10 +13,10 @@ public class AttackMove extends Move {
     public ChessPiece getAttackedPiece(Board board) {
         return board.getPieceAt(this.attackedPosition);
     }
+
     public Position getAttackedPosition() {
         return this.attackedPosition;
     }
-
 
     public AttackMove(Position startPosition, Position endPosition, Position attackedPosition) {
         super(startPosition, endPosition);

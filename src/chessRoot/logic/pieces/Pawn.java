@@ -40,14 +40,12 @@ public class Pawn extends ChessPiece {
         endPosition = new Position(getPosition(), -1, direction);
         attackedPosition = new Position(getPosition(),-1, 0);
         if (canAttack(attackedPosition,board) && board.getPieceAt(attackedPosition) instanceof Pawn && ((Pawn) board.getPieceAt(attackedPosition)).getHasMovedTwo()) {
-            System.out.println("End Position: " + endPosition + ". Attacked position: " + attackedPosition);
             moves.add(new AttackMove(getPosition(), endPosition, attackedPosition));
         }
 
         endPosition = new Position(getPosition(), 1, direction);
         attackedPosition = new Position(getPosition(),1, 0);
         if (canAttack(attackedPosition,board) && board.getPieceAt(attackedPosition) instanceof Pawn && ((Pawn) board.getPieceAt(attackedPosition)).getHasMovedTwo()) {
-            System.out.println("End Position: " + endPosition + ". Attacked position: " + attackedPosition);
             moves.add(new AttackMove(getPosition(), endPosition, attackedPosition));
         }
 
@@ -89,6 +87,7 @@ public class Pawn extends ChessPiece {
     public Pawn(Pawn pawn) {
         super(Position.copyOf(pawn.getPosition()), pawn.getPieceColor());
         this.hasMoved = pawn.getHasMoved();
+        this.justMovedTwo = pawn.getHasMovedTwo();
     }
 
     @Override
