@@ -58,19 +58,6 @@ public abstract class ChessPiece {
     abstract public List<Move> calculatePotentialMoves(Board board);
 
     /**
-     * checks if the move is possible to perform with the current configuration of the board
-     *
-     * @param move  the move to be checked
-     * @param board the current configuration of the board
-     * @return a boolean value, representing whether the move is possible
-     */
-    private boolean isMovePossible(Move move, Board board) {
-        Board copyBoard = new Board(board);
-        copyBoard.makeMove(move);
-        return !copyBoard.isCheck(copyBoard.getPieceAt(move.getEndPosition()).getPieceColor());
-    }
-
-    /**
      * checks if the current piece is different in color from the piece passed through parameters
      *
      * @param piece the piece to compare colors with
@@ -87,7 +74,7 @@ public abstract class ChessPiece {
      */
     private List<Move> validateMoves(Board board, List<Move> allMoves) {
         List<Move> moves = new ArrayList<>(allMoves);
-        moves.removeIf(move -> !isMovePossible(move, board));
+        moves.removeIf(move -> !move.isPossible(board));
         return moves;
     }
 

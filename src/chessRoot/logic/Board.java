@@ -1,6 +1,7 @@
 package chessRoot.logic;
 
 import chessRoot.logic.moves.AttackMove;
+import chessRoot.logic.moves.CastlingMove;
 import chessRoot.logic.moves.Move;
 import chessRoot.logic.moves.RelocationMove;
 import chessRoot.logic.pieces.*;
@@ -22,13 +23,17 @@ public class Board {
     public Board() {
     }
 
+    public boolean isUnderAttack(Position position, PieceColor currentSideColor) {
+        List<ChessPiece> pieces = currentSideColor == WHITE ? getBlackPieces() : getWhitePieces();
+        return pieces.stream().anyMatch(piece -> piece.attacks(position, this));
+    }
+
     /**
      * @param color The side which is being checked for checks. (Black or white).
      */
     public boolean isCheck(PieceColor color) {
         Position kingPosition = color == WHITE ? getWhiteKingPosition() : getBlackKingPosition();
-        List<ChessPiece> pieces = color == WHITE ? getBlackPieces() : getWhitePieces();
-        return pieces.stream().anyMatch(piece -> piece.attacks(kingPosition, this));
+        return isUnderAttack(kingPosition, color);
     }
 
     /**
@@ -42,24 +47,33 @@ public class Board {
         return currentPieces.stream().allMatch(piece -> piece.calculateMoves(this).isEmpty());
     }
 
-    private void makeRelocationMove(Move move) {
-        setPieceAt(move.getEndPosition(), move.getPieceAtStart(this));
-        setPieceAt(move.getStartPosition(), null);
-        move.getPieceAtEnd(this).setPosition(move.getEndPosition());
-
-        if (move.getPieceAtEnd(this) instanceof King) {
-            ((King) move.getPieceAtEnd(this)).setHasMoved(true);
-
-            if (move.getPieceAtEnd(this).isWhite())
-                setWhiteKingPosition(move.getEndPosition());
-            else setBlackKingPosition(move.getEndPosition());
-        }
+    private void handleMoveSensitivePieces(Move move) {
         if (move.getPieceAtEnd(this) instanceof Castle) {
             ((Castle) move.getPieceAtEnd(this)).setHasMoved(true);
         }
         if (move.getPieceAtEnd(this) instanceof Pawn) {
             ((Pawn) move.getPieceAtEnd(this)).setHasMoved(true);
         }
+        if (move.getPieceAtEnd(this) instanceof King) {
+            ((King) move.getPieceAtEnd(this)).setHasMoved(true);
+        }
+    }
+
+    private void handleKingMove(Move move) {
+        if (move.getPieceAtEnd(this) instanceof King) {
+            if (move.getPieceAtEnd(this).isWhite())
+                setWhiteKingPosition(move.getEndPosition());
+            else setBlackKingPosition(move.getEndPosition());
+        }
+    }
+
+    private void makeRelocationMove(Move move) {
+        setPieceAt(move.getEndPosition(), move.getPieceAtStart(this));
+        setPieceAt(move.getStartPosition(), null);
+        move.getPieceAtEnd(this).setPosition(move.getEndPosition());
+
+        handleMoveSensitivePieces(move);
+        handleKingMove(move);
     }
 
     private void makeAttackMove(AttackMove move) {
@@ -67,6 +81,19 @@ public class Board {
             blackPieces.remove(move.getAttackedPiece(this));
         } else {
             whitePieces.remove(move.getAttackedPiece(this));
+        }
+        makeRelocationMove(move);
+    }
+
+    private void makeCastlingMove(CastlingMove move) {
+        if (move.getEndPosition().equals(Position.at("g1"))) {
+            makeRelocationMove(new RelocationMove(Position.at("h1"), Position.at("f1")));
+        } else if (move.getEndPosition().equals(Position.at("c1"))) {
+            makeRelocationMove(new RelocationMove(Position.at("a1"), Position.at("d1")));
+        } else if (move.getEndPosition().equals(Position.at("g8"))) {
+            makeRelocationMove(new RelocationMove(Position.at("h8"), Position.at("f8")));
+        } else if (move.getEndPosition().equals(Position.at("c8"))) {
+            makeRelocationMove(new RelocationMove(Position.at("a8"), Position.at("d8")));
         }
         makeRelocationMove(move);
     }
@@ -81,6 +108,8 @@ public class Board {
             makeRelocationMove(move);
         } else if (move instanceof AttackMove) {
             makeAttackMove((AttackMove) move);
+        } else if (move instanceof CastlingMove) {
+            makeCastlingMove((CastlingMove) move);
         }
     }
 

@@ -2,6 +2,7 @@ package chessRoot.logic.pieces;
 
 import chessRoot.logic.Board;
 import chessRoot.logic.moves.AttackMove;
+import chessRoot.logic.moves.CastlingMove;
 import chessRoot.logic.moves.Move;
 import chessRoot.logic.moves.RelocationMove;
 
@@ -46,6 +47,30 @@ public class King extends ChessPiece {
         if (canMoveTo(endPosition, board)) moves.add(newMove(getPosition(), endPosition, board));
         endPosition = new Position(getPosition(), 0, -1);
         if (canMoveTo(endPosition, board)) moves.add(newMove(getPosition(), endPosition, board));
+
+        if (isWhite()) {
+            if (board.isEmptyAt(Position.at("g1")) && board.isEmptyAt(Position.at("f1")) &&
+                    !hasMoved && board.getPieceAt(Position.at("h1")) instanceof Castle &&
+                    !((Castle) board.getPieceAt(Position.at("h1"))).getHasMoved())
+                moves.add(new CastlingMove(getPosition(), Position.at("g1")));
+
+            if (board.isEmptyAt(Position.at("b1")) && board.isEmptyAt(Position.at("c1")) &&
+                    board.isEmptyAt(Position.at("d1")) &&
+                    !hasMoved && board.getPieceAt(Position.at("a1")) instanceof Castle &&
+                    !((Castle) board.getPieceAt(Position.at("a1"))).getHasMoved())
+                moves.add(new CastlingMove(getPosition(), Position.at("c1")));
+        } else if (isBlack()) {
+            if (board.isEmptyAt(Position.at("g8")) && board.isEmptyAt(Position.at("f8")) &&
+                    !hasMoved && board.getPieceAt(Position.at("h8")) instanceof Castle &&
+                    !((Castle) board.getPieceAt(Position.at("h8"))).getHasMoved())
+                moves.add(new CastlingMove(getPosition(), Position.at("g8")));
+
+            if (board.isEmptyAt(Position.at("b8")) && board.isEmptyAt(Position.at("c8")) &&
+                    board.isEmptyAt(Position.at("d8")) &&
+                    !hasMoved && board.getPieceAt(Position.at("a8")) instanceof Castle &&
+                    !((Castle) board.getPieceAt(Position.at("a8"))).getHasMoved())
+                moves.add(new CastlingMove(getPosition(), Position.at("c8")));
+        }
 
         return moves;
     }

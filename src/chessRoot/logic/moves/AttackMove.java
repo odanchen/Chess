@@ -22,4 +22,11 @@ public class AttackMove extends Move {
     public boolean isAttackedPosition(Position position) {
         return attackedPosition.equals(position);
     }
+
+    @Override
+    public boolean isPossible(Board board) {
+        Board copyBoard = new Board(board);
+        copyBoard.makeMove(this);
+        return !copyBoard.isCheck(copyBoard.getPieceAt(this.getEndPosition()).getPieceColor());
+    }
 }
