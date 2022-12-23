@@ -22,7 +22,7 @@ public class Pawn extends ChessPiece {
             moves.add(new RelocationMove(getPosition(), endPosition));
 
             endPosition = new Position(getPosition(), 0, 2 * direction);
-            if (board.isEmptyAt(endPosition) && !hasMoved)
+            if (endPosition.insideBoard() && board.isEmptyAt(endPosition) && !hasMoved)
                 moves.add(new RelocationMove(getPosition(), endPosition));
         }
 
