@@ -26,22 +26,29 @@ public class GameFrame extends JFrame {
     private final GameControl gameControl;
 
     public GameFrame(GameStatus gameStatus, GameControl gameControl) {
-        setUndecorated(true);
-        setBounds(0, 0, boardSize, boardSize);
-
         this.gameStatus = gameStatus;
         this.gameControl = gameControl;
         boardPanel = new BoardPanel(boardSize, colorSet);
         piecePanel = new PiecePanel(boardSize, gameStatus, gameControl);
         indicPanel = new IndicationPanel(boardSize, gameStatus, gameControl, colorSet);
 
-        add(piecePanel);
-        add(indicPanel);
-        add(boardPanel);
+        addBasicParameters();
+    }
 
+    private void addBasicParameters()
+    {
+        setUndecorated(true);
+        setBounds(0, 0, boardSize, boardSize);
+        addPanels();
         createMouseListener();
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         setVisible(true);
+    }
+
+    private void addPanels() {
+        add(piecePanel);
+        add(indicPanel);
+        add(boardPanel);
     }
 
     private void playerWhiteTurnEvent(MouseEvent e) {
