@@ -53,10 +53,20 @@ public class Board {
         }
         if (move.getPieceAtEnd(this) instanceof Pawn) {
             ((Pawn) move.getPieceAtEnd(this)).setHasMoved(true);
+            if (Math.abs(move.getStartPosition().getRow() - move.getEndPosition().getRow()) == 2)
+                ((Pawn) move.getPieceAtEnd(this)).setHasMovedTwo(true);
+            else resetPawnMovedTwo();
         }
         if (move.getPieceAtEnd(this) instanceof King) {
             ((King) move.getPieceAtEnd(this)).setHasMoved(true);
         }
+    }
+
+    private void resetPawnMovedTwo() {
+        for (char x = 'a'; x < 'a' + BOARD_SIZE; x++)
+            for (int y = 1; y <= BOARD_SIZE; y++)
+                if (this.getPieceAt(new Position(x, y)) instanceof Pawn)
+                    ((Pawn) this.getPieceAt(new Position(x, y))).setHasMovedTwo(false);
     }
 
     private void handleKingMove(Move move) {

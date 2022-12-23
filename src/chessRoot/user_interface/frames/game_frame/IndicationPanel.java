@@ -8,7 +8,7 @@ import javax.swing.*;
 import java.awt.*;
 
 public class IndicationPanel extends JPanel {
-    private final double MOVE_SELECTION_TO_SQUARE_RATIO = 0.35;
+    private final double MOVE_SELECTION_TO_SQUARE_RATIO = 0.3;
     private final double ATTACK_SELECTION_TO_SQUARE_RATIO = 0.85;
     private int boardSize;
     private final GameStatus gameStatus;
@@ -33,7 +33,7 @@ public class IndicationPanel extends JPanel {
                 int col = move.getEndPosition().colToIdx();
                 Graphics2D g2 = (Graphics2D) g;
                 g.setColor(gameStatus.getBoardColors().getCellSelection());
-                if (move instanceof AttackMove) {
+                if (move instanceof AttackMove && ((AttackMove) move).getAttackedPosition() == move.getEndPosition()) {
                     g2.setStroke(new BasicStroke(6));
                     g.drawOval(getAttackingCoordinate(col), getAttackingCoordinate(row), getAttackingOvalSize(), getAttackingOvalSize());
                 } else

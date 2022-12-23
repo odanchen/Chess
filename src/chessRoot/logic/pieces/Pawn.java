@@ -10,11 +10,13 @@ import java.util.List;
 
 public class Pawn extends ChessPiece {
     private boolean hasMoved;
+    private boolean justMovedTwo = false;
 
     @Override
     public List<Move> calculatePotentialMoves(Board board) {
         List<Move> moves = new ArrayList<>();
         Position endPosition;
+        Position attackedPosition;
         int direction = (isBlack()) ? -1 : 1;
 
         endPosition = new Position(getPosition(), 0, direction);
@@ -34,6 +36,21 @@ public class Pawn extends ChessPiece {
         if (canAttack(endPosition, board))
             moves.add(new AttackMove(getPosition(), endPosition, endPosition));
 
+        // En Passant
+        endPosition = new Position(getPosition(), -1, direction);
+        attackedPosition = new Position(getPosition(),-1, 0);
+        if (canAttack(attackedPosition,board) && board.getPieceAt(attackedPosition) instanceof Pawn && ((Pawn) board.getPieceAt(attackedPosition)).getHasMovedTwo()) {
+            System.out.println("End Position: " + endPosition + ". Attacked position: " + attackedPosition);
+            moves.add(new AttackMove(getPosition(), endPosition, attackedPosition));
+        }
+
+        endPosition = new Position(getPosition(), 1, direction);
+        attackedPosition = new Position(getPosition(),1, 0);
+        if (canAttack(attackedPosition,board) && board.getPieceAt(attackedPosition) instanceof Pawn && ((Pawn) board.getPieceAt(attackedPosition)).getHasMovedTwo()) {
+            System.out.println("End Position: " + endPosition + ". Attacked position: " + attackedPosition);
+            moves.add(new AttackMove(getPosition(), endPosition, attackedPosition));
+        }
+
         return moves;
     }
 
@@ -50,6 +67,13 @@ public class Pawn extends ChessPiece {
 
     public void setHasMoved(boolean hasMoved) {
         this.hasMoved = hasMoved;
+    }
+    public boolean getHasMovedTwo() {
+        return this.justMovedTwo;
+    }
+
+    public void setHasMovedTwo(boolean justMovedTwo) {
+        this.justMovedTwo = justMovedTwo;
     }
 
     public Pawn(Position position, PieceColor color, boolean hasMoved) {

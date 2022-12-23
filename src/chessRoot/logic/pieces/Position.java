@@ -18,6 +18,8 @@ public class Position {
         return col;
     }
 
+    public String toString() {return col+""+row;}
+
     /**
      * @return If the current position is inside the board or not. (Assumes 8 by 8 board)
      */
