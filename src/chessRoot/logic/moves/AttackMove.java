@@ -16,9 +16,6 @@ public class AttackMove extends Move {
     public Position getAttackedPosition() {
         return this.attackedPosition;
     }
-    public Position getEndPosition() {
-        return this.endPosition;
-    }
 
 
     public AttackMove(Position startPosition, Position endPosition, Position attackedPosition) {
