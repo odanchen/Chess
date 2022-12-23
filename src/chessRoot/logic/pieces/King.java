@@ -48,31 +48,46 @@ public class King extends ChessPiece {
         endPosition = new Position(getPosition(), 0, -1);
         if (canMoveTo(endPosition, board)) moves.add(newMove(getPosition(), endPosition, board));
 
-        if (isWhite()) {
-            if (board.isEmptyAt(Position.at("g1")) && board.isEmptyAt(Position.at("f1")) &&
-                    !hasMoved && board.getPieceAt(Position.at("h1")) instanceof Castle &&
-                    !((Castle) board.getPieceAt(Position.at("h1"))).getHasMoved())
-                moves.add(new CastlingMove(getPosition(), Position.at("g1")));
-
-            if (board.isEmptyAt(Position.at("b1")) && board.isEmptyAt(Position.at("c1")) &&
-                    board.isEmptyAt(Position.at("d1")) &&
-                    !hasMoved && board.getPieceAt(Position.at("a1")) instanceof Castle &&
-                    !((Castle) board.getPieceAt(Position.at("a1"))).getHasMoved())
-                moves.add(new CastlingMove(getPosition(), Position.at("c1")));
-        } else if (isBlack()) {
-            if (board.isEmptyAt(Position.at("g8")) && board.isEmptyAt(Position.at("f8")) &&
-                    !hasMoved && board.getPieceAt(Position.at("h8")) instanceof Castle &&
-                    !((Castle) board.getPieceAt(Position.at("h8"))).getHasMoved())
-                moves.add(new CastlingMove(getPosition(), Position.at("g8")));
-
-            if (board.isEmptyAt(Position.at("b8")) && board.isEmptyAt(Position.at("c8")) &&
-                    board.isEmptyAt(Position.at("d8")) &&
-                    !hasMoved && board.getPieceAt(Position.at("a8")) instanceof Castle &&
-                    !((Castle) board.getPieceAt(Position.at("a8"))).getHasMoved())
-                moves.add(new CastlingMove(getPosition(), Position.at("c8")));
-        }
+        if (!hasMoved && getShortCastling(board) != null) moves.add(getShortCastling(board));
+        if (!hasMoved && getLongCastling(board) != null) moves.add(getLongCastling(board));
 
         return moves;
+    }
+
+    private CastlingMove getShortCastling(Board board) {
+        Position checkPos = positionRight(getPosition());
+        Position newKingPos = positionRight(positionRight(getPosition()));
+        while (positionRight(checkPos).insideBoard()) {
+            if (board.isNotEmptyAt(checkPos)) return null;
+            checkPos = positionRight(checkPos);
+        }
+        ChessPiece edgePiece = board.getPieceAt(checkPos);
+        if (edgePiece instanceof Castle && !((Castle) edgePiece).getHasMoved()) {
+            return new CastlingMove(getPosition(), newKingPos, checkPos, positionRight(getPosition()));
+        }
+        return null;
+    }
+
+    private CastlingMove getLongCastling(Board board) {
+        Position checkPos = positionLeft(getPosition());
+        Position newKingPos = positionLeft(positionLeft(getPosition()));
+        while (positionLeft(checkPos).insideBoard()) {
+            if (board.isNotEmptyAt(checkPos)) return null;
+            checkPos = positionLeft(checkPos);
+        }
+        ChessPiece edgePiece = board.getPieceAt(checkPos);
+        if (edgePiece instanceof Castle && !((Castle) edgePiece).getHasMoved()) {
+            return new CastlingMove(getPosition(), newKingPos, checkPos, positionLeft(getPosition()));
+        }
+        return null;
+    }
+
+    private Position positionRight(Position position) {
+        return new Position(position, 1, 0);
+    }
+
+    private Position positionLeft(Position position) {
+        return new Position(position, -1, 0);
     }
 
     public boolean getHasMoved() {

@@ -86,16 +86,8 @@ public class Board {
     }
 
     private void makeCastlingMove(CastlingMove move) {
-        if (move.getEndPosition().equals(Position.at("g1"))) {
-            makeRelocationMove(new RelocationMove(Position.at("h1"), Position.at("f1")));
-        } else if (move.getEndPosition().equals(Position.at("c1"))) {
-            makeRelocationMove(new RelocationMove(Position.at("a1"), Position.at("d1")));
-        } else if (move.getEndPosition().equals(Position.at("g8"))) {
-            makeRelocationMove(new RelocationMove(Position.at("h8"), Position.at("f8")));
-        } else if (move.getEndPosition().equals(Position.at("c8"))) {
-            makeRelocationMove(new RelocationMove(Position.at("a8"), Position.at("d8")));
-        }
-        makeRelocationMove(move);
+        makeRelocationMove(move.getCastleMove());
+        makeRelocationMove(move.getKingMove());
     }
 
     /**
