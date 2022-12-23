@@ -1,5 +1,6 @@
 package chessRoot.user_interface.game_flow;
 
+import chessRoot.user_interface.GameManager;
 import chessRoot.user_interface.frames.game_frame.GameFrame;
 import chessRoot.logic.Board;
 import chessRoot.logic.pieces.PieceColor;
@@ -10,22 +11,20 @@ import static chessRoot.user_interface.game_flow.GameStates.PLAYER_BLACK_TURN;
 import static chessRoot.user_interface.game_flow.GameStates.PLAYER_WHITE_TURN;
 
 public class GameControl {
-    private GameFrame gameFrame;
+    private final GameFrame gameFrame;
     private final GameStatus gameStatus;
+    private final GameManager gameManager;
 
-    public GameControl(Board board, PieceColor movingSide) {
+    public GameControl(Board board, PieceColor movingSide, GameManager gameManager) {
         GameStates state = movingSide == WHITE ? PLAYER_WHITE_TURN : PLAYER_BLACK_TURN;
-        gameStatus = new GameStatus(state, board);
+        gameStatus = new GameStatus(board, state, gameManager.getBoardColors());
+        this.gameManager = gameManager;
+        gameFrame = new GameFrame(gameStatus, this);
     }
 
     public void performMove(Move move) {
         gameStatus.getBoard().makeMove(move);
-    }
-
-    /**
-     * Default way to run the game. Is usable at any starting position.
-     */
-    public void runTheGame() {
-        gameFrame = new GameFrame(gameStatus, this);
+        gameStatus.deselectPiece();
+        gameFrame.updateFrame();
     }
 }

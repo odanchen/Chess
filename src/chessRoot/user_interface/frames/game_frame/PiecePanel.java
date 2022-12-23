@@ -1,8 +1,6 @@
 package chessRoot.user_interface.frames.game_frame;
 
 import chessRoot.logic.pieces.ChessPiece;
-import chessRoot.logic.pieces.PieceColor;
-import chessRoot.user_interface.game_flow.GameControl;
 import chessRoot.user_interface.game_flow.GameStatus;
 
 import javax.imageio.ImageIO;
@@ -18,8 +16,6 @@ public class PiecePanel extends JPanel {
     private String pieceTextureFolder = "cburnett";
     private final double SQUARE_TO_PIECE_RATIO = 0.875;
     private final GameStatus gameStatus;
-    private final GameControl gameControl;
-
     private int getSquareSize() {
         return this.boardSize / 8;
     }
@@ -62,6 +58,10 @@ public class PiecePanel extends JPanel {
         }
     }
 
+    public void updatePanel() {
+        repaint();
+    }
+
     @Override
     public void paint(Graphics g) {
         for (ChessPiece piece : gameStatus.getBoard().getAllPieces()) {
@@ -75,11 +75,10 @@ public class PiecePanel extends JPanel {
         }
     }
 
-    PiecePanel(int boardSideSize, GameStatus gameStatus, GameControl gameControl) {
+    PiecePanel(int boardSideSize, GameStatus gameStatus) {
         this.setSize(boardSideSize, boardSideSize);
         this.setOpaque(false);
         this.gameStatus = gameStatus;
-        this.gameControl = gameControl;
         this.boardSize = boardSideSize;
     }
 }

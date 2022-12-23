@@ -1,15 +1,13 @@
 package chessRoot.user_interface.frames.game_frame;
 
-import chessRoot.assets.board_colors.BoardColors;
-import chessRoot.assets.board_colors.ColorSet;
+import chessRoot.user_interface.game_flow.GameStatus;
 
 import javax.swing.*;
 import java.awt.*;
 
 public class BoardPanel extends JPanel {
     private int boardSize;
-    private ColorSet boardColors;
-
+    private final GameStatus gameStatus;
 
     private int squareSize() {
         return boardSize / 8;
@@ -20,18 +18,18 @@ public class BoardPanel extends JPanel {
         for (int row = 0; row < 8; row++) {
             for (int col = 0; col < 8; col++) {
 
-                if ((col + row) % 2 == 0) g.setColor(boardColors.getWhiteCell());
-                else g.setColor(boardColors.getBlackCell());
+                if ((col + row) % 2 == 0) g.setColor(gameStatus.getBoardColors().getWhiteCell());
+                else g.setColor(gameStatus.getBoardColors().getBlackCell());
 
                 g.fillRect(col * squareSize(), row * squareSize(), squareSize(), squareSize());
             }
         }
     }
 
-    BoardPanel(int boardSideSize, ColorSet colorSet) {
+    BoardPanel(int boardSideSize, GameStatus gameStatus) {
         this.setSize(boardSideSize, boardSideSize);
         this.setOpaque(true);
         this.boardSize = boardSideSize;
-        this.boardColors = colorSet;
+        this.gameStatus = gameStatus;
     }
 }
