@@ -1,5 +1,7 @@
 package chessRoot.logic.moves;
 
+import chessRoot.logic.Board;
+import chessRoot.logic.pieces.ChessPiece;
 import chessRoot.logic.pieces.Position;
 
 /**
@@ -8,8 +10,8 @@ import chessRoot.logic.pieces.Position;
 public class AttackMove extends Move {
     private final Position attackedPosition;
 
-    public Position getAttackedPosition() {
-        return attackedPosition;
+    public ChessPiece getAttackedPiece(Board board) {
+        return board.getPieceAt(attackedPosition);
     }
 
     public AttackMove(Position startPosition, Position endPosition, Position attackedPosition) {

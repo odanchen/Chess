@@ -1,5 +1,7 @@
 package chessRoot.logic.moves;
 
+import chessRoot.logic.Board;
+import chessRoot.logic.pieces.ChessPiece;
 import chessRoot.logic.pieces.Position;
 
 /**
@@ -17,9 +19,16 @@ public abstract class Move {
         return this.endPosition;
     }
 
-    public Move(Position startPosition, Position endPosition)
-    {
+    public Move(Position startPosition, Position endPosition) {
         this.startPosition = startPosition;
         this.endPosition = endPosition;
+    }
+
+    public ChessPiece getPieceAtStart(Board board) {
+        return board.getPieceAt(startPosition);
+    }
+
+    public ChessPiece getPieceAtEnd(Board board) {
+        return board.getPieceAt(endPosition);
     }
 }

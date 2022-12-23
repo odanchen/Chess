@@ -21,7 +21,7 @@ public class Position {
     /**
      * @return If the current position is inside the board or not. (Assumes 8 by 8 board)
      */
-    public boolean isInsideBoard() {
+    public boolean insideBoard() {
         return (row >= 1 && row <= 8) && (col >= 'a' && col <= 'h');
     }
 
@@ -54,5 +54,14 @@ public class Position {
 
     public boolean equals(Position position) {
         return (this.getRow() == position.getRow() && this.getCol() == position.getCol());
+    }
+
+    public int rowToIdx() {
+        int BOARD_SIZE = 8;
+        return Math.abs(row - BOARD_SIZE);
+    }
+
+    public int colToIdx() {
+        return (int) col - 'a';
     }
 }

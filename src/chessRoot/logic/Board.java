@@ -8,6 +8,7 @@ import chessRoot.logic.pieces.*;
 import java.util.ArrayList;
 import java.util.List;
 
+import static chessRoot.logic.pieces.PieceColor.BLACK;
 import static chessRoot.logic.pieces.PieceColor.WHITE;
 
 public class Board {
@@ -42,33 +43,32 @@ public class Board {
     }
 
     private void makeRelocationMove(Move move) {
-        setPieceAt(move.getEndPosition(), getPieceAt(move.getStartPosition()));
+        setPieceAt(move.getEndPosition(), move.getPieceAtStart(this));
         setPieceAt(move.getStartPosition(), null);
-        getPieceAt(move.getEndPosition()).setPosition(move.getEndPosition());
+        move.getPieceAtEnd(this).setPosition(move.getEndPosition());
 
-        if (getPieceAt(move.getEndPosition()) instanceof King) {
-            ((King) getPieceAt(move.getEndPosition())).setHasMoved(true);
+        if (move.getPieceAtEnd(this) instanceof King) {
+            ((King) move.getPieceAtEnd(this)).setHasMoved(true);
 
-            if (getPieceAt(move.getEndPosition()).getPieceColor() == WHITE)
+            if (move.getPieceAtEnd(this).isWhite())
                 setWhiteKingPosition(move.getEndPosition());
             else setBlackKingPosition(move.getEndPosition());
         }
-        if (getPieceAt(move.getEndPosition()) instanceof Castle) {
-            ((Castle) getPieceAt(move.getEndPosition())).setHasMoved(true);
+        if (move.getPieceAtEnd(this) instanceof Castle) {
+            ((Castle) move.getPieceAtEnd(this)).setHasMoved(true);
         }
-        if (getPieceAt(move.getEndPosition()) instanceof Pawn) {
-            ((Pawn) getPieceAt(move.getEndPosition())).setHasMoved(true);
+        if (move.getPieceAtEnd(this) instanceof Pawn) {
+            ((Pawn) move.getPieceAtEnd(this)).setHasMoved(true);
         }
     }
 
     private void makeAttackMove(AttackMove move) {
-        if (getPieceAt(move.getStartPosition()).getPieceColor() == WHITE) {
-            blackPieces.remove(getPieceAt(move.getAttackedPosition()));
-            makeRelocationMove(move);
+        if (move.getAttackedPiece(this).isBlack()) {
+            blackPieces.remove(move.getAttackedPiece(this));
         } else {
-            whitePieces.remove(getPieceAt(move.getAttackedPosition()));
-            makeRelocationMove(move);
+            whitePieces.remove(move.getAttackedPiece(this));
         }
+        makeRelocationMove(move);
     }
 
     /**
@@ -89,8 +89,8 @@ public class Board {
      * @return The piece at the specified position.
      */
     public ChessPiece getPieceAt(Position position) {
-        int matrixRow = Math.abs(position.getRow() - BOARD_SIZE);
-        int matrixCol = (int) position.getCol() - 'a';
+        int matrixRow = position.rowToIdx();
+        int matrixCol = position.colToIdx();
         return configuration[matrixRow][matrixCol];
     }
 
@@ -98,8 +98,8 @@ public class Board {
      * @param position Position on the board.
      */
     public void setPieceAt(Position position, ChessPiece piece) {
-        int matrixRow = Math.abs(position.getRow() - BOARD_SIZE);
-        int matrixCol = (int) position.getCol() - 'a';
+        int matrixRow = position.rowToIdx();
+        int matrixCol = position.colToIdx();
         configuration[matrixRow][matrixCol] = piece;
     }
 
@@ -170,17 +170,25 @@ public class Board {
         blackPieces.add(piece);
     }
 
+    public boolean isNotEmptyAt(Position position) {
+        return getPieceAt(position) != null;
+    }
+
+    public boolean isEmptyAt(Position position) {
+        return getPieceAt(position) == null;
+    }
+
     private void addPiece(ChessPiece piece) {
         setPieceAt(piece.getPosition(), piece);
 
-        if (piece.getPieceColor() == WHITE) {
+        if (piece.isWhite()) {
             addWhitePiece(piece);
         } else {
             addBlackPiece(piece);
         }
 
         if (piece instanceof King) {
-            if (piece.getPieceColor() == WHITE) setWhiteKingPosition(piece.getPosition());
+            if (piece.isWhite()) setWhiteKingPosition(piece.getPosition());
             else setBlackKingPosition(piece.getPosition());
         }
     }
@@ -190,32 +198,32 @@ public class Board {
      */
     public void fillStandardBoard() {
         addPiece(new Castle(Position.at("a1"), WHITE));
-        addPiece(new Castle(Position.at("a8"), PieceColor.BLACK));
+        addPiece(new Castle(Position.at("a8"), BLACK));
 
         addPiece(new Knight(Position.at("b1"), WHITE));
-        addPiece(new Knight(Position.at("b8"), PieceColor.BLACK));
+        addPiece(new Knight(Position.at("b8"), BLACK));
 
         addPiece(new Bishop(Position.at("c1"), WHITE));
-        addPiece(new Bishop(Position.at("c8"), PieceColor.BLACK));
+        addPiece(new Bishop(Position.at("c8"), BLACK));
 
         addPiece(new Queen(Position.at("d1"), WHITE));
-        addPiece(new Queen(Position.at("d8"), PieceColor.BLACK));
+        addPiece(new Queen(Position.at("d8"), BLACK));
 
         addPiece(new King(Position.at("e1"), WHITE));
-        addPiece(new King(Position.at("e8"), PieceColor.BLACK));
+        addPiece(new King(Position.at("e8"), BLACK));
 
         addPiece(new Bishop(Position.at("f1"), WHITE));
-        addPiece(new Bishop(Position.at("f8"), PieceColor.BLACK));
+        addPiece(new Bishop(Position.at("f8"), BLACK));
 
         addPiece(new Knight(Position.at("g1"), WHITE));
-        addPiece(new Knight(Position.at("g8"), PieceColor.BLACK));
+        addPiece(new Knight(Position.at("g8"), BLACK));
 
         addPiece(new Castle(Position.at("h1"), WHITE));
-        addPiece(new Castle(Position.at("h8"), PieceColor.BLACK));
+        addPiece(new Castle(Position.at("h8"), BLACK));
 
         for (char i = 'a'; i <= 'h'; i++) {
             addPiece(new Pawn(new Position(i, 2), WHITE));
-            addPiece(new Pawn(new Position(i, 7), PieceColor.BLACK));
+            addPiece(new Pawn(new Position(i, 7), BLACK));
         }
     }
 

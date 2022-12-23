@@ -37,24 +37,23 @@ public class PiecePanel extends JPanel {
             return (BufferedImage) img;
         }
 
-        BufferedImage bimage = new BufferedImage(img.getWidth(null), img.getHeight(null), BufferedImage.TYPE_INT_ARGB);
+        BufferedImage bImage = new BufferedImage(img.getWidth(null), img.getHeight(null), BufferedImage.TYPE_INT_ARGB);
 
-        Graphics2D bGr = bimage.createGraphics();
+        Graphics2D bGr = bImage.createGraphics();
         bGr.drawImage(img, 0, 0, null);
         bGr.dispose();
 
-        return bimage;
+        return bImage;
     }
 
     private String getImageName(ChessPiece piece) {
-        String color = (piece.getPieceColor() == PieceColor.WHITE) ? "w" : "b";
-
+        String color = (piece.isWhite()) ? "w" : "b";
         return (color + piece.getPieceLetter() + ".png");
     }
 
     private BufferedImage getTextureOfPiece(ChessPiece piece) {
         String root = Paths.get("").toAbsolutePath().toString();
-        String[] fullPath = {root, "src", "chessRoot", "assets", "pieces_textures", this.pieceTextureFolder, getImageName(piece)};
+        String[] fullPath = {root, "src", "chessRoot", "assets", "pieces_textures", pieceTextureFolder, getImageName(piece)};
 
         try {
             return ImageIO.read(new File(String.join(File.separator, fullPath)));
@@ -70,10 +69,7 @@ public class PiecePanel extends JPanel {
             int row = Math.abs(piece.getPosition().getRow() - 8);
             int col = (int) piece.getPosition().getCol() - 'a';
 
-            BufferedImage image;
-
-            image = getTextureOfPiece(piece);
-
+            BufferedImage image = getTextureOfPiece(piece);
             image = toBufferedImage(image.getScaledInstance(getPieceSize(), getPieceSize(), Image.SCALE_SMOOTH));
             g.drawImage(image, getPieceCoordinate(col), getPieceCoordinate(row), null);
         }

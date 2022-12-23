@@ -15,32 +15,33 @@ public class Pawn extends ChessPiece {
     public List<Move> calculatePotentialMoves(Board board) {
         List<Move> moves = new ArrayList<>();
         Position endPosition;
-        int direction = (this.getPieceColor() == PieceColor.BLACK) ? -1 : 1;
+        int direction = (isBlack()) ? -1 : 1;
 
-        endPosition = new Position(this.getPosition(), 0, direction);
-        if (endPosition.isInsideBoard() && board.getPieceAt(endPosition) == null) {
-            moves.add(new RelocationMove(this.getPosition(), endPosition));
+        endPosition = new Position(getPosition(), 0, direction);
+        if (endPosition.insideBoard() && board.isEmptyAt(endPosition)) {
+            moves.add(new RelocationMove(getPosition(), endPosition));
 
-            endPosition = new Position(this.getPosition(), 0, 2 * direction);
-            if (board.getPieceAt(endPosition) == null && !this.hasMoved)
-                moves.add(new RelocationMove(this.getPosition(), endPosition));
+            endPosition = new Position(getPosition(), 0, 2 * direction);
+            if (board.isEmptyAt(endPosition) && !hasMoved)
+                moves.add(new RelocationMove(getPosition(), endPosition));
         }
 
-        endPosition = new Position(this.getPosition(), 1, direction);
+        endPosition = new Position(getPosition(), 1, direction);
         if (canAttack(endPosition, board))
-            moves.add(new AttackMove(this.getPosition(), endPosition, endPosition));
-        endPosition = new Position(this.getPosition(), -1, direction);
+            moves.add(new AttackMove(getPosition(), endPosition, endPosition));
+
+        endPosition = new Position(getPosition(), -1, direction);
         if (canAttack(endPosition, board))
-            moves.add(new AttackMove(this.getPosition(), endPosition, endPosition));
+            moves.add(new AttackMove(getPosition(), endPosition, endPosition));
 
         return moves;
     }
 
     private boolean canAttack(Position endPosition, Board board)
     {
-        return endPosition.isInsideBoard() &&
-                board.getPieceAt(endPosition) != null &&
-                this.notSameColorAs(board.getPieceAt(endPosition));
+        return endPosition.insideBoard() &&
+                board.isNotEmptyAt(endPosition) &&
+                differentColorFrom(board.getPieceAt(endPosition));
     }
 
     public boolean getHasMoved() {

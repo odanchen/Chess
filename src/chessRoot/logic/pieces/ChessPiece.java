@@ -76,7 +76,7 @@ public abstract class ChessPiece {
      * @param piece the piece to compare colors with
      * @return a boolean value representing whether the colors of the pieces are different
      */
-    public boolean notSameColorAs(ChessPiece piece) {
+    public boolean differentColorFrom(ChessPiece piece) {
         return getPieceColor() != piece.getPieceColor();
     }
 
