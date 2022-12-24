@@ -135,7 +135,7 @@ public class GameFrame extends JFrame {
     }
 
     private boolean isActionMove(MouseEvent e) {
-        if (!isClickInsideBoard(e)) return false;
+        if (isActionReselect(e)) return false;
         Position clickedPosition = getPositionOnTheBoard(e);
         return gameStatus.getSelectedPieceMoves().stream().anyMatch(move -> move.getEndPosition().equals(clickedPosition));
     }
