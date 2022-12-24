@@ -1,6 +1,7 @@
 package chessRoot.user_interface.frames.game_frame;
 
 import chessRoot.logic.moves.AttackMove;
+import chessRoot.user_interface.GraphicsManager;
 import chessRoot.user_interface.game_flow.GameStatus;
 
 
@@ -10,14 +11,14 @@ import java.awt.*;
 public class IndicationPanel extends JPanel {
     private final double MOVE_SELECTION_TO_SQUARE_RATIO = 0.3;
     private final double ATTACK_SELECTION_TO_SQUARE_RATIO = 0.85;
-    private int boardSize;
     private final GameStatus gameStatus;
+    private final GraphicsManager graphicsManager;
 
-    public IndicationPanel(int boardSize, GameStatus gameStatus) {
-        setSize(boardSize, boardSize);
-        setOpaque(false);
-        this.boardSize = boardSize;
+    public IndicationPanel(GraphicsManager graphicsManager, GameStatus gameStatus) {
         this.gameStatus = gameStatus;
+        this.graphicsManager = graphicsManager;
+        this.setBounds(graphicsManager.getPlayableRectangle());
+        this.setOpaque(false);
     }
 
     public void updatePanel() {
@@ -32,7 +33,7 @@ public class IndicationPanel extends JPanel {
                 int row = move.getEndPosition().rowToIdx();
                 int col = move.getEndPosition().colToIdx();
                 Graphics2D g2 = (Graphics2D) g;
-                g.setColor(gameStatus.getBoardColors().getCellSelection());
+                g.setColor(graphicsManager.getSelectionColor());
                 if (move instanceof AttackMove && ((AttackMove) move).getAttackedPosition() == move.getEndPosition()) {
                     g2.setStroke(new BasicStroke(6));
                     g.drawOval(getAttackingCoordinate(col), getAttackingCoordinate(row), getAttackingOvalSize(), getAttackingOvalSize());
@@ -41,24 +42,19 @@ public class IndicationPanel extends JPanel {
             }
         }
     }
-
-    private int getSquareSize() {
-        return this.boardSize / 8;
-    }
-
     private int getMovingOvalSize() {
-        return (int) (getSquareSize() * MOVE_SELECTION_TO_SQUARE_RATIO);
+        return (int) (graphicsManager.squareSize() * MOVE_SELECTION_TO_SQUARE_RATIO);
     }
 
     private int getMovingCoordinate(int idx) {
-        return (getSquareSize() * idx) + (getSquareSize() - getMovingOvalSize()) / 2;
+        return (graphicsManager.squareSize() * idx) + (graphicsManager.squareSize() - getMovingOvalSize()) / 2;
     }
 
     private int getAttackingOvalSize() {
-        return (int) (getSquareSize() * ATTACK_SELECTION_TO_SQUARE_RATIO);
+        return (int) (graphicsManager.squareSize() * ATTACK_SELECTION_TO_SQUARE_RATIO);
     }
 
     private int getAttackingCoordinate(int idx) {
-        return (getSquareSize() * idx) + (getSquareSize() - getAttackingOvalSize()) / 2;
+        return (graphicsManager.squareSize() * idx) + (graphicsManager.squareSize() - getAttackingOvalSize()) / 2;
     }
 }

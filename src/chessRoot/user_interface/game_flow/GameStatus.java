@@ -1,6 +1,5 @@
 package chessRoot.user_interface.game_flow;
 
-import chessRoot.assets.board_colors.ColorSet;
 import chessRoot.logic.Board;
 import chessRoot.logic.moves.Move;
 import chessRoot.logic.pieces.ChessPiece;
@@ -13,14 +12,9 @@ public class GameStatus {
     private GameStates gameState;
     private List<Move> gameLog;
     private final Board board;
-    private ColorSet boardColors;
 
     public Board getBoard() {
         return board;
-    }
-
-    public ColorSet getBoardColors() {
-        return boardColors;
     }
 
     public ChessPiece getSelectedPiece() {
@@ -51,11 +45,10 @@ public class GameStatus {
         return selectedPiece != null;
     }
 
-    public GameStatus(Board board, GameStates startingState, ColorSet boardColors) {
+    public GameStatus(Board board, GameStates startingState) {
         this.selectedPiece = null;
         this.gameState = startingState;
         this.board = board;
         this.gameLog = new ArrayList<>();
-        this.boardColors = boardColors;
     }
 }

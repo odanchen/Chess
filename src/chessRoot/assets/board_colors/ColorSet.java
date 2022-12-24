@@ -19,7 +19,6 @@ public class ColorSet {
         return cellSelection;
     }
 
-
     ColorSet(Color whiteCell, Color blackCell, Color whiteCellSelection) {
         this.whiteCell = whiteCell;
         this.blackCell = blackCell;

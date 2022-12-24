@@ -17,9 +17,9 @@ public class GameControl {
 
     public GameControl(Board board, PieceColor movingSide, GameManager gameManager) {
         GameStates state = movingSide == WHITE ? PLAYER_WHITE_TURN : PLAYER_BLACK_TURN;
-        gameStatus = new GameStatus(board, state, gameManager.getBoardColors());
+        this.gameStatus = new GameStatus(board, state);
         this.gameManager = gameManager;
-        gameFrame = new GameFrame(gameStatus, this);
+        this.gameFrame = new GameFrame(gameStatus, this, gameManager.getGraphicsManager());
     }
 
     public void performMove(Move move) {

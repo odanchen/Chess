@@ -1,6 +1,7 @@
 package chessRoot.user_interface.frames.game_frame;
 
 import chessRoot.logic.pieces.ChessPiece;
+import chessRoot.user_interface.GraphicsManager;
 import chessRoot.user_interface.game_flow.GameStatus;
 
 import javax.imageio.ImageIO;
@@ -12,20 +13,17 @@ import java.io.IOException;
 import java.nio.file.Paths;
 
 public class PiecePanel extends JPanel {
-    private int boardSize;
     private String pieceTextureFolder = "cburnett";
     private final double SQUARE_TO_PIECE_RATIO = 0.875;
     private final GameStatus gameStatus;
-    private int getSquareSize() {
-        return this.boardSize / 8;
-    }
+    private final GraphicsManager graphicsManager;
 
     private int getPieceSize() {
-        return (int) (getSquareSize() * this.SQUARE_TO_PIECE_RATIO);
+        return (int) (graphicsManager.squareSize() * this.SQUARE_TO_PIECE_RATIO);
     }
 
     private int getPieceCoordinate(int idx) {
-        return (getSquareSize() * idx) + (getSquareSize()-getPieceSize())/2;
+        return (graphicsManager.squareSize() * idx) + (graphicsManager.squareSize()-getPieceSize())/2;
     }
 
     private static BufferedImage toBufferedImage(Image img) {
@@ -75,10 +73,10 @@ public class PiecePanel extends JPanel {
         }
     }
 
-    PiecePanel(int boardSideSize, GameStatus gameStatus) {
-        this.setSize(boardSideSize, boardSideSize);
-        this.setOpaque(false);
+    PiecePanel(GraphicsManager graphicsManager, GameStatus gameStatus) {
         this.gameStatus = gameStatus;
-        this.boardSize = boardSideSize;
+        this.graphicsManager = graphicsManager;
+        this.setBounds(graphicsManager.getPlayableRectangle());
+        this.setOpaque(false);
     }
 }
