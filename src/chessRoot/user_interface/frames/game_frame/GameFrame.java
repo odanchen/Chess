@@ -3,16 +3,15 @@ package chessRoot.user_interface.frames.game_frame;
 import chessRoot.user_interface.GraphicsManager;
 import chessRoot.user_interface.game_flow.GameControl;
 import chessRoot.logic.pieces.ChessPiece;
-import chessRoot.logic.pieces.PieceColor;
 import chessRoot.logic.pieces.Position;
 import chessRoot.logic.moves.Move;
+import chessRoot.user_interface.game_flow.GameStates;
 import chessRoot.user_interface.game_flow.GameStatus;
 
 import javax.swing.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
-import static chessRoot.logic.pieces.PieceColor.WHITE;
 import static chessRoot.user_interface.game_flow.GameStates.*;
 
 public class GameFrame extends JFrame {
@@ -28,7 +27,7 @@ public class GameFrame extends JFrame {
         this.gameControl = gameControl;
         this.graphicsManager = graphicsManager;
 
-        boardPanel = new BoardPanel(graphicsManager, gameStatus);
+        boardPanel = new BoardPanel(graphicsManager);
         piecePanel = new PiecePanel(graphicsManager, gameStatus);
         indicPanel = new IndicationPanel(graphicsManager, gameStatus);
         addBasicParameters();
@@ -36,7 +35,7 @@ public class GameFrame extends JFrame {
 
     private void addBasicParameters() {
         setUndecorated(true);
-        setBounds(graphicsManager.getFrameRectangle());
+        setBounds(graphicsManager.getGameFrameBounds());
         addPanels();
         createMouseListener();
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
@@ -53,9 +52,7 @@ public class GameFrame extends JFrame {
         if (isClickInsideBoard(e)) {
             ChessPiece clickedPiece = gameStatus.getBoard().getPieceAt(getPositionOnTheBoard(e));
             if (clickedPiece != null && clickedPiece.isWhite()) {
-                gameStatus.setGameState(PLAYER_WHITE_SELECTED_PIECE);
-                gameStatus.selectPiece(clickedPiece);
-                indicPanel.updatePanel();
+                selectPiece(clickedPiece);
             }
         }
     }
@@ -64,76 +61,15 @@ public class GameFrame extends JFrame {
         if (isClickInsideBoard(e)) {
             ChessPiece clickedPiece = gameStatus.getBoard().getPieceAt(getPositionOnTheBoard(e));
             if (clickedPiece != null && clickedPiece.isBlack()) {
-                gameStatus.setGameState(PLAYER_BLACK_SELECTED_PIECE);
-                gameStatus.selectPiece(clickedPiece);
-                indicPanel.updatePanel();
+                selectPiece(clickedPiece);
             }
         }
     }
 
-    private void playerWhiteSelectedAPieceEvent(MouseEvent e) {
-        if (isClickInsideBoard(e)) {
-            Position clickedPosition = getPositionOnTheBoard(e);
-            ChessPiece clickedPiece = gameStatus.getBoard().getPieceAt(clickedPosition);
-
-            if (clickedPiece != null && clickedPiece.isWhite() && clickedPiece != gameStatus.getSelectedPiece()) {
-                gameStatus.selectPiece(clickedPiece);
-                indicPanel.updatePanel();
-            } else {
-                Move moveToMake = gameStatus.getSelectedPieceMoves().stream()
-                        .filter(move -> move.getEndPosition().equals(clickedPosition))
-                        .findFirst().orElse(null);
-
-                if (moveToMake != null) {
-                    gameControl.performMove(moveToMake);
-                    if (gameStatus.getBoard().isMate(PieceColor.BLACK)) {
-                        System.out.println("player black lost");
-                    }
-                    gameStatus.setGameState(PLAYER_BLACK_TURN);
-                } else {
-                    gameStatus.setGameState(PLAYER_WHITE_TURN);
-                    gameStatus.deselectPiece();
-                    indicPanel.updatePanel();
-                }
-            }
-        } else {
-            gameStatus.setGameState(PLAYER_WHITE_TURN);
-            gameStatus.deselectPiece();
-            indicPanel.updatePanel();
-        }
-
-    }
-
-    private void playerBlackSelectedAPieceEvent(MouseEvent e) {
-        if (isClickInsideBoard(e)) {
-            Position clickedPosition = getPositionOnTheBoard(e);
-            ChessPiece clickedPiece = gameStatus.getBoard().getPieceAt(clickedPosition);
-
-            if (clickedPiece != null && clickedPiece.isBlack() && clickedPiece != gameStatus.getSelectedPiece()) {
-                gameStatus.selectPiece(clickedPiece);
-                indicPanel.updatePanel();
-            } else {
-                Move moveToMake = gameStatus.getSelectedPieceMoves().stream()
-                        .filter(move -> move.getEndPosition().equals(clickedPosition))
-                        .findFirst().orElse(null);
-
-                if (moveToMake != null) {
-                    gameControl.performMove(moveToMake);
-                    if (gameStatus.getBoard().isMate(WHITE)) {
-                        System.out.println("player white lost");
-                    }
-                    gameStatus.setGameState(PLAYER_WHITE_TURN);
-                } else {
-                    gameStatus.setGameState(PLAYER_BLACK_TURN);
-                    gameStatus.deselectPiece();
-                    indicPanel.updatePanel();
-                }
-            }
-        } else {
-            gameStatus.setGameState(PLAYER_BLACK_TURN);
-            gameStatus.deselectPiece();
-            indicPanel.updatePanel();
-        }
+    private void playerSelectedAPieceEvent(MouseEvent e) {
+        if (isActionReselect(e)) reselectPiece(e);
+        else if (isActionDeselect(e)) deselectPiece();
+        else if (isActionMove(e)) makeMove(e);
     }
 
     private void onMousePress(MouseEvent e) {
@@ -145,10 +81,8 @@ public class GameFrame extends JFrame {
                 playerBlackTurnEvent(e);
                 break;
             case PLAYER_BLACK_SELECTED_PIECE:
-                playerBlackSelectedAPieceEvent(e);
-                break;
             case PLAYER_WHITE_SELECTED_PIECE:
-                playerWhiteSelectedAPieceEvent(e);
+                playerSelectedAPieceEvent(e);
                 break;
         }
     }
@@ -178,21 +112,100 @@ public class GameFrame extends JFrame {
         });
     }
 
+    private GameStates stateAfterMove() {
+        if (gameStatus.getState() == PLAYER_BLACK_SELECTED_PIECE) return PLAYER_WHITE_TURN;
+        return PLAYER_BLACK_TURN;
+    }
+
+    private void makeMove(MouseEvent e) {
+        Position clickedPosition = getPositionOnTheBoard(e);
+
+        Move moveToMake = gameStatus.getSelectedPieceMoves().stream()
+                .filter(move -> move.getEndPosition().equals(clickedPosition))
+                .findFirst().orElse(null);
+
+        gameControl.performMove(moveToMake);
+    }
+
+    public void makeMove(Move move) {
+        gameStatus.getBoard().makeMove(move);
+        gameStatus.setGameState(stateAfterMove());
+        gameStatus.deselectPiece();
+        updateFrame();
+    }
+
+    private boolean isActionMove(MouseEvent e) {
+        if (!isClickInsideBoard(e)) return false;
+        Position clickedPosition = getPositionOnTheBoard(e);
+        return gameStatus.getSelectedPieceMoves().stream().anyMatch(move -> move.getEndPosition().equals(clickedPosition));
+    }
+
+    private boolean isActionReselect(MouseEvent e) {
+        if (!isClickInsideBoard(e)) return false;
+        Position clickedPosition = getPositionOnTheBoard(e);
+        ChessPiece clickedPiece = gameStatus.getBoard().getPieceAt(clickedPosition);
+        if (gameStatus.getState() == PLAYER_BLACK_SELECTED_PIECE) {
+            return (clickedPiece != null && clickedPiece.isBlack() && clickedPiece != gameStatus.getSelectedPiece());
+        }
+        return (clickedPiece != null && clickedPiece.isWhite() && clickedPiece != gameStatus.getSelectedPiece());
+    }
+
+    private void reselectPiece(MouseEvent e) {
+        Position clickedPosition = getPositionOnTheBoard(e);
+        ChessPiece clickedPiece = gameStatus.getBoard().getPieceAt(clickedPosition);
+        selectPiece(clickedPiece);
+    }
+
+    private GameStates getStateAfterSelect() {
+        switch (gameStatus.getState()) {
+            case PLAYER_BLACK_TURN:
+            case PLAYER_BLACK_SELECTED_PIECE:
+                return PLAYER_BLACK_SELECTED_PIECE;
+            case PLAYER_WHITE_TURN:
+            case PLAYER_WHITE_SELECTED_PIECE:
+                return PLAYER_WHITE_SELECTED_PIECE;
+        }
+        return null;
+    }
+
+    private void selectPiece(ChessPiece piece) {
+        gameStatus.setGameState(getStateAfterSelect());
+        gameStatus.selectPiece(piece);
+        indicPanel.updatePanel();
+    }
+
+    private GameStates getStateAfterDeselect() {
+        if (gameStatus.getState() == PLAYER_BLACK_SELECTED_PIECE) return PLAYER_BLACK_TURN;
+        else return PLAYER_WHITE_TURN;
+    }
+
+    private boolean isActionDeselect(MouseEvent e) {
+        if (!isClickInsideBoard(e)) return true;
+        Position clickedPosition = getPositionOnTheBoard(e);
+        return gameStatus.getSelectedPieceMoves().stream().noneMatch(move -> move.getEndPosition().equals(clickedPosition));
+    }
+
+    private void deselectPiece() {
+        gameStatus.setGameState(getStateAfterDeselect());
+        gameStatus.deselectPiece();
+        indicPanel.updatePanel();
+    }
+
     public void updateFrame() {
         piecePanel.updatePanel();
         indicPanel.updatePanel();
     }
 
     private boolean isClickInsideBoard(MouseEvent e) {
-        int rect = graphicsManager.rectangleSize();
+        int rect = graphicsManager.getEdgeSize();
         int board = graphicsManager.getBoardSize();
 
         return (e.getX() > rect) && (e.getX() < board + rect) && (e.getY() > rect) && (e.getY() < board + rect);
     }
 
     private Position getPositionOnTheBoard(MouseEvent e) {
-        int row = (e.getY() - graphicsManager.rectangleSize()) / graphicsManager.squareSize();
-        int col = (e.getX() - graphicsManager.rectangleSize()) / graphicsManager.squareSize();
+        int row = (e.getY() - graphicsManager.getEdgeSize()) / graphicsManager.getSquareSize();
+        int col = (e.getX() - graphicsManager.getEdgeSize()) / graphicsManager.getSquareSize();
 
         return new Position((char) (col + 'a'), (8 - row));
     }

@@ -19,11 +19,11 @@ public class PiecePanel extends JPanel {
     private final GraphicsManager graphicsManager;
 
     private int getPieceSize() {
-        return (int) (graphicsManager.squareSize() * this.SQUARE_TO_PIECE_RATIO);
+        return (int) (graphicsManager.getSquareSize() * this.SQUARE_TO_PIECE_RATIO);
     }
 
     private int getPieceCoordinate(int idx) {
-        return (graphicsManager.squareSize() * idx) + (graphicsManager.squareSize()-getPieceSize())/2;
+        return (graphicsManager.getSquareSize() * idx) + (graphicsManager.getSquareSize()-getPieceSize())/2;
     }
 
     private static BufferedImage toBufferedImage(Image img) {
@@ -76,7 +76,7 @@ public class PiecePanel extends JPanel {
     PiecePanel(GraphicsManager graphicsManager, GameStatus gameStatus) {
         this.gameStatus = gameStatus;
         this.graphicsManager = graphicsManager;
-        this.setBounds(graphicsManager.getPlayableRectangle());
+        this.setBounds(graphicsManager.getPlayAreaBounds());
         this.setOpaque(false);
     }
 }

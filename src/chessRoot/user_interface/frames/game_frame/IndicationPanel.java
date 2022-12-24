@@ -17,7 +17,7 @@ public class IndicationPanel extends JPanel {
     public IndicationPanel(GraphicsManager graphicsManager, GameStatus gameStatus) {
         this.gameStatus = gameStatus;
         this.graphicsManager = graphicsManager;
-        this.setBounds(graphicsManager.getPlayableRectangle());
+        this.setBounds(graphicsManager.getPlayAreaBounds());
         this.setOpaque(false);
     }
 
@@ -43,18 +43,18 @@ public class IndicationPanel extends JPanel {
         }
     }
     private int getMovingOvalSize() {
-        return (int) (graphicsManager.squareSize() * MOVE_SELECTION_TO_SQUARE_RATIO);
+        return (int) (graphicsManager.getSquareSize() * MOVE_SELECTION_TO_SQUARE_RATIO);
     }
 
     private int getMovingCoordinate(int idx) {
-        return (graphicsManager.squareSize() * idx) + (graphicsManager.squareSize() - getMovingOvalSize()) / 2;
+        return (graphicsManager.getSquareSize() * idx) + (graphicsManager.getSquareSize() - getMovingOvalSize()) / 2;
     }
 
     private int getAttackingOvalSize() {
-        return (int) (graphicsManager.squareSize() * ATTACK_SELECTION_TO_SQUARE_RATIO);
+        return (int) (graphicsManager.getSquareSize() * ATTACK_SELECTION_TO_SQUARE_RATIO);
     }
 
     private int getAttackingCoordinate(int idx) {
-        return (graphicsManager.squareSize() * idx) + (graphicsManager.squareSize() - getAttackingOvalSize()) / 2;
+        return (graphicsManager.getSquareSize() * idx) + (graphicsManager.getSquareSize() - getAttackingOvalSize()) / 2;
     }
 }

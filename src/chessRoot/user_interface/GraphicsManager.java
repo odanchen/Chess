@@ -14,7 +14,7 @@ public class GraphicsManager {
     }
 
     public int getOutlineSize() {
-        return squareSize() / 12;
+        return getSquareSize() / 12;
     }
 
     public Color getWhiteSquareColor() {
@@ -29,20 +29,20 @@ public class GraphicsManager {
         return boardColors.getCellSelection();
     }
 
-    public int squareSize() {
+    public int getSquareSize() {
         return getBoardSize() / 8;
     }
 
-    public int rectangleSize() {
-        return squareSize() / 3;
+    public int getEdgeSize() {
+        return getSquareSize() / 3;
     }
 
-    public Rectangle getPlayableRectangle() {
-        return new Rectangle(rectangleSize(), rectangleSize(), getBoardSize(), getBoardSize());
+    public Rectangle getPlayAreaBounds() {
+        return new Rectangle(getEdgeSize(), getEdgeSize(), getBoardSize(), getBoardSize());
     }
 
-    public Rectangle getFrameRectangle() {
-        int newRectSize = 2 * rectangleSize() + getBoardSize();
+    public Rectangle getGameFrameBounds() {
+        int newRectSize = 2 * getEdgeSize() + getBoardSize();
         return new Rectangle(0, 0, newRectSize, newRectSize);
     }
 

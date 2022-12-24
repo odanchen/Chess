@@ -23,8 +23,6 @@ public class GameControl {
     }
 
     public void performMove(Move move) {
-        gameStatus.getBoard().makeMove(move);
-        gameStatus.deselectPiece();
-        gameFrame.updateFrame();
+        gameFrame.makeMove(move);
     }
 }
