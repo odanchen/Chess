@@ -15,7 +15,7 @@ public class GraphicsManager {
     }
 
     public int getOutlineSize() {
-        return getSquareSize() / 12;
+        return getSquareSize() / 6;
     }
 
     public Color getWhiteSquareColor() {

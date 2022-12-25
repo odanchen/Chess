@@ -42,6 +42,7 @@ public class IndicationPanel extends JPanel {
             }
         }
     }
+
     private int getMovingOvalSize() {
         return (int) (graphicsManager.getSquareSize() * MOVE_SELECTION_TO_SQUARE_RATIO);
     }

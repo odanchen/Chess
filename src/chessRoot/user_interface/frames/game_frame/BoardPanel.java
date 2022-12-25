@@ -11,6 +11,10 @@ public class BoardPanel extends JPanel {
     @Override
     public void paint(Graphics g) {
         drawBoardEdge(g);
+        drawPlayArea(g);
+    }
+
+    private void drawPlayArea(Graphics g) {
         int square = graphicsManager.getSquareSize();
         int edge = graphicsManager.getEdgeSize();
         for (int row = 0; row < 8; row++) {
