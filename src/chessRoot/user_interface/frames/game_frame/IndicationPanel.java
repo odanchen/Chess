@@ -30,8 +30,8 @@ public class IndicationPanel extends JPanel {
     public void paint(Graphics g) {
         if (gameStatus.isPieceSelected()) {
             for (var move : gameStatus.getSelectedPieceMoves()) {
-                int row = move.getEndPosition().rowToIdx();
-                int col = move.getEndPosition().colToIdx();
+                int row = Math.abs(move.getEndPosition().rowToIdx() - (graphicsManager.getFlipped() ? 7 : 0));
+                int col = Math.abs(move.getEndPosition().colToIdx() - (graphicsManager.getFlipped() ? 7 : 0));
                 Graphics2D g2 = (Graphics2D) g;
                 g.setColor(graphicsManager.getSelectionColor());
                 if (move instanceof AttackMove && ((AttackMove) move).getAttackedPosition() == move.getEndPosition()) {

@@ -123,11 +123,11 @@ public class GameFrame extends JFrame {
         Move moveToMake = gameStatus.getSelectedPieceMoves().stream()
                 .filter(move -> move.getEndPosition().equals(clickedPosition))
                 .findFirst().orElse(null);
-
         gameControl.performMove(moveToMake);
     }
 
     public void makeMove(Move move) {
+        graphicsManager.flipBoard();
         gameStatus.getBoard().makeMove(move);
         gameStatus.setGameState(stateAfterMove());
         gameStatus.deselectPiece();
@@ -204,8 +204,8 @@ public class GameFrame extends JFrame {
     }
 
     private Position getPositionOnTheBoard(MouseEvent e) {
-        int row = (e.getY() - graphicsManager.getEdgeSize()) / graphicsManager.getSquareSize();
-        int col = (e.getX() - graphicsManager.getEdgeSize()) / graphicsManager.getSquareSize();
+        int row = Math.abs((e.getY() - graphicsManager.getEdgeSize()) / graphicsManager.getSquareSize() - (graphicsManager.getFlipped() ? 7 : 0));
+        int col = Math.abs((e.getX() - graphicsManager.getEdgeSize()) / graphicsManager.getSquareSize() - (graphicsManager.getFlipped() ? 7 : 0));
 
         return new Position((char) (col + 'a'), (8 - row));
     }

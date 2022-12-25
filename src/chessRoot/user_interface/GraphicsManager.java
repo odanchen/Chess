@@ -8,6 +8,7 @@ import java.awt.*;
 public class GraphicsManager {
     private ColorSet boardColors;
     private int boardSize;
+    private boolean isFlipped = false;
 
     public int getBoardSize() {
         return boardSize;
@@ -44,6 +45,15 @@ public class GraphicsManager {
     public Rectangle getGameFrameBounds() {
         int newRectSize = 2 * getEdgeSize() + getBoardSize();
         return new Rectangle(0, 0, newRectSize, newRectSize);
+    }
+    public boolean getFlipped() {
+        return isFlipped;
+    }
+    public void flipBoard(boolean foo) {
+        isFlipped = foo;
+    }
+    public void flipBoard() {
+        isFlipped = !isFlipped;
     }
 
     public GraphicsManager() {

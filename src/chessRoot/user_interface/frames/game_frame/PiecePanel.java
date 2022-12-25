@@ -11,6 +11,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Paths;
+import java.util.List;
 
 public class PiecePanel extends JPanel {
     private String pieceTextureFolder = "cburnett";
@@ -64,8 +65,8 @@ public class PiecePanel extends JPanel {
     public void paint(Graphics g) {
         for (ChessPiece piece : gameStatus.getBoard().getAllPieces()) {
 
-            int row = Math.abs(piece.getPosition().getRow() - 8);
-            int col = (int) piece.getPosition().getCol() - 'a';
+            int row = Math.abs(piece.getPosition().getRow() - (graphicsManager.getFlipped() ? 1 : 8));
+            int col = Math.abs(piece.getPosition().getCol() - 'a' - (graphicsManager.getFlipped() ? 7 : 0));
 
             BufferedImage image = getTextureOfPiece(piece);
             image = toBufferedImage(image.getScaledInstance(getPieceSize(), getPieceSize(), Image.SCALE_SMOOTH));
