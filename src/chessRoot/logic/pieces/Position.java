@@ -54,8 +54,12 @@ public class Position {
         return new Position(pos.charAt(0), Integer.parseInt(pos.substring(1)));
     }
 
-    public boolean equals(Position position) {
-        return (this.getRow() == position.getRow() && this.getCol() == position.getCol());
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Position)) return false;
+        Position position = (Position) o;
+        return (getRow() == position.getRow() && getCol() == position.getCol());
     }
 
     public int rowToIdx() {
