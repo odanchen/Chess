@@ -19,7 +19,7 @@ public class GraphicsManager {
     private final HashMap<String, BufferedImage> activeTextures;
     private ColorSet boardColors;
     private int boardSize;
-    private boolean isFlipped = true;
+    private boolean isFlipped = false;
 
     public int getBoardSize() {
         return boardSize;
@@ -72,6 +72,26 @@ public class GraphicsManager {
 
     public int getPieceCoordinate(int idx) {
         return (getSquareSize() * idx) + (getSquareSize() - getPieceSize()) / 2;
+    }
+
+    public int getMovingOvalSize() {
+        return (int) (getSquareSize() * 0.3);
+    }
+
+    public int getMovingCoordinate(int idx) {
+        return (getSquareSize() * idx) + (getSquareSize() - getMovingOvalSize()) / 2;
+    }
+
+    public int getAttackingOvalSize() {
+        return (int) (getSquareSize() * 0.85);
+    }
+
+    public int getAttackingLineSize() {
+        return getSquareSize() / 12;
+    }
+
+    public int getAttackingCoordinate(int idx) {
+        return (getSquareSize() * idx) + (getSquareSize() - getAttackingOvalSize()) / 2;
     }
 
     private void fillActiveTextures() {

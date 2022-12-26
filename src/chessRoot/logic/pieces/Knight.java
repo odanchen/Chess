@@ -64,6 +64,6 @@ public class Knight extends ChessPiece {
 
     @Override
     public String getPieceSignature() {
-        return (isWhite() ? "w" : "b") + "n";
+        return pieceColor.getColorSign() + "n";
     }
 }

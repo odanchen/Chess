@@ -120,6 +120,6 @@ public class King extends ChessPiece {
 
     @Override
     public String getPieceSignature() {
-        return (isWhite() ? "w" : "b") + "k";
+        return pieceColor.getColorSign() + "k";
     }
 }

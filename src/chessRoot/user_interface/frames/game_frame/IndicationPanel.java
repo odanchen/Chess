@@ -1,6 +1,7 @@
 package chessRoot.user_interface.frames.game_frame;
 
 import chessRoot.logic.moves.AttackMove;
+import chessRoot.logic.moves.Move;
 import chessRoot.user_interface.GraphicsManager;
 import chessRoot.user_interface.game_flow.GameStatus;
 
@@ -9,8 +10,6 @@ import javax.swing.*;
 import java.awt.*;
 
 public class IndicationPanel extends JPanel {
-    private final double MOVE_SELECTION_TO_SQUARE_RATIO = 0.3;
-    private final double ATTACK_SELECTION_TO_SQUARE_RATIO = 0.85;
     private final GameStatus gameStatus;
     private final GraphicsManager graphicsManager;
 
@@ -29,33 +28,37 @@ public class IndicationPanel extends JPanel {
     @Override
     public void paint(Graphics g) {
         if (gameStatus.isPieceSelected()) {
-            for (var move : gameStatus.getSelectedPieceMoves()) {
-                int row = Math.abs(move.getEndPosition().rowToIdx() - (graphicsManager.isFlipped() ? 7 : 0));
-                int col = Math.abs(move.getEndPosition().colToIdx() - (graphicsManager.isFlipped() ? 7 : 0));
-                Graphics2D g2 = (Graphics2D) g;
-                g.setColor(graphicsManager.getSelectionColor());
-                if (move instanceof AttackMove && ((AttackMove) move).getAttackedPosition() == move.getEndPosition()) {
-                    g2.setStroke(new BasicStroke(6));
-                    g.drawOval(getAttackingCoordinate(col), getAttackingCoordinate(row), getAttackingOvalSize(), getAttackingOvalSize());
-                } else
-                    g.fillOval(getMovingCoordinate(col), getMovingCoordinate(row), getMovingOvalSize(), getMovingOvalSize());
-            }
+            gameStatus.getSelectedPieceMoves().forEach(move -> drawMoveIndication(g, move));
         }
     }
 
-    private int getMovingOvalSize() {
-        return (int) (graphicsManager.getSquareSize() * MOVE_SELECTION_TO_SQUARE_RATIO);
+    private void drawMoveIndication(Graphics g, Move move) {
+        int row = Math.abs(move.getEndPosition().rowToIdx() - (graphicsManager.isFlipped() ? 7 : 0));
+        int col = Math.abs(move.getEndPosition().colToIdx() - (graphicsManager.isFlipped() ? 7 : 0));
+        g.setColor(graphicsManager.getSelectionColor());
+
+        if (move instanceof AttackMove && ((AttackMove) move).getAttackedPosition() == move.getEndPosition()) {
+            drawAttackMove(g, row, col);
+        } else {
+            drawMove(g, row, col);
+        }
     }
 
-    private int getMovingCoordinate(int idx) {
-        return (graphicsManager.getSquareSize() * idx) + (graphicsManager.getSquareSize() - getMovingOvalSize()) / 2;
+    private void drawAttackMove(Graphics g, int row, int col) {
+        g.setColor(graphicsManager.getSelectionColor());
+        int ovalSize = graphicsManager.getAttackingOvalSize();
+        row = graphicsManager.getAttackingCoordinate(row);
+        col = graphicsManager.getAttackingCoordinate(col);
+        Graphics2D g2 = (Graphics2D) g;
+        g2.setStroke(new BasicStroke(graphicsManager.getAttackingLineSize()));
+        g.drawOval(col, row, ovalSize, ovalSize);
     }
 
-    private int getAttackingOvalSize() {
-        return (int) (graphicsManager.getSquareSize() * ATTACK_SELECTION_TO_SQUARE_RATIO);
-    }
-
-    private int getAttackingCoordinate(int idx) {
-        return (graphicsManager.getSquareSize() * idx) + (graphicsManager.getSquareSize() - getAttackingOvalSize()) / 2;
+    private void drawMove(Graphics g, int row, int col) {
+        g.setColor(graphicsManager.getSelectionColor());
+        int ovalSize = graphicsManager.getMovingOvalSize();
+        row = graphicsManager.getMovingCoordinate(row);
+        col = graphicsManager.getMovingCoordinate(col);
+        g.fillOval(col, row, ovalSize, ovalSize);
     }
 }

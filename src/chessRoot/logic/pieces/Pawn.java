@@ -97,6 +97,6 @@ public class Pawn extends ChessPiece {
 
     @Override
     public String getPieceSignature() {
-        return (isWhite() ? "w" : "b") + "p";
+        return pieceColor.getColorSign() + "p";
     }
 }

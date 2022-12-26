@@ -1,6 +1,16 @@
 package chessRoot.logic.pieces;
 
 public enum PieceColor {
-    WHITE,
-    BLACK
+    WHITE("w"),
+    BLACK("b");
+
+    private final String colorSign;
+
+    PieceColor(String colorSign) {
+        this.colorSign = colorSign;
+    }
+
+    public String getColorSign() {
+        return this.colorSign;
+    }
 }

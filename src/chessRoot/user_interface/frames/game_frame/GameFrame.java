@@ -48,22 +48,8 @@ public class GameFrame extends JFrame {
         add(boardPanel);
     }
 
-    private void playerWhiteTurnEvent(MouseEvent e) {
-        if (isClickInsideBoard(e)) {
-            ChessPiece clickedPiece = gameStatus.getBoard().getPieceAt(getPositionOnTheBoard(e));
-            if (clickedPiece != null && clickedPiece.isWhite()) {
-                selectPiece(clickedPiece);
-            }
-        }
-    }
-
-    private void playerBlackTurnEvent(MouseEvent e) {
-        if (isClickInsideBoard(e)) {
-            ChessPiece clickedPiece = gameStatus.getBoard().getPieceAt(getPositionOnTheBoard(e));
-            if (clickedPiece != null && clickedPiece.isBlack()) {
-                selectPiece(clickedPiece);
-            }
-        }
+    private void playerTurnEvent(MouseEvent e) {
+        if (isActionSelect(e)) actionSelect(e);
     }
 
     private void playerSelectedAPieceEvent(MouseEvent e) {
@@ -75,10 +61,8 @@ public class GameFrame extends JFrame {
     private void onMousePress(MouseEvent e) {
         switch (gameStatus.getState()) {
             case PLAYER_WHITE_TURN:
-                playerWhiteTurnEvent(e);
-                break;
             case PLAYER_BLACK_TURN:
-                playerBlackTurnEvent(e);
+                playerTurnEvent(e);
                 break;
             case PLAYER_BLACK_SELECTED_PIECE:
             case PLAYER_WHITE_SELECTED_PIECE:
@@ -112,6 +96,27 @@ public class GameFrame extends JFrame {
         });
     }
 
+    private void actionSelect(MouseEvent e) {
+        ChessPiece clickedPiece = gameStatus.getBoard().getPieceAt(getPositionOnTheBoard(e));
+        selectPiece(clickedPiece);
+    }
+
+    private boolean isActionSelect(MouseEvent e) {
+        if (isClickOutsideBoard(e)) return false;
+        ChessPiece clickedPiece = gameStatus.getBoard().getPieceAt(getPositionOnTheBoard(e));
+        return (isClickedPieceRightColor(clickedPiece));
+    }
+
+    private boolean isClickedPieceRightColor(ChessPiece clickedPiece) {
+        if (clickedPiece == null) return false;
+
+        if (gameStatus.getState() == PLAYER_BLACK_SELECTED_PIECE || gameStatus.getState() == PLAYER_BLACK_TURN) {
+            return clickedPiece.isBlack();
+        } else {
+            return clickedPiece.isWhite();
+        }
+    }
+
     private GameStates stateAfterMove() {
         if (gameStatus.getState() == PLAYER_BLACK_SELECTED_PIECE) return PLAYER_WHITE_TURN;
         return PLAYER_BLACK_TURN;
@@ -127,7 +132,6 @@ public class GameFrame extends JFrame {
     }
 
     public void makeMove(Move move) {
-        //graphicsManager.flipBoard();
         gameStatus.getBoard().makeMove(move);
         gameStatus.setGameState(stateAfterMove());
         gameStatus.deselectPiece();
@@ -141,13 +145,10 @@ public class GameFrame extends JFrame {
     }
 
     private boolean isActionReselect(MouseEvent e) {
-        if (!isClickInsideBoard(e)) return false;
+        if (isClickOutsideBoard(e)) return false;
         Position clickedPosition = getPositionOnTheBoard(e);
         ChessPiece clickedPiece = gameStatus.getBoard().getPieceAt(clickedPosition);
-        if (gameStatus.getState() == PLAYER_BLACK_SELECTED_PIECE) {
-            return (clickedPiece != null && clickedPiece.isBlack() && clickedPiece != gameStatus.getSelectedPiece());
-        }
-        return (clickedPiece != null && clickedPiece.isWhite() && clickedPiece != gameStatus.getSelectedPiece());
+        return (isClickedPieceRightColor(clickedPiece) && clickedPiece != gameStatus.getSelectedPiece());
     }
 
     private void reselectPiece(MouseEvent e) {
@@ -180,7 +181,7 @@ public class GameFrame extends JFrame {
     }
 
     private boolean isActionDeselect(MouseEvent e) {
-        if (!isClickInsideBoard(e)) return true;
+        if (isClickOutsideBoard(e)) return true;
         Position clickedPosition = getPositionOnTheBoard(e);
         return gameStatus.getSelectedPieceMoves().stream().noneMatch(move -> move.getEndPosition().equals(clickedPosition));
     }
@@ -196,11 +197,11 @@ public class GameFrame extends JFrame {
         indicPanel.updatePanel();
     }
 
-    private boolean isClickInsideBoard(MouseEvent e) {
+    private boolean isClickOutsideBoard(MouseEvent e) {
         int rect = graphicsManager.getEdgeSize();
         int board = graphicsManager.getBoardSize();
 
-        return (e.getX() > rect) && (e.getX() < board + rect) && (e.getY() > rect) && (e.getY() < board + rect);
+        return (e.getX() <= rect) || (e.getX() >= board + rect) || (e.getY() <= rect) || (e.getY() >= board + rect);
     }
 
     private Position getPositionOnTheBoard(MouseEvent e) {
