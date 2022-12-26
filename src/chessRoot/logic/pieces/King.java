@@ -119,7 +119,7 @@ public class King extends ChessPiece {
     }
 
     @Override
-    public String getPieceLetter() {
-        return "k";
+    public String getPieceSignature() {
+        return (isWhite() ? "w" : "b") + "k";
     }
 }

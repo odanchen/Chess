@@ -52,7 +52,7 @@ public class Bishop extends ChessPiece {
     }
 
     @Override
-    public String getPieceLetter() {
-        return "b";
+    public String getPieceSignature() {
+        return (isWhite() ? "w" : "b") + "b";
     }
 }

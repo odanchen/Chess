@@ -100,7 +100,7 @@ public abstract class ChessPiece {
         return validateMoves(board, calculatePotentialMoves(board));
     }
 
-    public abstract String getPieceLetter();
+    public abstract String getPieceSignature();
 
     public boolean isWhite() {
         return pieceColor == PieceColor.WHITE;

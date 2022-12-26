@@ -4,58 +4,13 @@ import chessRoot.logic.pieces.ChessPiece;
 import chessRoot.user_interface.GraphicsManager;
 import chessRoot.user_interface.game_flow.GameStatus;
 
-import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
-import java.nio.file.Paths;
-import java.util.List;
 
 public class PiecePanel extends JPanel {
-    private String pieceTextureFolder = "cburnett";
-    private final double SQUARE_TO_PIECE_RATIO = 0.875;
     private final GameStatus gameStatus;
     private final GraphicsManager graphicsManager;
-
-    private int getPieceSize() {
-        return (int) (graphicsManager.getSquareSize() * this.SQUARE_TO_PIECE_RATIO);
-    }
-
-    private int getPieceCoordinate(int idx) {
-        return (graphicsManager.getSquareSize() * idx) + (graphicsManager.getSquareSize()-getPieceSize())/2;
-    }
-
-    private static BufferedImage toBufferedImage(Image img) {
-        if (img instanceof BufferedImage) {
-            return (BufferedImage) img;
-        }
-
-        BufferedImage bImage = new BufferedImage(img.getWidth(null), img.getHeight(null), BufferedImage.TYPE_INT_ARGB);
-
-        Graphics2D bGr = bImage.createGraphics();
-        bGr.drawImage(img, 0, 0, null);
-        bGr.dispose();
-
-        return bImage;
-    }
-
-    private String getImageName(ChessPiece piece) {
-        String color = (piece.isWhite()) ? "w" : "b";
-        return (color + piece.getPieceLetter() + ".png");
-    }
-
-    private BufferedImage getTextureOfPiece(ChessPiece piece) {
-        String root = Paths.get("").toAbsolutePath().toString();
-        String[] fullPath = {root, "src", "chessRoot", "assets", "pieces_textures", pieceTextureFolder, getImageName(piece)};
-
-        try {
-            return ImageIO.read(new File(String.join(File.separator, fullPath)));
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
 
     public void updatePanel() {
         repaint();
@@ -63,15 +18,15 @@ public class PiecePanel extends JPanel {
 
     @Override
     public void paint(Graphics g) {
-        for (ChessPiece piece : gameStatus.getBoard().getAllPieces()) {
+        gameStatus.getAllPieces().forEach(piece -> drawPiece(g, piece));
+    }
 
-            int row = Math.abs(piece.getPosition().getRow() - (graphicsManager.getFlipped() ? 1 : 8));
-            int col = Math.abs(piece.getPosition().getCol() - 'a' - (graphicsManager.getFlipped() ? 7 : 0));
+    private void drawPiece(Graphics g, ChessPiece piece) {
+        int row = Math.abs(piece.getPosition().getRow() - (graphicsManager.isFlipped() ? 1 : 8));
+        int col = Math.abs(piece.getPosition().getCol() - 'a' - (graphicsManager.isFlipped() ? 7 : 0));
 
-            BufferedImage image = getTextureOfPiece(piece);
-            image = toBufferedImage(image.getScaledInstance(getPieceSize(), getPieceSize(), Image.SCALE_SMOOTH));
-            g.drawImage(image, getPieceCoordinate(col), getPieceCoordinate(row), null);
-        }
+        BufferedImage image = graphicsManager.getTextureOfPiece(piece);
+        g.drawImage(image, graphicsManager.getPieceCoordinate(col), graphicsManager.getPieceCoordinate(row), null);
     }
 
     PiecePanel(GraphicsManager graphicsManager, GameStatus gameStatus) {

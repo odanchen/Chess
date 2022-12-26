@@ -63,7 +63,7 @@ public class Knight extends ChessPiece {
     }
 
     @Override
-    public String getPieceLetter() {
-        return "n";
+    public String getPieceSignature() {
+        return (isWhite() ? "w" : "b") + "n";
     }
 }

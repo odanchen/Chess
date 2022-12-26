@@ -45,6 +45,10 @@ public class GameStatus {
         return selectedPiece != null;
     }
 
+    public List<ChessPiece> getAllPieces() {
+        return board.getAllPieces();
+    }
+
     public GameStatus(Board board, GameStates startingState) {
         this.selectedPiece = null;
         this.gameState = startingState;

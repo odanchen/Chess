@@ -68,7 +68,7 @@ public class Castle extends ChessPiece {
     }
 
     @Override
-    public String getPieceLetter() {
-        return "r";
+    public String getPieceSignature() {
+        return (isWhite() ? "w" : "b") + "r";
     }
 }
