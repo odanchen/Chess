@@ -37,11 +37,10 @@ public class IndicationPanel extends JPanel {
         int col = Math.abs(move.getEndPosition().colToIdx() - (graphicsManager.isFlipped() ? 7 : 0));
         g.setColor(graphicsManager.getSelectionColor());
 
-        if (move instanceof AttackMove && ((AttackMove) move).getAttackedPosition() == move.getEndPosition()) {
+        if (move instanceof AttackMove && ((AttackMove) move).getAttackedPosition() == move.getEndPosition())
             drawAttackMove(g, row, col);
-        } else {
-            drawMove(g, row, col);
-        }
+        else drawMove(g, row, col);
+
     }
 
     private void drawAttackMove(Graphics g, int row, int col) {

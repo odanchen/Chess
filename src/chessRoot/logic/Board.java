@@ -98,8 +98,9 @@ public class Board {
     }
 
     private void makePromotionMove(PromotionMove move) {
-        makeRelocationMove(move);
-        this.setPieceAt(move.getEndPosition(), move.getNewPiece());
+        if (move.getNewPiece().isWhite()) whitePieces.remove(getPieceAt(move.getStartPosition()));
+        else blackPieces.remove(getPieceAt(move.getStartPosition()));
+        addPiece(move.getNewPiece());
     }
 
     private void makePromotionAttackMove(PromotionAttackMove move) {
