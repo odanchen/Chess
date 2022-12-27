@@ -92,7 +92,6 @@ public class GameFrame extends JFrame {
 
 
     private void onMousePress(MouseEvent e) {
-        System.out.println(gameStatus.getState().toString());
         switch (gameStatus.getState()) {
             case WHITE_TURN:
             case BLACK_TURN:

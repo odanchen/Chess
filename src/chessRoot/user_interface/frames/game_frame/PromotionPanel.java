@@ -12,6 +12,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class PromotionPanel extends JPanel {
@@ -31,7 +32,7 @@ public class PromotionPanel extends JPanel {
         if (move != null) {
             int sqSize = graphicsManager.getSquareSize();
             int col = move.getEndPosition().getCol() - 'a';
-            int row = Math.abs(move.getEndPosition().getRow() - 8) - (move.getPieceAtStart(gameStatus.getBoard()).getPieceColor()==PieceColor.WHITE ? 0 : 4);
+            int row = Math.abs(move.getEndPosition().getRow() - 8) - (move.getPieceAtStart(gameStatus.getBoard()).getPieceColor()==PieceColor.WHITE ? 0 : 3);
             drawRect(col,row,sqSize,g);
             drawPieces(col,row,sqSize,g);
         }
@@ -41,7 +42,7 @@ public class PromotionPanel extends JPanel {
         g.setColor(graphicsManager.getWhiteSquareColor());
         g.fillRect(col * sqSize,row * sqSize,sqSize,sqSize * 4);
         g.setColor(Color.black);
-        g.drawRect(col * sqSize,row * sqSize,sqSize - 1,sqSize * 4);
+        g.drawRect(col * sqSize,row * sqSize,sqSize - 1,(sqSize * 4) - 1);
     }
 
     public void drawPieces(int col, int row, int sqSize, Graphics g) {
@@ -51,6 +52,7 @@ public class PromotionPanel extends JPanel {
         pieces.add(graphicsManager.getTextureOfPiece(color + "n"));
         pieces.add(graphicsManager.getTextureOfPiece(color + "r"));
         pieces.add(graphicsManager.getTextureOfPiece(color + "b"));
+        if (color == "b") Collections.reverse(pieces);
         for (int i = 0; i < pieces.size(); i++) {
             g.drawImage(pieces.get(i),graphicsManager.getPieceCoordinate(col), graphicsManager.getPieceCoordinate(row) + i*sqSize, null);
         }
