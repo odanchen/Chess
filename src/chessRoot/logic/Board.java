@@ -1,9 +1,6 @@
 package chessRoot.logic;
 
-import chessRoot.logic.moves.AttackMove;
-import chessRoot.logic.moves.CastlingMove;
-import chessRoot.logic.moves.Move;
-import chessRoot.logic.moves.RelocationMove;
+import chessRoot.logic.moves.*;
 import chessRoot.logic.pieces.*;
 
 import java.util.ArrayList;
@@ -100,6 +97,18 @@ public class Board {
         makeRelocationMove(move.getKingMove());
     }
 
+    private void makePromotionMove(PromotionMove move) {
+        makeRelocationMove(move);
+        this.setPieceAt(move.getEndPosition(), move.getNewPiece());
+    }
+
+    private void makePromotionAttackMove(PromotionAttackMove move) {
+        makeAttackMove(move.getAttackMove());
+        if (move.getNewPiece().isWhite()) whitePieces.remove(getPieceAt(move.getEndPosition()));
+        else blackPieces.remove(getPieceAt(move.getEndPosition()));
+        addPiece(move.getNewPiece());
+    }
+
     /**
      * mutates the current state of the board to the state after the move have been performed
      *
@@ -112,6 +121,10 @@ public class Board {
             makeAttackMove((AttackMove) move);
         } else if (move instanceof CastlingMove) {
             makeCastlingMove((CastlingMove) move);
+        } else if (move instanceof PromotionMove) {
+            makePromotionMove((PromotionMove) move);
+        } else if (move instanceof PromotionAttackMove) {
+            makePromotionAttackMove((PromotionAttackMove) move);
         }
     }
 

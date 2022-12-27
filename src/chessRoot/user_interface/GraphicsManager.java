@@ -3,6 +3,8 @@ package chessRoot.user_interface;
 import chessRoot.assets.board_colors.BoardColors;
 import chessRoot.assets.board_colors.ColorSet;
 import chessRoot.logic.pieces.ChessPiece;
+import chessRoot.logic.pieces.PieceColor;
+import chessRoot.logic.pieces.Position;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
@@ -11,6 +13,8 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Paths;
 import java.util.HashMap;
+
+import static chessRoot.logic.pieces.PieceColor.WHITE;
 
 public class GraphicsManager {
     private String pieceTextureFolder = "cburnett";
@@ -131,6 +135,10 @@ public class GraphicsManager {
 
     public BufferedImage getTextureOfPiece(ChessPiece piece) {
         return activeTextures.get(piece.getPieceSignature());
+    }
+
+    public BufferedImage getTextureOfPiece(String signature) {
+        return activeTextures.get(signature);
     }
 
     public GraphicsManager() {

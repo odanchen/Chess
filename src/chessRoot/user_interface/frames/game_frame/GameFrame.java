@@ -1,9 +1,11 @@
 package chessRoot.user_interface.frames.game_frame;
 
+import chessRoot.logic.moves.AttackMove;
+import chessRoot.logic.moves.PromotionAttackMove;
+import chessRoot.logic.moves.PromotionMove;
+import chessRoot.logic.pieces.*;
 import chessRoot.user_interface.GraphicsManager;
 import chessRoot.user_interface.game_flow.GameControl;
-import chessRoot.logic.pieces.ChessPiece;
-import chessRoot.logic.pieces.Position;
 import chessRoot.logic.moves.Move;
 import chessRoot.user_interface.game_flow.GameStates;
 import chessRoot.user_interface.game_flow.GameStatus;
@@ -11,6 +13,8 @@ import chessRoot.user_interface.game_flow.GameStatus;
 import javax.swing.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.util.Arrays;
+import java.util.List;
 
 import static chessRoot.user_interface.game_flow.GameStates.*;
 
@@ -96,6 +100,14 @@ public class GameFrame extends JFrame {
         });
     }
 
+    private Move getMoveOnClick(MouseEvent e) {
+        Position clickedPosition = getPositionOnTheBoard(e);
+
+        return gameStatus.getSelectedPieceMoves().stream()
+                .filter(move -> move.getEndPosition().equals(clickedPosition))
+                .findFirst().orElse(null);
+    }
+
     private void actionSelect(MouseEvent e) {
         ChessPiece clickedPiece = gameStatus.getBoard().getPieceAt(getPositionOnTheBoard(e));
         selectPiece(clickedPiece);
@@ -118,17 +130,76 @@ public class GameFrame extends JFrame {
     }
 
     private GameStates stateAfterMove() {
-        if (gameStatus.getState() == PLAYER_BLACK_SELECTED_PIECE) return PLAYER_WHITE_TURN;
-        return PLAYER_BLACK_TURN;
+        switch (gameStatus.getState()) {
+            case PLAYER_BLACK_SELECTED_PIECE:
+                return PLAYER_WHITE_TURN;
+            case PLAYER_WHITE_SELECTED_PIECE:
+                return PLAYER_BLACK_TURN;
+        }
+        return null;
     }
 
     private void makeMove(MouseEvent e) {
-        Position clickedPosition = getPositionOnTheBoard(e);
+        Move moveToMake = getMoveOnClick(e);
+        if (isMovePromotional(moveToMake)) {
+           moveToMake = makeMovePromotional(moveToMake, getNewPieceName());
+        }
 
-        Move moveToMake = gameStatus.getSelectedPieceMoves().stream()
-                .filter(move -> move.getEndPosition().equals(clickedPosition))
-                .findFirst().orElse(null);
         gameControl.performMove(moveToMake);
+    }
+
+    private String getNewPieceName() {
+        // Creating list of options
+        List<JRadioButton> options = Arrays.asList(
+                new JRadioButton("queen"),
+                new JRadioButton("castle"),
+                new JRadioButton("bishop"),
+                new JRadioButton("knight")
+        );
+
+        JPanel panel = new JPanel(); // panel for components to pass into dialog
+        ButtonGroup group = new ButtonGroup(); // group to make only one RadioButton selected
+        // Adding options
+        options.forEach(option -> {
+            group.add(option);
+            panel.add(option);
+        });
+        // Calling a Dialog Window and passing the panel filled with components
+        JOptionPane.showMessageDialog(null, panel, "Choose New Piece", JOptionPane.PLAIN_MESSAGE);
+        return options.stream()
+                .filter(AbstractButton::isSelected)
+                .findFirst()
+                .map(AbstractButton::getText)
+                .orElse(null);
+    }
+
+    public Move makeMovePromotional(Move move, String pieceName) {
+        ChessPiece newPiece = makeNewPiece(move, pieceName);
+        if (move instanceof AttackMove) {
+            return new PromotionAttackMove(move.getStartPosition(), move.getEndPosition(), newPiece, ((AttackMove) move).getAttackedPosition());
+        }
+        return new PromotionMove(move.getStartPosition(), move.getEndPosition(), newPiece);
+    }
+
+    private ChessPiece makeNewPiece(Move move, String pieceTitle) {
+        switch (pieceTitle) {
+            case "queen":
+                return new Queen(move.getEndPosition(), move.getPieceAtStart(gameStatus.getBoard()).getPieceColor());
+            case "knight":
+                return new Knight(move.getEndPosition(), move.getPieceAtStart(gameStatus.getBoard()).getPieceColor());
+            case "castle":
+                return new Castle(move.getEndPosition(), move.getPieceAtStart(gameStatus.getBoard()).getPieceColor(), true);
+        }
+        return new Bishop(move.getEndPosition(), move.getPieceAtStart(gameStatus.getBoard()).getPieceColor());
+    }
+
+    private boolean isMovePromotional(Move move) {
+        if (!(move.getPieceAtStart(gameStatus.getBoard()) instanceof Pawn)) return false;
+        if (move.getPieceAtStart(gameStatus.getBoard()).isWhite()) {
+            return move.getEndPosition().getRow() == 8;
+        } else {
+            return move.getEndPosition().getRow() == 1;
+        }
     }
 
     public void makeMove(Move move) {
@@ -140,8 +211,7 @@ public class GameFrame extends JFrame {
 
     private boolean isActionMove(MouseEvent e) {
         if (isActionReselect(e)) return false;
-        Position clickedPosition = getPositionOnTheBoard(e);
-        return gameStatus.getSelectedPieceMoves().stream().anyMatch(move -> move.getEndPosition().equals(clickedPosition));
+        return getMoveOnClick(e) != null;
     }
 
     private boolean isActionReselect(MouseEvent e) {
@@ -182,8 +252,7 @@ public class GameFrame extends JFrame {
 
     private boolean isActionDeselect(MouseEvent e) {
         if (isClickOutsideBoard(e)) return true;
-        Position clickedPosition = getPositionOnTheBoard(e);
-        return gameStatus.getSelectedPieceMoves().stream().noneMatch(move -> move.getEndPosition().equals(clickedPosition));
+        return getMoveOnClick(e) == null;
     }
 
     private void deselectPiece() {
