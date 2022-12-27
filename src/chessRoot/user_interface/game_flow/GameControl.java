@@ -7,8 +7,8 @@ import chessRoot.logic.pieces.PieceColor;
 import chessRoot.logic.moves.Move;
 
 import static chessRoot.logic.pieces.PieceColor.WHITE;
-import static chessRoot.user_interface.game_flow.GameStates.PLAYER_BLACK_TURN;
-import static chessRoot.user_interface.game_flow.GameStates.PLAYER_WHITE_TURN;
+import static chessRoot.user_interface.game_flow.GameStates.BLACK_TURN;
+import static chessRoot.user_interface.game_flow.GameStates.WHITE_TURN;
 
 public class GameControl {
     private final GameFrame gameFrame;
@@ -16,7 +16,7 @@ public class GameControl {
     private final GameManager gameManager;
 
     public GameControl(Board board, PieceColor movingSide, GameManager gameManager) {
-        GameStates state = movingSide == WHITE ? PLAYER_WHITE_TURN : PLAYER_BLACK_TURN;
+        GameStates state = movingSide == WHITE ? WHITE_TURN : BLACK_TURN;
         this.gameStatus = new GameStatus(board, state);
         this.gameManager = gameManager;
         this.gameFrame = new GameFrame(gameStatus, this, gameManager.getGraphicsManager());
