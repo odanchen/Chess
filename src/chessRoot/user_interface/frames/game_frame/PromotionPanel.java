@@ -1,11 +1,8 @@
 package chessRoot.user_interface.frames.game_frame;
 
 import chessRoot.logic.moves.Move;
-import chessRoot.logic.pieces.ChessPiece;
 import chessRoot.logic.pieces.PieceColor;
-import chessRoot.logic.pieces.Position;
 import chessRoot.user_interface.GraphicsManager;
-import chessRoot.user_interface.game_flow.GameStates;
 import chessRoot.user_interface.game_flow.GameStatus;
 
 import javax.swing.*;
@@ -52,7 +49,7 @@ public class PromotionPanel extends JPanel {
         pieces.add(graphicsManager.getTextureOfPiece(color + "n"));
         pieces.add(graphicsManager.getTextureOfPiece(color + "r"));
         pieces.add(graphicsManager.getTextureOfPiece(color + "b"));
-        if (color == "b") Collections.reverse(pieces);
+        if (color.equals("b")) Collections.reverse(pieces);
         for (int i = 0; i < pieces.size(); i++) {
             g.drawImage(pieces.get(i),graphicsManager.getPieceCoordinate(col), graphicsManager.getPieceCoordinate(row) + i*sqSize, null);
         }

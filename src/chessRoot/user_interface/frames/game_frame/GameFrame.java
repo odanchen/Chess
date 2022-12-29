@@ -1,12 +1,9 @@
 package chessRoot.user_interface.frames.game_frame;
 
-import chessRoot.logic.moves.AttackMove;
-import chessRoot.logic.moves.PromotionAttackMove;
-import chessRoot.logic.moves.PromotionMove;
+import chessRoot.logic.moves.*;
 import chessRoot.logic.pieces.*;
 import chessRoot.user_interface.GraphicsManager;
 import chessRoot.user_interface.game_flow.GameControl;
-import chessRoot.logic.moves.Move;
 import chessRoot.user_interface.game_flow.GameStates;
 import chessRoot.user_interface.game_flow.GameStatus;
 
@@ -66,12 +63,12 @@ public class GameFrame extends JFrame {
     private void playerPromotionEvent(MouseEvent e) {
         ChessPiece desiredPiece = desiredPieceToPromoteTo(e);
         if (desiredPiece != null) {
-            if (gameStatus.getBoard().getPieceAt(promPanel.getMove().getEndPosition()) == null) { // Promotion move
-                PromotionMove promMove = new PromotionMove(promPanel.getMove().getStartPosition(), promPanel.getMove().getEndPosition(),desiredPiece);
+            if (promPanel.getMove() instanceof RelocationMove) { // Promotion move
+                PromotionMove promMove = new PromotionMove((RelocationMove) promPanel.getMove(), desiredPiece);
                 makeMove(promMove);
             }
             else { // Attacking promotion move.
-                PromotionAttackMove promMove = new PromotionAttackMove(promPanel.getMove().getStartPosition(),promPanel.getMove().getEndPosition(),desiredPiece,promPanel.getMove().getEndPosition());
+                PromotionAttackMove promMove = new PromotionAttackMove((AttackMove) promPanel.getMove(), desiredPiece);
                 makeMove(promMove);
             }
         }

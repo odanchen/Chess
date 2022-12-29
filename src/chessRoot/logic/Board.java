@@ -98,16 +98,13 @@ public class Board {
     }
 
     private void makePromotionMove(PromotionMove move) {
-        if (move.getNewPiece().isWhite()) whitePieces.remove(getPieceAt(move.getStartPosition()));
-        else blackPieces.remove(getPieceAt(move.getStartPosition()));
-        addPiece(move.getNewPiece());
+        makeRelocationMove(move);
+        replacePiece(move.getNewPiece());
     }
 
     private void makePromotionAttackMove(PromotionAttackMove move) {
-        makeAttackMove(move.getAttackMove());
-        if (move.getNewPiece().isWhite()) whitePieces.remove(getPieceAt(move.getEndPosition()));
-        else blackPieces.remove(getPieceAt(move.getEndPosition()));
-        addPiece(move.getNewPiece());
+        makeAttackMove(move);
+        replacePiece(move.getNewPiece());
     }
 
     /**
@@ -116,16 +113,16 @@ public class Board {
      * @param move the move to be performed
      */
     public void makeMove(Move move) {
-        if (move instanceof RelocationMove) {
+        if (move instanceof PromotionMove) {
+            makePromotionMove((PromotionMove) move);
+        } else if (move instanceof PromotionAttackMove) {
+            makePromotionAttackMove((PromotionAttackMove) move);
+        } else if (move instanceof RelocationMove) {
             makeRelocationMove(move);
         } else if (move instanceof AttackMove) {
             makeAttackMove((AttackMove) move);
         } else if (move instanceof CastlingMove) {
             makeCastlingMove((CastlingMove) move);
-        } else if (move instanceof PromotionMove) {
-            makePromotionMove((PromotionMove) move);
-        } else if (move instanceof PromotionAttackMove) {
-            makePromotionAttackMove((PromotionAttackMove) move);
         }
     }
 
@@ -221,6 +218,12 @@ public class Board {
 
     public boolean isEmptyAt(Position position) {
         return getPieceAt(position) == null;
+    }
+
+    private void replacePiece(ChessPiece newPiece) {
+        if (getPieceAt(newPiece.getPosition()).isWhite()) whitePieces.remove(getPieceAt(newPiece.getPosition()));
+        else blackPieces.remove(getPieceAt(newPiece.getPosition()));
+        addPiece(newPiece);
     }
 
     private void addPiece(ChessPiece piece) {
