@@ -30,6 +30,10 @@ public class PromotionPanel extends JPanel {
             int sqSize = graphicsManager.getSquareSize();
             int col = move.getEndPosition().getCol() - 'a';
             int row = Math.abs(move.getEndPosition().getRow() - 8) - (move.getPieceAtStart(gameStatus.getBoard()).getPieceColor()==PieceColor.WHITE ? 0 : 3);
+            if (graphicsManager.isFlipped()) {
+                col = Math.abs(col-7);
+                row = Math.abs(row-4);
+            }
             drawRect(col,row,sqSize,g);
             drawPieces(col,row,sqSize,g);
         }
@@ -47,7 +51,7 @@ public class PromotionPanel extends JPanel {
         pieces.add(graphicsManager.getTextureOfPiece(color + "n"));
         pieces.add(graphicsManager.getTextureOfPiece(color + "r"));
         pieces.add(graphicsManager.getTextureOfPiece(color + "b"));
-        if (color.equals("b")) Collections.reverse(pieces);
+        if ((color.equals("b") && !graphicsManager.isFlipped()) || (color.equals("w") && graphicsManager.isFlipped())) Collections.reverse(pieces);
         for (int i = 0; i < pieces.size(); i++) {
             g.drawImage(pieces.get(i),graphicsManager.getPieceCoordinate(col), graphicsManager.getPieceCoordinate(row) + i*sqSize, null);
         }
