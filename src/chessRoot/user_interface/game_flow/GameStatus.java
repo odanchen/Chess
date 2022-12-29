@@ -9,6 +9,7 @@ import java.util.List;
 
 public class GameStatus {
     private ChessPiece selectedPiece;
+    private Move selectedMove;
     private GameStates gameState;
     private List<Move> gameLog;
     private final Board board;
@@ -49,8 +50,21 @@ public class GameStatus {
         return board.getAllPieces();
     }
 
+    public void selectMove(Move move) {
+        this.selectedMove = move;
+    }
+
+    public void deselectMove() {
+        this.selectedMove = null;
+    }
+
+    public Move getSelectedMove() {
+        return selectedMove;
+    }
+
     public GameStatus(Board board, GameStates startingState) {
         this.selectedPiece = null;
+        this.selectedMove = null;
         this.gameState = startingState;
         this.board = board;
         this.gameLog = new ArrayList<>();

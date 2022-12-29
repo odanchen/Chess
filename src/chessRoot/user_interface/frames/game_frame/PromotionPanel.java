@@ -16,7 +16,6 @@ public class PromotionPanel extends JPanel {
 
     private final GameStatus gameStatus;
     private final GraphicsManager graphicsManager;
-    private Move move;
 
     public PromotionPanel(GraphicsManager graphicsManager, GameStatus gameStatus) {
         this.graphicsManager = graphicsManager;
@@ -26,6 +25,7 @@ public class PromotionPanel extends JPanel {
     }
     @Override
     public void paint(Graphics g) {
+        Move move = gameStatus.getSelectedMove();
         if (move != null) {
             int sqSize = graphicsManager.getSquareSize();
             int col = move.getEndPosition().getCol() - 'a';
@@ -44,7 +44,7 @@ public class PromotionPanel extends JPanel {
 
     public void drawPieces(int col, int row, int sqSize, Graphics g) {
         List<BufferedImage> pieces = new ArrayList<>();
-        String color = move.getPieceAtStart(gameStatus.getBoard()).getPieceColor() == PieceColor.WHITE ? "w" : "b";
+        String color = gameStatus.getSelectedMove().getPieceAtStart(gameStatus.getBoard()).getPieceColor().getColorSign();
         pieces.add(graphicsManager.getTextureOfPiece(color + "q"));
         pieces.add(graphicsManager.getTextureOfPiece(color + "n"));
         pieces.add(graphicsManager.getTextureOfPiece(color + "r"));
@@ -55,12 +55,8 @@ public class PromotionPanel extends JPanel {
         }
     }
 
-    public Move getMove() {
-        return this.move;
-    }
 
-    public void updatePanel(Move move) {
-        this.move = move;
+    public void updatePanel() {
         removeAll();
         repaint();
     }
