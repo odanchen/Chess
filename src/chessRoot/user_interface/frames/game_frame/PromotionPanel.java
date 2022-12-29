@@ -36,15 +36,13 @@ public class PromotionPanel extends JPanel {
     }
 
     private void drawRect(int col, int row, int sqSize, Graphics g) {
-        g.setColor(graphicsManager.getWhiteSquareColor());
-        g.fillRect(col * sqSize,row * sqSize,sqSize,sqSize * 4);
-        g.setColor(Color.black);
-        g.drawRect(col * sqSize,row * sqSize,sqSize - 1,(sqSize * 4) - 1);
+        g.setColor(Color.white);
+        g.fillRoundRect(col * sqSize,row * sqSize,sqSize,sqSize * 4, sqSize / 3, sqSize / 3);
     }
 
     public void drawPieces(int col, int row, int sqSize, Graphics g) {
         List<BufferedImage> pieces = new ArrayList<>();
-        String color = gameStatus.getSelectedMove().getPieceAtStart(gameStatus.getBoard()).getPieceColor().getColorSign();
+        String color = gameStatus.getSelectedColor().getColorSign();
         pieces.add(graphicsManager.getTextureOfPiece(color + "q"));
         pieces.add(graphicsManager.getTextureOfPiece(color + "n"));
         pieces.add(graphicsManager.getTextureOfPiece(color + "r"));

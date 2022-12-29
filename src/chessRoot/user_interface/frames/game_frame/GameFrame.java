@@ -62,16 +62,17 @@ public class GameFrame extends JFrame {
     }
 
     private void piecePromotionEvent(MouseEvent e) {
-        ChessPiece desiredPiece = desiredPieceToPromoteTo(e);
-        if (desiredPiece != null) {
-            if (gameStatus.getSelectedMove() instanceof RelocationMove) { // Promotion move
-                PromotionMove promMove = new PromotionMove((RelocationMove) gameStatus.getSelectedMove(), desiredPiece);
-                makeMove(promMove);
-            } else { // Attacking promotion move.
-                PromotionAttackMove promMove = new PromotionAttackMove((AttackMove) gameStatus.getSelectedMove(), desiredPiece);
-                makeMove(promMove);
-            }
-        }
+        Move move = createPromotionMove(e);
+        if (move != null) gameControl.performMove(move);
+    }
+
+    private Move createPromotionMove(MouseEvent e) {
+        ChessPiece newPiece = desiredPieceToPromoteTo(e);
+        if (newPiece == null) return null;
+
+        if (gameStatus.getSelectedMove() instanceof RelocationMove)
+            return new PromotionMove((RelocationMove) gameStatus.getSelectedMove(), newPiece);
+        return new PromotionAttackMove((AttackMove) gameStatus.getSelectedMove(), newPiece);
     }
 
     private ChessPiece desiredPieceToPromoteTo(MouseEvent e) {

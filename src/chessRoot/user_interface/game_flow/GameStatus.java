@@ -3,6 +3,7 @@ package chessRoot.user_interface.game_flow;
 import chessRoot.logic.Board;
 import chessRoot.logic.moves.Move;
 import chessRoot.logic.pieces.ChessPiece;
+import chessRoot.logic.pieces.PieceColor;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -60,6 +61,10 @@ public class GameStatus {
 
     public Move getSelectedMove() {
         return selectedMove;
+    }
+
+    public PieceColor getSelectedColor() {
+        return selectedPiece.getPieceColor();
     }
 
     public GameStatus(Board board, GameStates startingState) {
