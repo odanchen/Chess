@@ -2,23 +2,16 @@ package chessRoot.logic.moves;
 
 import chessRoot.logic.Board;
 import chessRoot.logic.pieces.ChessPiece;
-import chessRoot.logic.pieces.Position;
 
 /**
  * If the pawn has reached the last tile. While not attacking any chessRoot.logic.pieces.
  */
-public class PromotionAttackMove extends Move {
+public class PromotionAttackMove extends AttackMove {
     private final ChessPiece newPiece;
-    private final AttackMove attackMove;
 
-    public PromotionAttackMove(Position startPosition, Position endPosition, ChessPiece newPiece, Position attackPos) {
-        super(startPosition, endPosition);
+    public PromotionAttackMove(AttackMove move, ChessPiece newPiece) {
+        super(move.getStartPosition(), move.getEndPosition(), move.getAttackedPosition());
         this.newPiece = newPiece;
-        this.attackMove = new AttackMove(startPosition, endPosition, attackPos);
-    }
-
-    public AttackMove getAttackMove() {
-        return attackMove;
     }
 
     public ChessPiece getNewPiece() {

@@ -3,12 +3,14 @@ package chessRoot.user_interface.game_flow;
 import chessRoot.logic.Board;
 import chessRoot.logic.moves.Move;
 import chessRoot.logic.pieces.ChessPiece;
+import chessRoot.logic.pieces.PieceColor;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class GameStatus {
     private ChessPiece selectedPiece;
+    private Move selectedMove;
     private GameStates gameState;
     private List<Move> gameLog;
     private final Board board;
@@ -49,8 +51,25 @@ public class GameStatus {
         return board.getAllPieces();
     }
 
+    public void selectMove(Move move) {
+        this.selectedMove = move;
+    }
+
+    public void deselectMove() {
+        this.selectedMove = null;
+    }
+
+    public Move getSelectedMove() {
+        return selectedMove;
+    }
+
+    public PieceColor getSelectedColor() {
+        return selectedPiece.getPieceColor();
+    }
+
     public GameStatus(Board board, GameStates startingState) {
         this.selectedPiece = null;
+        this.selectedMove = null;
         this.gameState = startingState;
         this.board = board;
         this.gameLog = new ArrayList<>();
