@@ -23,25 +23,26 @@ public class PromotionPanel extends JPanel {
         this.setBounds(graphicsManager.getPlayAreaBounds());
         this.setOpaque(false);
     }
+
     @Override
     public void paint(Graphics g) {
         Move move = gameStatus.getSelectedMove();
         if (move != null) {
             int sqSize = graphicsManager.getSquareSize();
             int col = move.getEndPosition().getCol() - 'a';
-            int row = Math.abs(move.getEndPosition().getRow() - 8) - (move.getPieceAtStart(gameStatus.getBoard()).getPieceColor()==PieceColor.WHITE ? 0 : 3);
+            int row = Math.abs(move.getEndPosition().getRow() - 8) - (move.getPieceAtStart(gameStatus.getBoard()).getPieceColor() == PieceColor.WHITE ? 0 : 3);
             if (graphicsManager.isFlipped()) {
-                col = Math.abs(col-7);
-                row = Math.abs(row-4);
+                col = Math.abs(col - 7);
+                row = Math.abs(row - 4);
             }
-            drawRect(col,row,sqSize,g);
-            drawPieces(col,row,sqSize,g);
+            drawRect(col, row, sqSize, g);
+            drawPieces(col, row, sqSize, g);
         }
     }
 
     private void drawRect(int col, int row, int sqSize, Graphics g) {
         g.setColor(Color.white);
-        g.fillRoundRect(col * sqSize,row * sqSize,sqSize,sqSize * 4, sqSize / 3, sqSize / 3);
+        g.fillRoundRect(col * sqSize, row * sqSize, sqSize, sqSize * 4, sqSize / 3, sqSize / 3);
     }
 
     public void drawPieces(int col, int row, int sqSize, Graphics g) {
@@ -51,9 +52,10 @@ public class PromotionPanel extends JPanel {
         pieces.add(graphicsManager.getTextureOfPiece(color + "n"));
         pieces.add(graphicsManager.getTextureOfPiece(color + "r"));
         pieces.add(graphicsManager.getTextureOfPiece(color + "b"));
-        if ((color.equals("b") && !graphicsManager.isFlipped()) || (color.equals("w") && graphicsManager.isFlipped())) Collections.reverse(pieces);
+        if ((color.equals("b") && !graphicsManager.isFlipped()) || (color.equals("w") && graphicsManager.isFlipped()))
+            Collections.reverse(pieces);
         for (int i = 0; i < pieces.size(); i++) {
-            g.drawImage(pieces.get(i),graphicsManager.getPieceCoordinate(col), graphicsManager.getPieceCoordinate(row) + i*sqSize, null);
+            g.drawImage(pieces.get(i), graphicsManager.getPieceCoordinate(col), graphicsManager.getPieceCoordinate(row) + i * sqSize, null);
         }
     }
 

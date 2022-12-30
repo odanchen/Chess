@@ -66,29 +66,6 @@ public class GameFrame extends JFrame {
         if (move != null) gameControl.performMove(move);
     }
 
-    private Move createPromotionMove(MouseEvent e) {
-        ChessPiece newPiece = desiredPieceToPromoteTo(e);
-        if (newPiece == null) return null;
-
-        if (gameStatus.getSelectedMove() instanceof RelocationMove)
-            return new PromotionMove((RelocationMove) gameStatus.getSelectedMove(), newPiece);
-        return new PromotionAttackMove((AttackMove) gameStatus.getSelectedMove(), newPiece);
-    }
-
-    private ChessPiece desiredPieceToPromoteTo(MouseEvent e) {
-        Position clickedPos = getPositionOnTheBoard(e);
-        Position endPos = gameStatus.getSelectedMove().getEndPosition();
-        PieceColor color = gameStatus.getSelectedMove().getPieceAtStart(gameStatus.getBoard()).getPieceColor();
-        if (clickedPos.getCol() != endPos.getCol()) return null;
-        else if (Math.abs(clickedPos.getRow() - endPos.getRow()) == 0) return new Queen(endPos, color);
-        else if (Math.abs(clickedPos.getRow() - endPos.getRow()) == 1) return new Knight(endPos, color);
-        else if (Math.abs(clickedPos.getRow() - endPos.getRow()) == 2) return new Castle(endPos, color);
-        else if (Math.abs(clickedPos.getRow() - endPos.getRow()) == 3) return new Bishop(endPos, color);
-        return null;
-
-    }
-
-
     private void onMousePress(MouseEvent e) {
         switch (gameStatus.getState()) {
             case WHITE_TURN:
@@ -131,6 +108,34 @@ public class GameFrame extends JFrame {
         });
     }
 
+    private Move createPromotionMove(MouseEvent e) {
+        ChessPiece newPiece = desiredPieceToPromoteTo(e);
+        if (newPiece == null) return null;
+
+        if (gameStatus.getSelectedMove() instanceof RelocationMove)
+            return new PromotionMove((RelocationMove) gameStatus.getSelectedMove(), newPiece);
+        return new PromotionAttackMove((AttackMove) gameStatus.getSelectedMove(), newPiece);
+    }
+
+    private ChessPiece desiredPieceToPromoteTo(MouseEvent e) {
+        Position clickedPos = getPositionOnTheBoard(e);
+        Position endPos = gameStatus.getSelectedMove().getEndPosition();
+        PieceColor color = gameStatus.getSelectedColor();
+        if (clickedPos.getCol() != endPos.getCol()) return null;
+
+        switch (Math.abs(clickedPos.getRow() - endPos.getRow())) {
+            case 0:
+                return new Queen(endPos, color);
+            case 1:
+                return new Knight(endPos, color);
+            case 2:
+                return new Castle(endPos, color, true);
+            case 3:
+                return new Bishop(endPos, color);
+        }
+        return null;
+    }
+
     private void actionPromotion(MouseEvent e) {
         if (gameStatus.getState() == BLACK_SELECTED_PIECE) gameStatus.setGameState(BLACK_PROMOTION);
         else gameStatus.setGameState(WHITE_PROMOTION);
@@ -152,13 +157,13 @@ public class GameFrame extends JFrame {
     }
 
     private void actionSelect(MouseEvent e) {
-        ChessPiece clickedPiece = gameStatus.getBoard().getPieceAt(getPositionOnTheBoard(e));
+        ChessPiece clickedPiece = gameStatus.getPieceAt(getPositionOnTheBoard(e));
         selectPiece(clickedPiece);
     }
 
     private boolean isActionSelect(MouseEvent e) {
         if (isClickOutsideBoard(e)) return false;
-        ChessPiece clickedPiece = gameStatus.getBoard().getPieceAt(getPositionOnTheBoard(e));
+        ChessPiece clickedPiece = gameStatus.getPieceAt(getPositionOnTheBoard(e));
         return (isClickedPieceRightColor(clickedPiece));
     }
 
@@ -214,13 +219,13 @@ public class GameFrame extends JFrame {
     private boolean isActionReselect(MouseEvent e) {
         if (isClickOutsideBoard(e)) return false;
         Position clickedPosition = getPositionOnTheBoard(e);
-        ChessPiece clickedPiece = gameStatus.getBoard().getPieceAt(clickedPosition);
+        ChessPiece clickedPiece = gameStatus.getPieceAt(clickedPosition);
         return (isClickedPieceRightColor(clickedPiece) && clickedPiece != gameStatus.getSelectedPiece());
     }
 
     private void reselectPiece(MouseEvent e) {
         Position clickedPosition = getPositionOnTheBoard(e);
-        ChessPiece clickedPiece = gameStatus.getBoard().getPieceAt(clickedPosition);
+        ChessPiece clickedPiece = gameStatus.getPieceAt(clickedPosition);
         selectPiece(clickedPiece);
     }
 

@@ -12,6 +12,7 @@ public class BoardPanel extends JPanel {
     public void paint(Graphics g) {
         drawBoardEdge(g);
         drawPlayArea(g);
+        drawLetters(g);
     }
 
     private void drawPlayArea(Graphics g) {
@@ -46,6 +47,34 @@ public class BoardPanel extends JPanel {
         g2d.setStroke(new BasicStroke(graphicsManager.getOutlineSize()));
         g2d.setColor(graphicsManager.getWhiteSquareColor());
         g2d.drawRect(edge, edge, board, board);
+    }
+
+
+    private void drawLetters(Graphics g) {
+        if (graphicsManager.isFlipped()) drawFlippedConf(g);
+        else drawNormalConf(g);
+    }
+
+    private void drawNormalConf(Graphics g) {
+        int edge = graphicsManager.getEdgeSize();
+        int sqr = graphicsManager.getSquareSize();
+        for (char letter = 'A'; letter <= 'H'; letter++) {
+            g.drawImage(graphicsManager.getLetterImage(letter), edge + sqr / 3 + sqr * (letter - 'A'), edge / 8, null);
+        }
+        for (int digit = 8; digit >= 1; digit--) {
+            g.drawImage(graphicsManager.getLetterImage((char) (digit + '0')), edge / 8 ,edge + sqr / 3 + sqr * (8 - digit), null);
+        }
+    }
+
+    private void drawFlippedConf(Graphics g) {
+        int edge = graphicsManager.getEdgeSize();
+        int sqr = graphicsManager.getSquareSize();
+        for (char letter = 'H'; letter >= 'A'; letter--) {
+            g.drawImage(graphicsManager.getLetterImage(letter), edge + sqr / 3 + sqr * ('H' - letter), edge / 8, null);
+        }
+        for (int digit = 1; digit <= 8; digit++) {
+            g.drawImage(graphicsManager.getLetterImage((char) (digit + '0')), edge / 8 ,edge + sqr / 3 + sqr * (digit - 1), null);
+        }
     }
 
     BoardPanel(GraphicsManager graphicsManager) {

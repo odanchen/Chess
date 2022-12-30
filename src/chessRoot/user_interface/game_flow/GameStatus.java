@@ -4,6 +4,7 @@ import chessRoot.logic.Board;
 import chessRoot.logic.moves.Move;
 import chessRoot.logic.pieces.ChessPiece;
 import chessRoot.logic.pieces.PieceColor;
+import chessRoot.logic.pieces.Position;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -65,6 +66,10 @@ public class GameStatus {
 
     public PieceColor getSelectedColor() {
         return selectedPiece.getPieceColor();
+    }
+
+    public ChessPiece getPieceAt(Position position) {
+        return board.getPieceAt(position);
     }
 
     public GameStatus(Board board, GameStates startingState) {

@@ -11,15 +11,21 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Paths;
 import java.util.HashMap;
+import java.util.Map;
+import java.util.List;
+
+import static java.awt.Font.PLAIN;
 
 
 public class GraphicsManager {
     private String pieceTextureFolder = "cburnett";
     private final String[] pieceTextureFolders = {"cburnett", "kilifiger", "kosal", "leipzig", "maya", "pirat", "regular"};
     private final String[] pieceSignatures = {"bb", "bk", "bn", "bp", "bq", "br", "wb", "wk", "wn", "wp", "wq", "wr"};
-    private final HashMap<String, BufferedImage> activeTextures;
+    private final Map<String, BufferedImage> activeTextures;
+    List<Character> letters = List.of('1','2','3','4','5','6','7','8','A','B','C','D','E','F','G','H');
+    Map<Character, BufferedImage> font;
     private ColorSet boardColors;
-    private int boardSize;
+    private final int boardSize;
     private boolean isFlipped = false;
 
     public int getBoardSize() {
@@ -47,7 +53,7 @@ public class GraphicsManager {
     }
 
     public int getEdgeSize() {
-        return getSquareSize() / 3;
+        return getSquareSize() / 2;
     }
 
     public Rectangle getPlayAreaBounds() {
@@ -138,10 +144,15 @@ public class GraphicsManager {
         return activeTextures.get(signature);
     }
 
+    public BufferedImage getLetterImage(char letter) {
+        return font.get(letter);
+    }
+
     public GraphicsManager() {
         boardSize = 512;
         boardColors = BoardColors.OPTION1;
         activeTextures = new HashMap<>();
         fillActiveTextures();
+        font = new BitmapFontGenerator(boardColors, letters, new Font("Monospaced", PLAIN, getSquareSize() / 3)).getBitmapFont();
     }
 }
