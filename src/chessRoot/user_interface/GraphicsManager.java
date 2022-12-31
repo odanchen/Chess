@@ -79,6 +79,11 @@ public class GraphicsManager {
         return new Rectangle(xCor, yCor, newRectWidth, newRectHeight);
     }
 
+    public Rectangle getFlipButtonBounds() {
+        int frameWidth = 2 * getEdgeSize() + getBoardSize() + 5 * getSquareSize();
+        return new Rectangle(frameWidth / 10 * 9, 0, getSquareSize(), getSquareSize() / 2);
+    }
+
     public boolean isFlipped() {
         return isFlipped;
     }

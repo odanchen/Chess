@@ -199,7 +199,7 @@ public class GamePanel extends JPanel {
         gameStatus.setGameState(stateAfterMove());
         gameStatus.deselectPiece();
         gameStatus.deselectMove();
-        updateFrame();
+        updatePanel();
     }
 
     public boolean isMovePromotional(Move move) {
@@ -263,10 +263,18 @@ public class GamePanel extends JPanel {
         indicPanel.updatePanel();
     }
 
-    public void updateFrame() {
+    public void updatePanel() {
         piecePanel.updatePanel();
         indicPanel.updatePanel();
         promPanel.updatePanel();
+    }
+
+    public void flipPanel() {
+        graphicsManager.flipBoard();
+        piecePanel.updatePanel();
+        indicPanel.updatePanel();
+        promPanel.updatePanel();
+        boardPanel.updatePanel();
     }
 
     private boolean isClickOutsideBoard(MouseEvent e) {
