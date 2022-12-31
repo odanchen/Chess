@@ -13,7 +13,7 @@ import java.awt.event.MouseListener;
 
 import static chessRoot.user_interface.game_flow.GameStates.*;
 
-public class GameFrame extends JFrame {
+public class GamePanel extends JPanel {
     private final BoardPanel boardPanel;
     private final PiecePanel piecePanel;
     private final IndicationPanel indicPanel;
@@ -22,7 +22,7 @@ public class GameFrame extends JFrame {
     private final GameControl gameControl;
     private final GraphicsManager graphicsManager;
 
-    public GameFrame(GameStatus gameStatus, GameControl gameControl, GraphicsManager graphicsManager) {
+    public GamePanel(GameStatus gameStatus, GameControl gameControl, GraphicsManager graphicsManager) {
         this.gameStatus = gameStatus;
         this.gameControl = gameControl;
         this.graphicsManager = graphicsManager;
@@ -35,12 +35,12 @@ public class GameFrame extends JFrame {
     }
 
     private void addBasicParameters() {
-        setUndecorated(true);
-        setBounds(graphicsManager.getGameFrameBounds());
+        setBounds(graphicsManager.getGamePanelBounds());
         addPanels();
         createMouseListener();
-        setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         setVisible(true);
+        setOpaque(false);
+        validate();
     }
 
     private void addPanels() {

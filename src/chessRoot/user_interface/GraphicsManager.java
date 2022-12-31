@@ -22,8 +22,8 @@ public class GraphicsManager {
     private final String[] pieceTextureFolders = {"cburnett", "kilifiger", "kosal", "leipzig", "maya", "pirat", "regular"};
     private final String[] pieceSignatures = {"bb", "bk", "bn", "bp", "bq", "br", "wb", "wk", "wn", "wp", "wq", "wr"};
     private final Map<String, BufferedImage> activeTextures;
-    List<Character> letters = List.of('1','2','3','4','5','6','7','8','A','B','C','D','E','F','G','H');
-    Map<Character, BufferedImage> font;
+    private final List<Character> letters = List.of('1','2','3','4','5','6','7','8','A','B','C','D','E','F','G','H');
+    private Map<Character, BufferedImage> font;
     private ColorSet boardColors;
     private final int boardSize;
     private boolean isFlipped = false;
@@ -60,9 +60,23 @@ public class GraphicsManager {
         return new Rectangle(getEdgeSize(), getEdgeSize(), getBoardSize(), getBoardSize());
     }
 
-    public Rectangle getGameFrameBounds() {
+    public Rectangle getBoardPanelBounds() {
         int newRectSize = 2 * getEdgeSize() + getBoardSize();
         return new Rectangle(0, 0, newRectSize, newRectSize);
+    }
+
+    public Rectangle getGamePanelBounds() {
+        int newRectSize = 2 * getEdgeSize() + getBoardSize();
+        return new Rectangle(getSquareSize(), getSquareSize(), newRectSize, newRectSize);
+    }
+
+    public Rectangle getFrameBounds() {
+        int newRectWidth = 2 * getEdgeSize() + getBoardSize() + 5 * getSquareSize();
+        int newRectHeight = 3 * getEdgeSize() + getBoardSize() + 2 * getSquareSize();
+        Dimension screen = Toolkit.getDefaultToolkit().getScreenSize();
+        int xCor = (int) ((screen.getWidth() - newRectWidth) / 2);
+        int yCor = (int) ((screen.getHeight() - newRectHeight) / 2);
+        return new Rectangle(xCor, yCor, newRectWidth, newRectHeight);
     }
 
     public boolean isFlipped() {
@@ -149,7 +163,7 @@ public class GraphicsManager {
     }
 
     public GraphicsManager() {
-        boardSize = 512;
+        boardSize = (int) (Toolkit.getDefaultToolkit().getScreenSize().getWidth() / 3);
         boardColors = BoardColors.OPTION1;
         activeTextures = new HashMap<>();
         fillActiveTextures();

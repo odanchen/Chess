@@ -79,7 +79,7 @@ public class BoardPanel extends JPanel {
 
     BoardPanel(GraphicsManager graphicsManager) {
         this.graphicsManager = graphicsManager;
-        this.setBounds(graphicsManager.getGameFrameBounds());
+        this.setBounds(graphicsManager.getBoardPanelBounds());
         this.setOpaque(true);
     }
 }
