@@ -18,8 +18,8 @@ public class TextureHolder {
     private ColorSet colorSet;
     private Map<Character, BufferedImage> bitmapFont;
     private Map<String, BufferedImage> activeTextures;
-    String pieceTextureFolder;
-    int pieceSize;
+    private String pieceTextureFolder;
+    private int pieceSize;
     private final Font font;
     private final List<Character> letters = List.of('1','2','3','4','5','6','7','8','A','B','C','D','E','F','G','H');
     private final List<String> pieceSignatures = List.of("bb", "bk", "bn", "bp", "bq", "br", "wb", "wk", "wn", "wp", "wq", "wr");
