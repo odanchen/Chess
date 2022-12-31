@@ -28,19 +28,23 @@ public class PromotionPanel extends JPanel {
     public void paint(Graphics g) {
         Move move = gameStatus.getSelectedMove();
         if (move != null) {
-            int sqSize = graphicsManager.getSquareSize();
-            int col = move.getEndPosition().getCol() - 'a';
-            int row = Math.abs(move.getEndPosition().getRow() - 8) - (move.getPieceAtStart(gameStatus.getBoard()).getPieceColor() == PieceColor.WHITE ? 0 : 3);
-            if (graphicsManager.isFlipped()) {
-                col = Math.abs(col - 7);
-                row = Math.abs(row - 4);
-            }
-            drawRect(col, row, sqSize, g);
-            drawPieces(col, row, sqSize, g);
+            drawPanel(g, move);
         }
     }
 
-    private void drawRect(int col, int row, int sqSize, Graphics g) {
+    private void drawPanel(Graphics g, Move move) {
+        int sqSize = graphicsManager.getSquareSize();
+        int col = move.getEndPosition().getCol() - 'a';
+        int row = Math.abs(move.getEndPosition().getRow() - 8) - (move.getPieceAtStart(gameStatus.getBoard()).getPieceColor() == PieceColor.WHITE ? 0 : 3);
+        if (graphicsManager.isFlipped()) {
+            col = Math.abs(col - 7);
+            row = Math.abs(row - 4);
+        }
+        drawBackground(col, row, sqSize, g);
+        drawPieces(col, row, sqSize, g);
+    }
+
+    private void drawBackground(int col, int row, int sqSize, Graphics g) {
         g.setColor(Color.white);
         g.fillRoundRect(col * sqSize, row * sqSize, sqSize, sqSize * 4, sqSize / 3, sqSize / 3);
     }
@@ -59,10 +63,8 @@ public class PromotionPanel extends JPanel {
         }
     }
 
-
     public void updatePanel() {
         removeAll();
         repaint();
     }
-
 }

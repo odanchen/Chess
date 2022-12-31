@@ -39,10 +39,16 @@ public class Board {
      * @param currentSide this is not a real doc it was just giving warning
      * @return returns a boolean value of whether a current side could not perform any moves
      */
-    public boolean isMate(PieceColor currentSide) {
+    public boolean isCheckmate(PieceColor currentSide) {
         List<ChessPiece> currentPieces = currentSide == WHITE ? getWhitePieces() : getBlackPieces();
-        return currentPieces.stream().allMatch(piece -> piece.calculateMoves(this).isEmpty());
+        return currentPieces.stream().allMatch(piece -> piece.calculateMoves(this).isEmpty()) && isCheck(currentSide);
     }
+
+    public boolean isStalemate(PieceColor currentSide) {
+        List<ChessPiece> currentPieces = currentSide == WHITE ? getWhitePieces() : getBlackPieces();
+        return currentPieces.stream().allMatch(piece -> piece.calculateMoves(this).isEmpty()) && !isCheck(currentSide);
+    }
+
 
     private void handleMoveSensitivePieces(Move move) {
         if (move.getPieceAtEnd(this) instanceof Castle) {

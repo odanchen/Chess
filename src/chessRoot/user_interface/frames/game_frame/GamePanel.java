@@ -200,6 +200,15 @@ public class GamePanel extends JPanel {
         gameStatus.deselectPiece();
         gameStatus.deselectMove();
         updatePanel();
+
+        checkGameEnd();
+    }
+
+    private void checkGameEnd() {
+        if (gameStatus.getBoard().isCheckmate(PieceColor.WHITE)) System.out.println("player white lost due to a checkmate");
+        else if (gameStatus.getBoard().isStalemate(PieceColor.WHITE)) System.out.println("draw due to a stalemate");
+        else if (gameStatus.getBoard().isCheckmate(PieceColor.BLACK)) System.out.println("player black lost due to a checkmate");
+        else if (gameStatus.getBoard().isStalemate(PieceColor.BLACK)) System.out.println("draw due to a stalemate");
     }
 
     public boolean isMovePromotional(Move move) {

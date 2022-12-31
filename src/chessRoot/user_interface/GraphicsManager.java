@@ -4,15 +4,8 @@ import chessRoot.assets.board_colors.BoardColors;
 import chessRoot.assets.board_colors.ColorSet;
 import chessRoot.logic.pieces.ChessPiece;
 
-import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
-import java.nio.file.Paths;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.List;
 
 import static java.awt.Font.PLAIN;
 
@@ -20,13 +13,10 @@ import static java.awt.Font.PLAIN;
 public class GraphicsManager {
     private String pieceTextureFolder = "cburnett";
     private final String[] pieceTextureFolders = {"cburnett", "kilifiger", "kosal", "leipzig", "maya", "pirat", "regular"};
-    private final String[] pieceSignatures = {"bb", "bk", "bn", "bp", "bq", "br", "wb", "wk", "wn", "wp", "wq", "wr"};
-    private final Map<String, BufferedImage> activeTextures;
-    private final List<Character> letters = List.of('1','2','3','4','5','6','7','8','A','B','C','D','E','F','G','H');
-    private Map<Character, BufferedImage> font;
     private ColorSet boardColors;
     private final int boardSize;
     private boolean isFlipped = false;
+    private final TextureHolder textureHolder;
 
     public int getBoardSize() {
         return boardSize;
@@ -120,58 +110,23 @@ public class GraphicsManager {
         return (getSquareSize() * idx) + (getSquareSize() - getAttackingOvalSize()) / 2;
     }
 
-    private void fillActiveTextures() {
-        for (String signature : pieceSignatures) {
-            activeTextures.put(signature, getNewTexture(signature));
-        }
-    }
-
-    private static BufferedImage toBufferedImage(Image img) {
-        if (img instanceof BufferedImage) {
-            return (BufferedImage) img;
-        }
-
-        BufferedImage bImage = new BufferedImage(img.getWidth(null), img.getHeight(null), BufferedImage.TYPE_INT_ARGB);
-
-        Graphics2D bGr = bImage.createGraphics();
-        bGr.drawImage(img, 0, 0, null);
-        bGr.dispose();
-
-        return bImage;
-    }
-
-    private BufferedImage rescale(BufferedImage image) {
-        return toBufferedImage(image.getScaledInstance(getPieceSize(), getPieceSize(), Image.SCALE_SMOOTH));
-    }
-
-    private BufferedImage getNewTexture(String signature) {
-        String root = Paths.get("").toAbsolutePath().toString();
-        String[] fullPath = {root, "src", "chessRoot", "assets", "pieces_textures", pieceTextureFolder, signature + ".png"};
-
-        try {
-            return rescale(ImageIO.read(new File(String.join(File.separator, fullPath))));
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
     public BufferedImage getTextureOfPiece(ChessPiece piece) {
-        return activeTextures.get(piece.getPieceSignature());
+        return textureHolder.getPieceTexture(piece.getPieceSignature());
     }
 
     public BufferedImage getTextureOfPiece(String signature) {
-        return activeTextures.get(signature);
+        return textureHolder.getPieceTexture(signature);
     }
 
     public BufferedImage getLetterImage(char letter) {
-        return font.get(letter);
+        return textureHolder.getLetterImage(letter);
     }
 
     public GraphicsManager() {
         boardSize = (int) (Toolkit.getDefaultToolkit().getScreenSize().getWidth() / 3);
+
+        Font letterFont = new Font("Monospaced", PLAIN, getSquareSize() / 3);
         boardColors = BoardColors.OPTION1;
-        activeTextures = new HashMap<>();
-        fillActiveTextures();
-        font = new BitmapFontGenerator(boardColors, letters, new Font("Monospaced", PLAIN, getSquareSize() / 3)).getBitmapFont();
+        textureHolder = new TextureHolder(boardColors, letterFont, pieceTextureFolder, getPieceSize());
     }
 }
