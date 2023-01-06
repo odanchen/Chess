@@ -1,7 +1,6 @@
-package chessRoot.user_interface.frames;
+package chessRoot.user_interface.frames.game_frame;
 
 import chessRoot.user_interface.GraphicsManager;
-import chessRoot.user_interface.frames.game_frame.GamePanel;
 import chessRoot.user_interface.game_flow.GameControl;
 import chessRoot.user_interface.game_flow.GameStatus;
 
@@ -10,7 +9,7 @@ import java.awt.*;
 import java.io.File;
 import java.nio.file.Paths;
 
-public class MainFrame extends JFrame {
+public class GameMainFrame extends JFrame {
     private final GameStatus gameStatus;
     private final GraphicsManager graphicsManager;
     private final GameControl gameControl;
@@ -43,7 +42,7 @@ public class MainFrame extends JFrame {
         return graphicsManager.getFrameBounds().getSize();
     }
 
-    public MainFrame(GameStatus gameStatus, GameControl gameControl, GraphicsManager graphicsManager) {
+    public GameMainFrame(GameStatus gameStatus, GameControl gameControl, GraphicsManager graphicsManager) {
         addIcon();
 
         this.gameStatus = gameStatus;
