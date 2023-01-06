@@ -49,6 +49,9 @@ public class MainFrame extends JFrame {
         this.graphicsManager = graphicsManager;
         this.gameFrame = new GamePanel(gameStatus, gameControl, graphicsManager);
 
+        GroupLayout layout = new GroupLayout(getContentPane());
+        getContentPane().setLayout(layout);
+
         getContentPane().setBackground(graphicsManager.getWhiteSquareColor());
         setBounds(graphicsManager.getFrameBounds());
         setResizable(false);

@@ -32,6 +32,9 @@ public class GamePanel extends JPanel {
         piecePanel = new PiecePanel(graphicsManager, gameStatus);
         indicPanel = new IndicationPanel(graphicsManager, gameStatus);
         promPanel = new PromotionPanel(graphicsManager, gameStatus);
+
+        setLayout(new GroupLayout(this));
+
         addBasicParameters();
     }
 
