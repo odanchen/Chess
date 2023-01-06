@@ -8,6 +8,7 @@ import chessRoot.user_interface.game_flow.GameStates;
 import chessRoot.user_interface.game_flow.GameStatus;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
@@ -284,6 +285,12 @@ public class GamePanel extends JPanel {
         indicPanel.updatePanel();
         promPanel.updatePanel();
         boardPanel.updatePanel();
+    }
+
+    @Override
+    public Dimension getPreferredSize()
+    {
+        return graphicsManager.getGamePanelBounds().getSize();
     }
 
     private boolean isClickOutsideBoard(MouseEvent e) {

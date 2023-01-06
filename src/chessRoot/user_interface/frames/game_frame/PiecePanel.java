@@ -29,6 +29,12 @@ public class PiecePanel extends JPanel {
         g.drawImage(image, graphicsManager.getPieceCoordinate(col), graphicsManager.getPieceCoordinate(row), null);
     }
 
+    @Override
+    public Dimension getPreferredSize()
+    {
+        return graphicsManager.getPlayAreaBounds().getSize();
+    }
+
     PiecePanel(GraphicsManager graphicsManager, GameStatus gameStatus) {
         this.gameStatus = gameStatus;
         this.graphicsManager = graphicsManager;

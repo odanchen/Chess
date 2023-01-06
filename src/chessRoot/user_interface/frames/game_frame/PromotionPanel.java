@@ -63,6 +63,12 @@ public class PromotionPanel extends JPanel {
         }
     }
 
+    @Override
+    public Dimension getPreferredSize()
+    {
+        return graphicsManager.getPlayAreaBounds().getSize();
+    }
+
     public void updatePanel() {
         removeAll();
         repaint();

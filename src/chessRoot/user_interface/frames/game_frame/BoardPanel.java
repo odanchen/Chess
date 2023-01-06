@@ -81,6 +81,12 @@ public class BoardPanel extends JPanel {
         repaint();
     }
 
+    @Override
+    public Dimension getPreferredSize()
+    {
+        return graphicsManager.getBoardPanelBounds().getSize();
+    }
+
     BoardPanel(GraphicsManager graphicsManager) {
         this.graphicsManager = graphicsManager;
         this.setBounds(graphicsManager.getBoardPanelBounds());

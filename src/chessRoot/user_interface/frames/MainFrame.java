@@ -35,6 +35,12 @@ public class MainFrame extends JFrame {
         Taskbar.getTaskbar().setIconImage(img.getImage());
     }
 
+    @Override
+    public Dimension getPreferredSize()
+    {
+        return graphicsManager.getFrameBounds().getSize();
+    }
+
     public MainFrame(GameStatus gameStatus, GameControl gameControl, GraphicsManager graphicsManager) {
         addIcon();
 

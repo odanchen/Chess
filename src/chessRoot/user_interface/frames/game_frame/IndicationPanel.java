@@ -53,6 +53,12 @@ public class IndicationPanel extends JPanel {
         g.drawOval(col, row, ovalSize, ovalSize);
     }
 
+    @Override
+    public Dimension getPreferredSize()
+    {
+        return graphicsManager.getPlayAreaBounds().getSize();
+    }
+
     private void drawMove(Graphics g, int row, int col) {
         g.setColor(graphicsManager.getSelectionColor());
         int ovalSize = graphicsManager.getMovingOvalSize();
