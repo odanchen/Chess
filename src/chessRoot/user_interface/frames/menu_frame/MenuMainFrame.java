@@ -32,6 +32,10 @@ public class MenuMainFrame {
             gameManager.runChess();
         });
 
+        quitButton.addActionListener(e -> {
+            SwingUtilities.getWindowAncestor((JComponent) e.getSource()).dispose(); // Closes window
+        });
+        
         JFrame f = new JFrame("Chess");
 
         f.setBounds(gameManager.getGraphicsManager().getMenuBounds());
