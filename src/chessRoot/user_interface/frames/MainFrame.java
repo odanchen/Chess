@@ -32,7 +32,9 @@ public class MainFrame extends JFrame {
         String[] fullPath = {root, "src", "chessRoot", "assets", "pieces_textures", "cburnett", "bk.png"};
         ImageIcon img = new ImageIcon(String.join(File.separator, fullPath));
         setIconImage(img.getImage());
-        Taskbar.getTaskbar().setIconImage(img.getImage());
+        if (System.getProperty("os.name").contains("Mac")) {
+            Taskbar.getTaskbar().setIconImage(img.getImage());
+        }
     }
 
     @Override
