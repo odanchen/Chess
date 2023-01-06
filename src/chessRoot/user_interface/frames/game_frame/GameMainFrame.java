@@ -39,7 +39,7 @@ public class GameMainFrame extends JFrame {
     @Override
     public Dimension getPreferredSize()
     {
-        return graphicsManager.getFrameBounds().getSize();
+        return graphicsManager.getGameBounds().getSize();
     }
 
     public GameMainFrame(GameStatus gameStatus, GameControl gameControl, GraphicsManager graphicsManager) {
@@ -54,7 +54,7 @@ public class GameMainFrame extends JFrame {
         getContentPane().setLayout(layout);
 
         getContentPane().setBackground(graphicsManager.getWhiteSquareColor());
-        setBounds(graphicsManager.getFrameBounds());
+        setBounds(graphicsManager.getGameBounds());
         setResizable(false);
         setVisible(true);
         getContentPane().add(gameFrame);
