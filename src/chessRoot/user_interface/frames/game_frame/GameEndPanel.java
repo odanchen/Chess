@@ -35,7 +35,6 @@ public class GameEndPanel extends JPanel {
             result = "Draw!";
         }
         g.drawString(result,endRect.x + (int) (endRect.width/3.5),endRect.y + endRect.height/2);
-
     }
 
     public void switchVis(GameResult gameResult) {

@@ -247,6 +247,26 @@ public class Board {
         }
     }
 
+    public void fromFEN(String fen) {
+        String[] fenParts = fen.split(" ");
+        String[] fenRows = fenParts[0].split("/");
+        for (int i = 0; i < fenRows.length; i++) {
+            int col = 0;
+            for (int j = 0; j < fenRows[i].length(); j++) {
+                char c = fenRows[i].charAt(j);
+                if (Character.isDigit(c)) {
+                    col += Character.getNumericValue(c);
+                } else {
+                    Position position = new Position((char) ('a' + col), BOARD_SIZE - i);
+                    ChessPiece piece = ChessPiece.fromFEN(c, position);
+                    addPiece(piece);
+                    col++;
+                }
+            }
+        }
+
+    }
+
     /**
      * Fills board object with standard pieces and piece positions.
      */

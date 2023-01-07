@@ -90,6 +90,37 @@ public abstract class ChessPiece {
         return moves.stream().anyMatch(move -> move instanceof AttackMove && ((AttackMove) move).isAttackedPosition(position));
     }
 
+    public static ChessPiece fromFEN(char piece, Position position) {
+        switch (piece) {
+            case 'P':
+                return new Pawn(position, PieceColor.WHITE);
+            case 'p':
+                return new Pawn(position, PieceColor.BLACK);
+            case 'R':
+                return new Castle(position, PieceColor.WHITE);
+            case 'r':
+                return new Castle(position, PieceColor.BLACK);
+            case 'N':
+                return new Knight(position, PieceColor.WHITE);
+            case 'n':
+                return new Knight(position, PieceColor.BLACK);
+            case 'B':
+                return new Bishop(position, PieceColor.WHITE);
+            case 'b':
+                return new Bishop(position, PieceColor.BLACK);
+            case 'Q':
+                return new Queen(position, PieceColor.WHITE);
+            case 'q':
+                return new Queen(position, PieceColor.BLACK);
+            case 'K':
+                return new King(position, PieceColor.WHITE);
+            case 'k':
+                return new King(position, PieceColor.BLACK);
+            default:
+                return null;
+        }
+    }
+
     /**
      * returns the list of moves which are actually possible to perform
      *
