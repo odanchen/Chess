@@ -60,18 +60,9 @@ public class GraphicsManager {
         return new Rectangle(getSquareSize(), getSquareSize(), newRectSize, newRectSize);
     }
 
-    public Rectangle getGameBounds() {
+    public Rectangle getFrameBounds() {
         int newRectWidth = 2 * getEdgeSize() + getBoardSize() + 5 * getSquareSize();
         int newRectHeight = 3 * getEdgeSize() + getBoardSize() + 2 * getSquareSize();
-        Dimension screen = Toolkit.getDefaultToolkit().getScreenSize();
-        int xCor = (int) ((screen.getWidth() - newRectWidth) / 2);
-        int yCor = (int) ((screen.getHeight() - newRectHeight) / 2);
-        return new Rectangle(xCor, yCor, newRectWidth, newRectHeight);
-    }
-
-    public Rectangle getMenuBounds() {
-        int newRectWidth = 600;
-        int newRectHeight = 600;
         Dimension screen = Toolkit.getDefaultToolkit().getScreenSize();
         int xCor = (int) ((screen.getWidth() - newRectWidth) / 2);
         int yCor = (int) ((screen.getHeight() - newRectHeight) / 2);

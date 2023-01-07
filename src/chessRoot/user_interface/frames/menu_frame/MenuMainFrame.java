@@ -37,8 +37,8 @@ public class MenuMainFrame {
         });
         
         JFrame f = new JFrame("Chess");
+        f.setSize(600, 600);
 
-        f.setBounds(gameManager.getGraphicsManager().getMenuBounds());
         f.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         f.setLayout(null);
         f.setVisible(true);
