@@ -1,4 +1,4 @@
-package chessRoot.user_interface.frames.custom_components;
+package chessRoot.user_interface.frames.menu_frame;
 
 import javax.swing.*;
 import java.awt.*;
