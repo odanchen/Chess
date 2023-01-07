@@ -54,7 +54,8 @@ public class IndicationPanel extends JPanel {
     }
 
     @Override
-    public Dimension getPreferredSize() {
+    public Dimension getPreferredSize()
+    {
         return graphicsManager.getPlayAreaBounds().getSize();
     }
 

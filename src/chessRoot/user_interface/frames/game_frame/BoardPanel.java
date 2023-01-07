@@ -62,7 +62,7 @@ public class BoardPanel extends JPanel {
             g.drawImage(graphicsManager.getLetterImage(letter), edge + sqr / 3 + sqr * (letter - 'A'), edge / 8, null);
         }
         for (int digit = 8; digit >= 1; digit--) {
-            g.drawImage(graphicsManager.getLetterImage((char) (digit + '0')), edge / 8, edge + sqr / 3 + sqr * (8 - digit), null);
+            g.drawImage(graphicsManager.getLetterImage((char) (digit + '0')), edge / 8 ,edge + sqr / 3 + sqr * (8 - digit), null);
         }
     }
 
@@ -73,7 +73,7 @@ public class BoardPanel extends JPanel {
             g.drawImage(graphicsManager.getLetterImage(letter), edge + sqr / 3 + sqr * ('H' - letter), edge / 8, null);
         }
         for (int digit = 1; digit <= 8; digit++) {
-            g.drawImage(graphicsManager.getLetterImage((char) (digit + '0')), edge / 8, edge + sqr / 3 + sqr * (digit - 1), null);
+            g.drawImage(graphicsManager.getLetterImage((char) (digit + '0')), edge / 8 ,edge + sqr / 3 + sqr * (digit - 1), null);
         }
     }
 
@@ -82,7 +82,8 @@ public class BoardPanel extends JPanel {
     }
 
     @Override
-    public Dimension getPreferredSize() {
+    public Dimension getPreferredSize()
+    {
         return graphicsManager.getBoardPanelBounds().getSize();
     }
 

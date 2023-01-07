@@ -64,7 +64,8 @@ public class PromotionPanel extends JPanel {
     }
 
     @Override
-    public Dimension getPreferredSize() {
+    public Dimension getPreferredSize()
+    {
         return graphicsManager.getPlayAreaBounds().getSize();
     }
 
