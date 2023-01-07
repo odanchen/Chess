@@ -1,5 +1,3 @@
-import chessRoot.logic.Board;
-import chessRoot.logic.pieces.PieceColor;
 import chessRoot.user_interface.GameManager;
 
 public class Main {

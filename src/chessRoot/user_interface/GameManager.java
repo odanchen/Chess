@@ -21,6 +21,7 @@ public class GameManager {
         board.fillStandardBoard();
         gameControl = new GameControl(board, PieceColor.WHITE, this);
     }
+
     public void runChess(Board board, PieceColor firstMove) {
         gameControl = new GameControl(board, firstMove, this);
     }

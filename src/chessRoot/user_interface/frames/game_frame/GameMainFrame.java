@@ -40,8 +40,7 @@ public class GameMainFrame extends JFrame {
     }
 
     @Override
-    public Dimension getPreferredSize()
-    {
+    public Dimension getPreferredSize() {
         return graphicsManager.getGameBounds().getSize();
     }
 
@@ -59,8 +58,12 @@ public class GameMainFrame extends JFrame {
 
     public void myPaint() {
         switch (scene) {
-            case "menu": showMenu(); break;
-            case "chessGame": showChessGame(); break;
+            case "menu":
+                showMenu();
+                break;
+            case "chessGame":
+                showChessGame();
+                break;
         }
     }
 
@@ -106,9 +109,7 @@ public class GameMainFrame extends JFrame {
             changeScene("chessGame");
         });
 
-        quitButton.addActionListener(e -> {
-            closeWindow(e);
-        });
+        quitButton.addActionListener(this::closeWindow);
 
         JFrame f = new JFrame("Chess");
         f.setBounds(graphicsManager.getMenuBounds());
@@ -119,12 +120,10 @@ public class GameMainFrame extends JFrame {
         f.setResizable(false);
         f.add(buttonsPanel);
         f.add(titlePanel);
-
+        f.validate();
     }
 
     private void closeWindow(ActionEvent e) {
         SwingUtilities.getWindowAncestor((JComponent) e.getSource()).dispose();
     }
-
-
 }

@@ -21,7 +21,7 @@ public class TextureHolder {
     private String pieceTextureFolder;
     private int pieceSize;
     private final Font font;
-    private final List<Character> letters = List.of('1','2','3','4','5','6','7','8','A','B','C','D','E','F','G','H');
+    private final List<Character> letters = List.of('1', '2', '3', '4', '5', '6', '7', '8', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H');
     private final List<String> pieceSignatures = List.of("bb", "bk", "bn", "bp", "bq", "br", "wb", "wk", "wn", "wp", "wq", "wr");
 
     public void generateLetterTextures(ColorSet colorSet) {
@@ -33,7 +33,7 @@ public class TextureHolder {
         BufferedImage image = new BufferedImage(font.getSize(), font.getSize(), BufferedImage.TYPE_INT_ARGB);
         Graphics2D g = image.createGraphics();
         g.setColor(colorSet.getWhiteCell());
-        drawCenteredString(g, String.valueOf(character), new Rectangle(0,0,font.getSize(), font.getSize()), font);
+        drawCenteredString(g, String.valueOf(character), new Rectangle(0, 0, font.getSize(), font.getSize()), font);
         g.dispose();
         return image;
     }

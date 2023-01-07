@@ -209,9 +209,11 @@ public class GamePanel extends JPanel {
     }
 
     private void checkGameEnd() {
-        if (gameStatus.getBoard().isCheckmate(PieceColor.WHITE)) System.out.println("player white lost due to a checkmate");
+        if (gameStatus.getBoard().isCheckmate(PieceColor.WHITE))
+            System.out.println("player white lost due to a checkmate");
         else if (gameStatus.getBoard().isStalemate(PieceColor.WHITE)) System.out.println("draw due to a stalemate");
-        else if (gameStatus.getBoard().isCheckmate(PieceColor.BLACK)) System.out.println("player black lost due to a checkmate");
+        else if (gameStatus.getBoard().isCheckmate(PieceColor.BLACK))
+            System.out.println("player black lost due to a checkmate");
         else if (gameStatus.getBoard().isStalemate(PieceColor.BLACK)) System.out.println("draw due to a stalemate");
     }
 
@@ -291,8 +293,7 @@ public class GamePanel extends JPanel {
     }
 
     @Override
-    public Dimension getPreferredSize()
-    {
+    public Dimension getPreferredSize() {
         return graphicsManager.getGamePanelBounds().getSize();
     }
 

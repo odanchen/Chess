@@ -30,8 +30,7 @@ public class PiecePanel extends JPanel {
     }
 
     @Override
-    public Dimension getPreferredSize()
-    {
+    public Dimension getPreferredSize() {
         return graphicsManager.getPlayAreaBounds().getSize();
     }
 
