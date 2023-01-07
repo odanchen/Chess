@@ -80,7 +80,7 @@ public class GraphicsManager {
 
     public Rectangle getFlipButtonBounds() {
         int frameWidth = 2 * getEdgeSize() + getBoardSize() + 5 * getSquareSize();
-        return new Rectangle(frameWidth / 10 * 9, 0, getSquareSize(), getSquareSize() / 2);
+        return new Rectangle(frameWidth / 10 * 8, getSquareSize() + getEdgeSize(), getSquareSize(), getSquareSize() / 2);
     }
 
     public boolean isFlipped() {

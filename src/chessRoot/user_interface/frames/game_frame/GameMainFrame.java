@@ -1,6 +1,7 @@
 package chessRoot.user_interface.frames.game_frame;
 
 import chessRoot.user_interface.GraphicsManager;
+import chessRoot.user_interface.frames.menu_frame.CustomButton;
 import chessRoot.user_interface.game_flow.GameControl;
 import chessRoot.user_interface.game_flow.GameStatus;
 
@@ -20,7 +21,10 @@ public class GameMainFrame extends JFrame {
     }
 
     private void addFlipButton() {
-        JButton flipButton = new JButton("FLIP");
+        JButton flipButton = new CustomButton("Flip");
+        flipButton.setBackground(Color.WHITE);
+        flipButton.setContentAreaFilled(true);
+        flipButton.setFont(new Font("Serif", Font.BOLD, 20));
         getContentPane().add(flipButton);
         flipButton.setBounds(graphicsManager.getFlipButtonBounds());
         flipButton.addActionListener(e -> gameFrame.flipPanel());

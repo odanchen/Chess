@@ -4,6 +4,7 @@ import chessRoot.logic.moves.*;
 import chessRoot.logic.pieces.*;
 import chessRoot.user_interface.GraphicsManager;
 import chessRoot.user_interface.game_flow.GameControl;
+import chessRoot.user_interface.game_flow.GameResult;
 import chessRoot.user_interface.game_flow.GameStates;
 import chessRoot.user_interface.game_flow.GameStatus;
 
@@ -19,6 +20,7 @@ public class GamePanel extends JPanel {
     private final PiecePanel piecePanel;
     private final IndicationPanel indicPanel;
     private final PromotionPanel promPanel;
+    private final GameEndPanel endPanel;
     private final GameStatus gameStatus;
     private final GameControl gameControl;
     private final GraphicsManager graphicsManager;
@@ -32,6 +34,7 @@ public class GamePanel extends JPanel {
         piecePanel = new PiecePanel(graphicsManager, gameStatus);
         indicPanel = new IndicationPanel(graphicsManager, gameStatus);
         promPanel = new PromotionPanel(graphicsManager, gameStatus);
+        endPanel = new GameEndPanel(graphicsManager);
 
         setLayout(new GroupLayout(this));
 
@@ -48,6 +51,7 @@ public class GamePanel extends JPanel {
     }
 
     private void addPanels() {
+        add(endPanel);
         add(promPanel);
         add(piecePanel);
         add(indicPanel);
@@ -209,10 +213,10 @@ public class GamePanel extends JPanel {
     }
 
     private void checkGameEnd() {
-        if (gameStatus.getBoard().isCheckmate(PieceColor.WHITE)) System.out.println("player white lost due to a checkmate");
-        else if (gameStatus.getBoard().isStalemate(PieceColor.WHITE)) System.out.println("draw due to a stalemate");
-        else if (gameStatus.getBoard().isCheckmate(PieceColor.BLACK)) System.out.println("player black lost due to a checkmate");
-        else if (gameStatus.getBoard().isStalemate(PieceColor.BLACK)) System.out.println("draw due to a stalemate");
+        if (gameStatus.getBoard().isCheckmate(PieceColor.WHITE)) endPanel.switchVis(GameResult.PLAYER_BLACK_WON_BY_CHECKMATE);
+        else if (gameStatus.getBoard().isStalemate(PieceColor.WHITE)) endPanel.switchVis(GameResult.STALEMATE);
+        else if (gameStatus.getBoard().isCheckmate(PieceColor.BLACK)) endPanel.switchVis(GameResult.PLAYER_WHITE_WON_BY_CHECKMATE);
+        else if (gameStatus.getBoard().isStalemate(PieceColor.BLACK)) endPanel.switchVis(GameResult.STALEMATE);
     }
 
     public boolean isMovePromotional(Move move) {
