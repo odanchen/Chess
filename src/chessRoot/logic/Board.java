@@ -1,9 +1,11 @@
 package chessRoot.logic;
 
+import chessRoot.logic.log.GameLog;
 import chessRoot.logic.moves.*;
 import chessRoot.logic.pieces.*;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import static chessRoot.logic.pieces.PieceColor.BLACK;
@@ -16,6 +18,7 @@ public class Board {
     private Position blackKingPosition;
     private List<ChessPiece> whitePieces = new ArrayList<>();
     private List<ChessPiece> blackPieces = new ArrayList<>();
+    private final GameLog gameLog = new GameLog(this);
 
     public Board() {
     }
@@ -130,6 +133,12 @@ public class Board {
         } else if (move instanceof CastlingMove) {
             makeCastlingMove((CastlingMove) move);
         }
+
+    }
+
+    public void addMoveToLog(Move move) {
+        gameLog.addMove(move);
+        System.out.println(gameLog.getString().toString());
     }
 
     /**

@@ -25,4 +25,10 @@ public class PromotionMove extends RelocationMove {
         copyBoard.makeMove(this);
         return !copyBoard.isCheck(copyBoard.getPieceAt(this.getEndPosition()).getPieceColor());
     }
+
+    @Override
+    public String toString(Board board) {
+        return getEndPosition().toString() + "=" + getNewPiece().getNotationSignature();
+    }
+
 }

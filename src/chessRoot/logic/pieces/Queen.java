@@ -60,4 +60,8 @@ public class Queen extends ChessPiece {
     public String getPieceSignature() {
         return pieceColor.getColorSign() + "q";
     }
+    @Override
+    public String getNotationSignature(){
+        return "Q";
+    }
 }

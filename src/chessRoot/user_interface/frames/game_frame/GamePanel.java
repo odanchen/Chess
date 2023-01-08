@@ -204,11 +204,11 @@ public class GamePanel extends JPanel {
 
     public void makeMove(Move move) {
         gameStatus.getBoard().makeMove(move);
+        gameStatus.getBoard().addMoveToLog(move);
         gameStatus.setGameState(stateAfterMove());
         gameStatus.deselectPiece();
         gameStatus.deselectMove();
         updatePanel();
-
         checkGameEnd();
     }
 

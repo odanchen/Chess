@@ -31,4 +31,11 @@ public class CastlingMove extends Move {
         copy.makeMove(this);
         return !(copy.isUnderAttack(endPosition, sideColor) || copy.isUnderAttack(castleMove.endPosition, sideColor));
     }
+
+    @Override
+    public String toString(Board board) {
+        if (endPosition.getCol() == 'g')
+            return "O-O";
+        return "O-O-0";
+    }
 }

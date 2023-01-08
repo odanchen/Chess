@@ -71,4 +71,8 @@ public class Castle extends ChessPiece {
     public String getPieceSignature() {
         return pieceColor.getColorSign()+ "r";
     }
+    @Override
+    public String getNotationSignature() {
+        return "R";
+    }
 }

@@ -2,6 +2,7 @@ package chessRoot.logic.moves;
 
 import chessRoot.logic.Board;
 import chessRoot.logic.pieces.ChessPiece;
+import chessRoot.logic.pieces.Pawn;
 import chessRoot.logic.pieces.Position;
 
 /**
@@ -33,4 +34,12 @@ public class AttackMove extends Move {
         copyBoard.makeMove(this);
         return !copyBoard.isCheck(copyBoard.getPieceAt(this.getEndPosition()).getPieceColor());
     }
+
+    @Override
+    public String toString(Board board) {
+        if (getPieceAtEnd(board) instanceof Pawn)
+            return getStartPosition().getCol() + "x" + getEndPosition().toString();
+        return getPieceAtEnd(board).getNotationSignature() + "x" + getEndPosition().toString();
+    }
+
 }

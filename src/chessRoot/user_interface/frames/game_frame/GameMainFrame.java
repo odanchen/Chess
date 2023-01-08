@@ -22,7 +22,8 @@ public class GameMainFrame extends JFrame {
 
     private void addFlipButton() {
         JButton flipButton = new CustomButton("Flip");
-        flipButton.setBackground(Color.WHITE);
+        flipButton.setBackground(graphicsManager.getBlackSquareColor());
+        flipButton.setForeground(graphicsManager.getWhiteSquareColor());
         flipButton.setContentAreaFilled(true);
         flipButton.setFont(new Font("Serif", Font.BOLD, 20));
         getContentPane().add(flipButton);

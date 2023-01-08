@@ -99,4 +99,8 @@ public class Pawn extends ChessPiece {
     public String getPieceSignature() {
         return pieceColor.getColorSign() + "p";
     }
+    @Override
+    public String getNotationSignature() {
+        return "";
+    }
 }

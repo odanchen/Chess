@@ -17,4 +17,9 @@ public class RelocationMove extends Move {
         copyBoard.makeMove(this);
         return !copyBoard.isCheck(copyBoard.getPieceAt(this.getEndPosition()).getPieceColor());
     }
+
+    @Override
+    public String toString(Board board) {
+        return getPieceAtEnd(board).getNotationSignature() + getEndPosition().toString();
+    }
 }

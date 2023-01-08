@@ -132,6 +132,7 @@ public abstract class ChessPiece {
     }
 
     public abstract String getPieceSignature();
+    public abstract String getNotationSignature();
 
     public boolean isWhite() {
         return pieceColor == PieceColor.WHITE;

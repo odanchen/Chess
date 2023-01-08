@@ -77,6 +77,5 @@ public class GameStatus {
         this.selectedMove = null;
         this.gameState = startingState;
         this.board = board;
-        this.gameLog = new ArrayList<>();
     }
 }

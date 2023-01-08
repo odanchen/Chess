@@ -122,4 +122,8 @@ public class King extends ChessPiece {
     public String getPieceSignature() {
         return pieceColor.getColorSign() + "k";
     }
+    @Override
+    public String getNotationSignature() {
+        return "K";
+    }
 }

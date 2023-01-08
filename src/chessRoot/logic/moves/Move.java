@@ -31,6 +31,7 @@ public abstract class Move {
     public ChessPiece getPieceAtEnd(Board board) {
         return board.getPieceAt(endPosition);
     }
+    public abstract String toString(Board board);
 
     public abstract boolean isPossible(Board board);
 }
