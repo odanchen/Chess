@@ -1,0 +1,12 @@
+package root.ui.game_flow;
+
+public enum GameStates {
+    WHITE_TURN,
+    WHITE_SELECTED_PIECE,
+    WHITE_OFFERED_A_DRAW,
+    BLACK_TURN,
+    BLACK_SELECTED_PIECE,
+    BLACK_OFFERED_A_DRAW,
+    WHITE_PROMOTION,
+    BLACK_PROMOTION
+}
