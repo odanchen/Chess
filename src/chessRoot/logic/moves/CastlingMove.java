@@ -36,6 +36,6 @@ public class CastlingMove extends Move {
     public String toString(Board board) {
         if (endPosition.getCol() == 'g')
             return "O-O";
-        return "O-O-0";
+        return "O-O-O";
     }
 }

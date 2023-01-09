@@ -136,11 +136,6 @@ public class Board {
 
     }
 
-    public void addMoveToLog(Move move) {
-        gameLog.addMove(move);
-        System.out.println(gameLog.getString().toString());
-    }
-
     /**
      * @param position Position on the board.
      * @return The piece at the specified position.
