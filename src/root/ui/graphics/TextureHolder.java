@@ -8,7 +8,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Paths;
-import java.security.Signature;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -22,11 +22,15 @@ public class TextureHolder {
     private String pieceTextureFolder;
     private final int pieceSize;
     private final Font font;
-    private final List<Character> letters = List.of('1', '2', '3', '4', '5', '6', '7', '8', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H');
     private final List<String> pieceSignatures = List.of("bb", "bk", "bn", "bp", "bq", "br", "wb", "wk", "wn", "wp", "wq", "wr");
 
     public void generateLetterTextures(ColorSet colorSet) {
         this.colorSet = colorSet;
+        List<Character> letters = new ArrayList<>();
+        for (char letter = '0'; letter <= '9'; letter++) letters.add(letter);
+        for (char letter = 'a'; letter <= 'z'; letter++) letters.add(letter);
+        for (char letter = 'A'; letter <= 'Z'; letter++) letters.add(letter);
+        letters.add(' ');
         this.bitmapFont = letters.stream().collect(Collectors.toMap(Function.identity(), this::createBitmap));
     }
 

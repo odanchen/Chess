@@ -1,4 +1,4 @@
-package root.ui.frames.game_frame;
+package root.ui.frames.game_frame.panels;
 
 import root.logic.moves.Move;
 import root.logic.pieces.PieceColor;
@@ -64,8 +64,7 @@ public class PromotionPanel extends JPanel {
     }
 
     @Override
-    public Dimension getPreferredSize()
-    {
+    public Dimension getPreferredSize() {
         return graphicsManager.getPlayAreaBounds().getSize();
     }
 

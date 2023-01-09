@@ -83,6 +83,12 @@ public class GraphicsManager {
         return new Rectangle(frameWidth / 10 * 8, getSquareSize() + getEdgeSize(), getSquareSize() * 2, getSquareSize() / 2);
     }
 
+    public Rectangle getEndPanelBounds() {
+        int edge = getEdgeSize();
+        int sqr = getSquareSize();
+        return new Rectangle(edge + sqr / 2, edge + sqr / 2 , sqr * 7, sqr * 7);
+    }
+
     public boolean isFlipped() {
         return isFlipped;
     }

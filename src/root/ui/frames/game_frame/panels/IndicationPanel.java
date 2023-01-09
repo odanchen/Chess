@@ -1,4 +1,4 @@
-package root.ui.frames.game_frame;
+package root.ui.frames.game_frame.panels;
 
 import root.logic.moves.AttackMove;
 import root.logic.moves.Move;
@@ -54,8 +54,7 @@ public class IndicationPanel extends JPanel {
     }
 
     @Override
-    public Dimension getPreferredSize()
-    {
+    public Dimension getPreferredSize() {
         return graphicsManager.getPlayAreaBounds().getSize();
     }
 

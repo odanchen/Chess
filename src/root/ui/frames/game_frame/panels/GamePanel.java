@@ -1,4 +1,4 @@
-package root.ui.frames.game_frame;
+package root.ui.frames.game_frame.panels;
 
 import root.logic.moves.*;
 import root.logic.pieces.*;
@@ -29,19 +29,17 @@ public class GamePanel extends JPanel {
         this.gameStatus = gameStatus;
         this.gameControl = gameControl;
         this.graphicsManager = graphicsManager;
-
-        boardPanel = new BoardPanel(graphicsManager);
-        piecePanel = new PiecePanel(graphicsManager, gameStatus);
-        indicPanel = new IndicationPanel(graphicsManager, gameStatus);
-        promPanel = new PromotionPanel(graphicsManager, gameStatus);
-        endPanel = new GameEndPanel(graphicsManager);
-
-        setLayout(new GroupLayout(this));
+        this.boardPanel = new BoardPanel(graphicsManager);
+        this.piecePanel = new PiecePanel(graphicsManager, gameStatus);
+        this.indicPanel = new IndicationPanel(graphicsManager, gameStatus);
+        this.promPanel = new PromotionPanel(graphicsManager, gameStatus);
+        this.endPanel = new GameEndPanel(graphicsManager);
 
         addBasicParameters();
     }
 
     private void addBasicParameters() {
+        setLayout(new GroupLayout(this));
         setBounds(graphicsManager.getGamePanelBounds());
         addPanels();
         createMouseListener();
@@ -214,10 +212,12 @@ public class GamePanel extends JPanel {
     }
 
     private void checkGameEnd() {
-        if (gameStatus.getBoard().isCheckmate(PieceColor.WHITE)) endPanel.switchVis(GameResult.PLAYER_BLACK_WON_BY_CHECKMATE);
-        else if (gameStatus.getBoard().isStalemate(PieceColor.WHITE)) endPanel.switchVis(GameResult.STALEMATE);
-        else if (gameStatus.getBoard().isCheckmate(PieceColor.BLACK)) endPanel.switchVis(GameResult.PLAYER_WHITE_WON_BY_CHECKMATE);
-        else if (gameStatus.getBoard().isStalemate(PieceColor.BLACK)) endPanel.switchVis(GameResult.STALEMATE);
+        if (gameStatus.getBoard().isCheckmate(PieceColor.WHITE))
+            endPanel.showPanel(GameResult.PLAYER_BLACK_WON_BY_CHECKMATE);
+        else if (gameStatus.getBoard().isStalemate(PieceColor.WHITE)) endPanel.showPanel(GameResult.STALEMATE);
+        else if (gameStatus.getBoard().isCheckmate(PieceColor.BLACK))
+            endPanel.showPanel(GameResult.PLAYER_WHITE_WON_BY_CHECKMATE);
+        else if (gameStatus.getBoard().isStalemate(PieceColor.BLACK)) endPanel.showPanel(GameResult.STALEMATE);
     }
 
     public boolean isMovePromotional(Move move) {
@@ -296,8 +296,7 @@ public class GamePanel extends JPanel {
     }
 
     @Override
-    public Dimension getPreferredSize()
-    {
+    public Dimension getPreferredSize() {
         return graphicsManager.getGamePanelBounds().getSize();
     }
 

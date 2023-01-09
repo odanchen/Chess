@@ -1,4 +1,4 @@
-package root.ui.frames.game_frame;
+package root.ui.frames.game_frame.panels;
 
 import root.logic.pieces.ChessPiece;
 import root.ui.graphics.GraphicsManager;
@@ -30,8 +30,7 @@ public class PiecePanel extends JPanel {
     }
 
     @Override
-    public Dimension getPreferredSize()
-    {
+    public Dimension getPreferredSize() {
         return graphicsManager.getPlayAreaBounds().getSize();
     }
 

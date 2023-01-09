@@ -6,7 +6,7 @@ import root.ui.GameManager;
 import javax.swing.*;
 import java.awt.*;
 
-public class MenuMainFrame {
+public class MenuFrame {
     public void MainMenu(GameManager gameManager) {
 
         JLabel title = new JLabel();
