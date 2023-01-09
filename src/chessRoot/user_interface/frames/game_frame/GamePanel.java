@@ -203,8 +203,9 @@ public class GamePanel extends JPanel {
     }
 
     public void makeMove(Move move) {
+
         gameStatus.getBoard().makeMove(move);
-        gameStatus.getBoard().addMoveToLog(move);
+        gameStatus.logMove(move);
         gameStatus.setGameState(stateAfterMove());
         gameStatus.deselectPiece();
         gameStatus.deselectMove();
