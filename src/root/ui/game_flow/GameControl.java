@@ -3,10 +3,10 @@ package root.ui.game_flow;
 import root.ui.GameManager;
 import root.ui.frames.game_frame.GameFrame;
 import root.logic.Board;
-import root.logic.pieces.PieceColor;
+import root.logic.pieces.properties.PieceColor;
 import root.logic.moves.Move;
 
-import static root.logic.pieces.PieceColor.WHITE;
+import static root.logic.pieces.properties.PieceColor.WHITE;
 import static root.ui.game_flow.GameStates.BLACK_TURN;
 import static root.ui.game_flow.GameStates.WHITE_TURN;
 

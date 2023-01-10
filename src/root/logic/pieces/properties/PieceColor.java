@@ -1,4 +1,4 @@
-package root.logic.pieces;
+package root.logic.pieces.properties;
 
 public enum PieceColor {
     WHITE("w"),

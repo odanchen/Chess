@@ -1,7 +1,7 @@
 package root.ui;
 
 import root.logic.Board;
-import root.logic.pieces.PieceColor;
+import root.logic.pieces.properties.PieceColor;
 import root.ui.frames.BaseFrame;
 import root.ui.game_flow.GameControl;
 import root.ui.game_flow.MenuControl;

@@ -2,7 +2,7 @@ package root.logic.moves;
 
 import root.logic.Board;
 import root.logic.pieces.ChessPiece;
-import root.logic.pieces.Position;
+import root.logic.pieces.properties.Position;
 
 /**
  * If the pawn has reached the last tile. While not attacking any chessRoot.logic.pieces.

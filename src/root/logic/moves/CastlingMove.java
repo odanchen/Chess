@@ -1,8 +1,8 @@
 package root.logic.moves;
 
 import root.logic.Board;
-import root.logic.pieces.PieceColor;
-import root.logic.pieces.Position;
+import root.logic.pieces.properties.PieceColor;
+import root.logic.pieces.properties.Position;
 
 /**
  * Standard castling rules apply to this type of move.

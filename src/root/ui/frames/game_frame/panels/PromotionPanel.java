@@ -1,7 +1,7 @@
 package root.ui.frames.game_frame.panels;
 
 import root.logic.moves.Move;
-import root.logic.pieces.PieceColor;
+import root.logic.pieces.properties.PieceColor;
 import root.ui.graphics.GraphicsManager;
 import root.ui.game_flow.GameStatus;
 

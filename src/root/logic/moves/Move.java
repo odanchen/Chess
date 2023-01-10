@@ -2,7 +2,7 @@ package root.logic.moves;
 
 import root.logic.Board;
 import root.logic.pieces.ChessPiece;
-import root.logic.pieces.Position;
+import root.logic.pieces.properties.Position;
 
 /**
  * Abstract move class. Includes a starting position and ending position.

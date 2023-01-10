@@ -2,7 +2,7 @@ package root.logic.log;
 
 import root.logic.Board;
 import root.logic.moves.Move;
-import root.logic.pieces.PieceColor;
+import root.logic.pieces.properties.PieceColor;
 
 import java.util.ArrayList;
 import java.util.List;

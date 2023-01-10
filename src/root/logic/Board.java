@@ -2,12 +2,14 @@ package root.logic;
 
 import root.logic.moves.*;
 import root.logic.pieces.*;
+import root.logic.pieces.properties.PieceColor;
+import root.logic.pieces.properties.Position;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static root.logic.pieces.PieceColor.BLACK;
-import static root.logic.pieces.PieceColor.WHITE;
+import static root.logic.pieces.properties.PieceColor.BLACK;
+import static root.logic.pieces.properties.PieceColor.WHITE;
 
 public class Board {
     private final static int BOARD_SIZE = 8;

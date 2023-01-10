@@ -4,8 +4,8 @@ import root.logic.Board;
 import root.logic.log.GameLog;
 import root.logic.moves.Move;
 import root.logic.pieces.ChessPiece;
-import root.logic.pieces.PieceColor;
-import root.logic.pieces.Position;
+import root.logic.pieces.properties.PieceColor;
+import root.logic.pieces.properties.Position;
 
 import java.util.List;
 

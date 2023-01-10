@@ -3,7 +3,7 @@ package root.logic.moves;
 import root.logic.Board;
 import root.logic.pieces.ChessPiece;
 import root.logic.pieces.Pawn;
-import root.logic.pieces.Position;
+import root.logic.pieces.properties.Position;
 
 /**
  * A type of move where the enemy piece is being taken. Includes an attacked position.

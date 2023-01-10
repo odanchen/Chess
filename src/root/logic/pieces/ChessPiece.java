@@ -3,6 +3,8 @@ package root.logic.pieces;
 import root.logic.Board;
 import root.logic.moves.AttackMove;
 import root.logic.moves.Move;
+import root.logic.pieces.properties.PieceColor;
+import root.logic.pieces.properties.Position;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -5,6 +5,8 @@ import root.logic.moves.AttackMove;
 import root.logic.moves.CastlingMove;
 import root.logic.moves.Move;
 import root.logic.moves.RelocationMove;
+import root.logic.pieces.properties.PieceColor;
+import root.logic.pieces.properties.Position;
 
 import java.util.ArrayList;
 import java.util.List;
