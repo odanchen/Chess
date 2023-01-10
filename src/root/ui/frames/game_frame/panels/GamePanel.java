@@ -146,6 +146,7 @@ public class GamePanel extends JPanel {
         else gameStatus.setGameState(WHITE_PROMOTION);
         gameStatus.selectMove(getMoveOnClick(e));
         promPanel.updatePanel();
+        validate();
     }
 
     private boolean isActionPromotion(MouseEvent e) {
@@ -206,6 +207,7 @@ public class GamePanel extends JPanel {
         gameStatus.deselectMove();
         updatePanel();
         checkGameEnd();
+        validate();
     }
 
     private void checkGameEnd() {
@@ -260,6 +262,7 @@ public class GamePanel extends JPanel {
         gameStatus.setGameState(getStateAfterSelect());
         gameStatus.selectPiece(piece);
         indicPanel.updatePanel();
+        validate();
     }
 
     private GameStates getStateAfterDeselect() {
@@ -276,12 +279,14 @@ public class GamePanel extends JPanel {
         gameStatus.setGameState(getStateAfterDeselect());
         gameStatus.deselectPiece();
         indicPanel.updatePanel();
+        validate();
     }
 
     public void updatePanel() {
         piecePanel.updatePanel();
         indicPanel.updatePanel();
         promPanel.updatePanel();
+        validate();
     }
 
     public void flipPanel() {
@@ -290,6 +295,7 @@ public class GamePanel extends JPanel {
         indicPanel.updatePanel();
         promPanel.updatePanel();
         boardPanel.updatePanel();
+        validate();
     }
 
     @Override
