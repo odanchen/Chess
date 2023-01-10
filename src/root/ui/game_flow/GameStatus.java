@@ -77,10 +77,10 @@ public class GameStatus {
         System.out.println(gameLog.getString().toString());
     }
 
-    public GameStatus(Board board, GameStates startingState) {
+    public GameStatus(Board board, PieceColor startingSide) {
         this.selectedPiece = null;
         this.selectedMove = null;
-        this.gameState = startingState;
+        this.gameState = startingSide == PieceColor.WHITE ? GameStates.WHITE_TURN : GameStates.BLACK_TURN;
         this.board = board;
         this.gameLog = new GameLog(board);
     }

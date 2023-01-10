@@ -1,24 +1,20 @@
 package root.ui.frames.game_frame;
 
+import root.logic.Board;
+import root.logic.pieces.properties.PieceColor;
+import root.ui.GameManager;
 import root.ui.frames.BaseFrame;
 import root.ui.frames.game_frame.panels.GamePanel;
 import root.ui.graphics.GraphicsManager;
 import root.ui.frames.menu_frame.CustomButton;
-import root.ui.game_flow.GameControl;
 import root.ui.game_flow.GameStatus;
 
 import javax.swing.*;
 import java.awt.*;
 
 public class GameFrame extends BaseFrame {
-    private final GameStatus gameStatus;
     private final GraphicsManager graphicsManager;
-    private final GameControl gameControl;
     private final GamePanel gamePanel;
-
-    public GamePanel getGamePanel() {
-        return gamePanel;
-    }
 
     private void addFlipButton() {
         JButton flipButton = new CustomButton("Flip");
@@ -31,12 +27,17 @@ public class GameFrame extends BaseFrame {
         flipButton.addActionListener(e -> gamePanel.flipPanel());
     }
 
-    public GameFrame(GameStatus gameStatus, GameControl gameControl, GraphicsManager graphicsManager) {
-        super(graphicsManager);
-        this.gameStatus = gameStatus;
-        this.gameControl = gameControl;
+    private Board createBoard() {
+        Board board = new Board();
+        board.fillStandardBoard();
+        return board;
+    }
+
+    public GameFrame(GameManager gameManager, GraphicsManager graphicsManager) {
+        super(gameManager, graphicsManager);
         this.graphicsManager = graphicsManager;
-        this.gamePanel = new GamePanel(gameStatus, gameControl, graphicsManager);
+        GameStatus gameStatus = new GameStatus(createBoard(), PieceColor.WHITE);
+        this.gamePanel = new GamePanel(gameStatus, graphicsManager);
 
         getContentPane().setBackground(graphicsManager.getWhiteSquareColor());
         getContentPane().add(gamePanel);

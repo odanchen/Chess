@@ -2,12 +2,16 @@
 package root.ui.frames.menu_frame;
 
 import root.ui.GameManager;
+import root.ui.frames.BaseFrame;
+import root.ui.graphics.GraphicsManager;
 
 import javax.swing.*;
 import java.awt.*;
 
-public class MenuFrame {
-    public void MainMenu(GameManager gameManager) {
+public class MenuFrame extends BaseFrame {
+
+    public MenuFrame(GameManager gameManager, GraphicsManager graphicsManager) {
+        super(gameManager, graphicsManager);
 
         JLabel title = new JLabel();
         title.setText("Chess Game");
@@ -32,19 +36,11 @@ public class MenuFrame {
             gameManager.runChess();
         });
 
-        quitButton.addActionListener(e -> {
-            SwingUtilities.getWindowAncestor((JComponent) e.getSource()).dispose(); // Closes window
-        });
+        quitButton.addActionListener(e -> System.exit(0));
 
-        JFrame f = new JFrame("Chess");
-        f.setBounds(gameManager.getGraphicsManager().getMenuBounds());
-        f.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        f.setLayout(null);
-        f.setVisible(true);
-        f.setResizable(false);
-        f.add(buttonsPanel);
-        f.add(titlePanel);
-        f.validate();
+        add(buttonsPanel);
+        add(titlePanel);
+        validate();
     }
 }
 

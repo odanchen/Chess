@@ -5,7 +5,6 @@ import root.logic.pieces.*;
 import root.logic.pieces.properties.PieceColor;
 import root.logic.pieces.properties.Position;
 import root.ui.graphics.GraphicsManager;
-import root.ui.game_flow.GameControl;
 import root.ui.game_flow.GameResult;
 import root.ui.game_flow.GameStates;
 import root.ui.game_flow.GameStatus;
@@ -24,12 +23,10 @@ public class GamePanel extends JPanel {
     private final PromotionPanel promPanel;
     private final GameEndPanel endPanel;
     private final GameStatus gameStatus;
-    private final GameControl gameControl;
     private final GraphicsManager graphicsManager;
 
-    public GamePanel(GameStatus gameStatus, GameControl gameControl, GraphicsManager graphicsManager) {
+    public GamePanel(GameStatus gameStatus, GraphicsManager graphicsManager) {
         this.gameStatus = gameStatus;
-        this.gameControl = gameControl;
         this.graphicsManager = graphicsManager;
         this.boardPanel = new BoardPanel(graphicsManager);
         this.piecePanel = new PiecePanel(graphicsManager, gameStatus);
@@ -71,7 +68,7 @@ public class GamePanel extends JPanel {
 
     private void piecePromotionEvent(MouseEvent e) {
         Move move = createPromotionMove(e);
-        if (move != null) gameControl.performMove(move);
+        if (move != null) makeMove(move);
     }
 
     private void onMousePress(MouseEvent e) {
@@ -198,12 +195,10 @@ public class GamePanel extends JPanel {
     }
 
     private void makeMove(MouseEvent e) {
-        gameStatus.selectMove(getMoveOnClick(e));
-        gameControl.performMove(gameStatus.getSelectedMove());
+        makeMove(getMoveOnClick(e));
     }
 
     public void makeMove(Move move) {
-
         gameStatus.getBoard().makeMove(move);
         gameStatus.logMove(move);
         gameStatus.setGameState(stateAfterMove());

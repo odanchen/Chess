@@ -1,15 +1,14 @@
 package root.ui;
 
 import root.logic.Board;
-import root.logic.pieces.properties.PieceColor;
 import root.ui.frames.BaseFrame;
-import root.ui.game_flow.GameControl;
-import root.ui.game_flow.MenuControl;
+import root.ui.frames.game_frame.GameFrame;
+import root.ui.frames.menu_frame.MenuFrame;
 import root.ui.graphics.GraphicsManager;
 
+import javax.swing.*;
+
 public class GameManager {
-    private GameControl gameControl;
-    private MenuControl menuControl;
     private BaseFrame currentFrame;
     private final GraphicsManager graphicsManager;
 
@@ -17,21 +16,13 @@ public class GameManager {
         graphicsManager = new GraphicsManager();
     }
 
-    public GraphicsManager getGraphicsManager() {
-        return graphicsManager;
-    }
-
     public void runChess() {
         Board board = new Board();
         board.fillStandardBoard();
-        gameControl = new GameControl(board, PieceColor.WHITE, this);
-    }
-
-    public void runChess(Board board, PieceColor firstMove) {
-        gameControl = new GameControl(board, firstMove, this);
+        currentFrame = new GameFrame(this, graphicsManager);
     }
 
     public void runMenu() {
-        menuControl = new MenuControl(this);
+        currentFrame = new MenuFrame(this, graphicsManager);
     }
 }

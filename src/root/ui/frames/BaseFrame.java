@@ -1,5 +1,6 @@
 package root.ui.frames;
 
+import root.ui.GameManager;
 import root.ui.graphics.GraphicsManager;
 
 import javax.swing.*;
@@ -7,6 +8,8 @@ import java.awt.*;
 import java.io.File;
 
 public abstract class BaseFrame extends JFrame {
+    protected final GraphicsManager graphicsManager;
+    protected final GameManager gameManager;
 
     @Override
     public Dimension getPreferredSize() {
@@ -22,9 +25,9 @@ public abstract class BaseFrame extends JFrame {
         }
     }
 
-    protected GraphicsManager graphicsManager;
-    public BaseFrame(GraphicsManager graphicsManager) {
+    public BaseFrame(GameManager gameManager, GraphicsManager graphicsManager) {
         this.graphicsManager = graphicsManager;
+        this.gameManager = gameManager;
         addIcon();
         setTitle("Chess");
         GroupLayout layout = new GroupLayout(getContentPane());
