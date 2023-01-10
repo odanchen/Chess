@@ -6,8 +6,6 @@ import root.ui.frames.game_frame.GameFrame;
 import root.ui.frames.menu_frame.MenuFrame;
 import root.ui.graphics.GraphicsManager;
 
-import javax.swing.*;
-
 public class GameManager {
     private BaseFrame currentFrame;
     private final GraphicsManager graphicsManager;

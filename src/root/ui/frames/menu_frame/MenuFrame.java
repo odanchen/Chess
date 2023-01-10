@@ -3,6 +3,7 @@ package root.ui.frames.menu_frame;
 
 import root.ui.GameManager;
 import root.ui.frames.BaseFrame;
+import root.ui.frames.menu_frame.panels.BackgroundPanel;
 import root.ui.graphics.GraphicsManager;
 
 import javax.swing.*;
@@ -12,14 +13,6 @@ public class MenuFrame extends BaseFrame {
 
     public MenuFrame(GameManager gameManager, GraphicsManager graphicsManager) {
         super(gameManager, graphicsManager);
-
-        JLabel title = new JLabel();
-        title.setText("Chess Game");
-        title.setFont(new Font("Serif", Font.PLAIN, 20));
-
-        JPanel titlePanel = new JPanel();
-        titlePanel.setBounds(220, 150, 150, 50);
-        titlePanel.add(title);
 
         // Buttons business
         JButton startButton = new CustomButton("   Start   ");
@@ -31,6 +24,9 @@ public class MenuFrame extends BaseFrame {
         buttonsPanel.add(settingsButton);
         buttonsPanel.add(quitButton);
 
+        BackgroundPanel backgroundPanel = new BackgroundPanel(graphicsManager);
+
+
         startButton.addActionListener(e -> {
             SwingUtilities.getWindowAncestor((JComponent) e.getSource()).dispose(); // Closes window
             gameManager.runChess();
@@ -38,8 +34,12 @@ public class MenuFrame extends BaseFrame {
 
         quitButton.addActionListener(e -> System.exit(0));
 
+
+
         add(buttonsPanel);
-        add(titlePanel);
+        add(backgroundPanel);
+
+        backgroundPanel.repaint();
         validate();
     }
 }

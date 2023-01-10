@@ -21,6 +21,7 @@ public class TextureHolder {
     private Map<String, BufferedImage> activeTextures;
     private String pieceTextureFolder;
     private final int pieceSize;
+    private final Dimension stageSize;
     private final Font font;
     private final List<String> pieceSignatures = List.of("bb", "bk", "bn", "bp", "bq", "br", "wb", "wk", "wn", "wp", "wq", "wr");
 
@@ -61,8 +62,8 @@ public class TextureHolder {
         return bImage;
     }
 
-    private BufferedImage rescale(BufferedImage image) {
-        return toBufferedImage(image.getScaledInstance(pieceSize, pieceSize, Image.SCALE_SMOOTH));
+    private BufferedImage rescale(BufferedImage image, int height, int width) {
+        return toBufferedImage(image.getScaledInstance(width, height, Image.SCALE_SMOOTH));
     }
 
     public String getPathToTexture(String signature) {
@@ -73,7 +74,24 @@ public class TextureHolder {
 
     private BufferedImage getNewTexture(String signature) {
         try {
-            return rescale(ImageIO.read(new File(getPathToTexture(signature))));
+            return rescale(ImageIO.read(new File(getPathToTexture(signature))), pieceSize, pieceSize);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    private String getPathToBackground(String filename) {
+        String root = Paths.get("").toAbsolutePath().toString();
+        String[] fullPath = {root, "src", "root", "assets", "stages", filename + ".png"};
+        String ans = String.join(File.separator, fullPath);
+        return ans;
+        //return String.join(File.separator, fullPath);
+    }
+
+    public BufferedImage getBackgroundTexture(String filename) {
+        try {
+            BufferedImage img = ImageIO.read(new File(getPathToBackground(filename)));
+            return rescale(img, stageSize.height, stageSize.width);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -95,11 +113,12 @@ public class TextureHolder {
         return bitmapFont.get(letter);
     }
 
-    public TextureHolder(ColorSet colorSet, Font font, String pieceTextureFolder, int pieceSize) {
+    public TextureHolder(ColorSet colorSet, Font font, String pieceTextureFolder, int pieceSize, Dimension stageSize) {
         this.colorSet = colorSet;
         this.font = font;
         this.pieceTextureFolder = pieceTextureFolder;
         this.pieceSize = pieceSize;
+        this.stageSize = stageSize;
 
         activeTextures = new HashMap<>();
         fillActiveTextures();
