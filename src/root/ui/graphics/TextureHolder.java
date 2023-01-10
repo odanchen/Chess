@@ -87,11 +87,11 @@ public class TextureHolder {
         return String.join(File.separator, fullPath);
     }
 
-    public ImageIcon getImageIconOf(String id) {
+    public ImageIcon getImageIconOf(String id, int width, int height) {
         String root = Paths.get("").toAbsolutePath().toString();
         String[] fullPath = {root, "src", "root", "assets", "buttons", id + ".png"};
         try {
-            return new ImageIcon(rescale(ImageIO.read(new File(String.join(File.separator, fullPath))), 50, 150));
+            return new ImageIcon(rescale(ImageIO.read(new File(String.join(File.separator, fullPath))), height, width));
         } catch (IOException e) {
             System.out.println(getPathToBackground(String.join(File.separator, fullPath)));
             throw new RuntimeException(e);

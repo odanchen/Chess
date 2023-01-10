@@ -17,13 +17,13 @@ public class GameFrame extends BaseFrame {
     private final GamePanel gamePanel;
 
     private void addFlipButton() {
-        JButton flipButton = new CustomButton("flipButtonReleased", graphicsManager);
+        JButton flipButton = new CustomButton("flipButtonReleased", graphicsManager,75,75);
         flipButton.setBackground(graphicsManager.getBlackSquareColor());
         flipButton.setForeground(graphicsManager.getWhiteSquareColor());
         flipButton.setContentAreaFilled(true);
         flipButton.setFont(new Font("Serif", Font.BOLD, 20));
         getContentPane().add(flipButton);
-        flipButton.setBounds(graphicsManager.getFlipButtonBounds());
+        flipButton.setBounds(graphicsManager.getFlipButtonBounds(75,75));
         flipButton.addActionListener(e -> gamePanel.flipPanel());
     }
 

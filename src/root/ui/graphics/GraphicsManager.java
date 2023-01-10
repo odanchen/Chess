@@ -82,9 +82,9 @@ public class GraphicsManager {
         return new Rectangle(0, 0, newRectWidth, newRectHeight);
     }
 
-    public Rectangle getFlipButtonBounds() {
-        int frameWidth = 2 * getEdgeSize() + getBoardSize() + 5 * getSquareSize();
-        return new Rectangle(frameWidth / 10 * 8, getSquareSize() + getEdgeSize(), getSquareSize() * 2, getSquareSize() / 2);
+    public Rectangle getFlipButtonBounds(int width, int height) {
+        int startX = (getBoardPanelBounds().x + getBoardPanelBounds().width + getSquareSize() + getGameBounds().width - width) / 2;
+        return new Rectangle(startX, getSquareSize() + getEdgeSize(), width, height);
     }
 
     public Rectangle getEndPanelBounds() {
@@ -149,8 +149,8 @@ public class GraphicsManager {
         return textureHolder.getBackgroundTexture(filename);
     }
 
-    public ImageIcon getImageIconOf(String id) {
-        return textureHolder.getImageIconOf(id);
+    public ImageIcon getImageIconOf(String id, int width, int height) {
+        return textureHolder.getImageIconOf(id, width, height);
     }
 
     public GraphicsManager() {
