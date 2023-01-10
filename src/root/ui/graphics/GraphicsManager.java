@@ -4,6 +4,7 @@ import root.assets.colors.BoardColors;
 import root.assets.colors.ColorSet;
 import root.logic.pieces.ChessPiece;
 
+import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
@@ -64,10 +65,16 @@ public class GraphicsManager {
         int newRectWidth = 2 * getEdgeSize() + getBoardSize() + 5 * getSquareSize();
         int newRectHeight = 3 * getEdgeSize() + getBoardSize() + 2 * getSquareSize();
         Dimension screen = Toolkit.getDefaultToolkit().getScreenSize();
+
         int xCor = (int) ((screen.getWidth() - newRectWidth) / 2);
         int yCor = (int) ((screen.getHeight() - newRectHeight) / 2);
         return new Rectangle(xCor, yCor, newRectWidth, newRectHeight);
     }
+
+    public int getCenterOfScreenX(int width) {
+        return (int) (getGameBounds().getSize().getWidth() / 2) - width/2;
+    }
+    public int getCenterOfScreenY(int height) {return (int) (getGameBounds().getSize().getHeight() / 2) - height/2;}
 
     public Rectangle getBackgroundBounds() {
         int newRectWidth = 2 * getEdgeSize() + getBoardSize() + 5 * getSquareSize();
@@ -140,6 +147,10 @@ public class GraphicsManager {
 
     public BufferedImage getBackgroundTexture(String filename) {
         return textureHolder.getBackgroundTexture(filename);
+    }
+
+    public ImageIcon getImageIconOf(String id) {
+        return textureHolder.getImageIconOf(id);
     }
 
     public GraphicsManager() {

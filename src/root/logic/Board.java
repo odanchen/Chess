@@ -274,34 +274,7 @@ public class Board {
      * Fills board object with standard pieces and piece positions.
      */
     public void fillStandardBoard() {
-        addPiece(new Castle(Position.at("a1"), WHITE));
-        addPiece(new Castle(Position.at("a8"), BLACK));
-
-        addPiece(new Knight(Position.at("b1"), WHITE));
-        addPiece(new Knight(Position.at("b8"), BLACK));
-
-        addPiece(new Bishop(Position.at("c1"), WHITE));
-        addPiece(new Bishop(Position.at("c8"), BLACK));
-
-        addPiece(new Queen(Position.at("d1"), WHITE));
-        addPiece(new Queen(Position.at("d8"), BLACK));
-
-        addPiece(new King(Position.at("e1"), WHITE));
-        addPiece(new King(Position.at("e8"), BLACK));
-
-        addPiece(new Bishop(Position.at("f1"), WHITE));
-        addPiece(new Bishop(Position.at("f8"), BLACK));
-
-        addPiece(new Knight(Position.at("g1"), WHITE));
-        addPiece(new Knight(Position.at("g8"), BLACK));
-
-        addPiece(new Castle(Position.at("h1"), WHITE));
-        addPiece(new Castle(Position.at("h8"), BLACK));
-
-        for (char i = 'a'; i <= 'h'; i++) {
-            addPiece(new Pawn(new Position(i, 2), WHITE));
-            addPiece(new Pawn(new Position(i, 7), BLACK));
-        }
+        this.fromFEN("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR");
     }
 
     private static List<ChessPiece> copyPiecesList(List<ChessPiece> originalPieces) {

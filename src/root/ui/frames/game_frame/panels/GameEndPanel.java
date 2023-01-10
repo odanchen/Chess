@@ -22,7 +22,7 @@ public class GameEndPanel extends JPanel {
     public void paint(Graphics g) {
         int arcSize = graphicsManager.getSquareSize() / 2;
         g.setColor(Color.WHITE);
-        g.fillRoundRect(0, 0, getBounds().width, getBounds().height, arcSize, arcSize);
+        g.fillRoundRect((int) (graphicsManager.getSquareSize() * 1.75), (int) (graphicsManager.getSquareSize() * 1.75), (int) (graphicsManager.getSquareSize() * 4.25), (int) (graphicsManager.getSquareSize() * 4.25), arcSize, arcSize);
         g.setColor(Color.BLACK);
         g.setFont(new Font("Arial", Font.BOLD, 15));
         g.drawString("Game Over", getBounds().x + (int) (getBounds().width / 3.5), getBounds().y + getBounds().height / 4);

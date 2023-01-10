@@ -15,11 +15,12 @@ public class MenuFrame extends BaseFrame {
         super(gameManager, graphicsManager);
 
         // Buttons business
-        JButton startButton = new CustomButton("   Start   ");
-        JButton settingsButton = new CustomButton("Settings");
-        JButton quitButton = new CustomButton("    Quit    ");
+        JButton startButton = new CustomButton("startButtonReleased", graphicsManager);
+        JButton settingsButton = new CustomButton("settingsButtonReleased", graphicsManager);
+        JButton quitButton = new CustomButton("quitButtonReleased", graphicsManager);
         JPanel buttonsPanel = new JPanel();
-        buttonsPanel.setBounds(230, 250, 130, 170);
+        buttonsPanel.setBounds(graphicsManager.getCenterOfScreenX(150), graphicsManager.getCenterOfScreenY(175), 150, 175);
+        buttonsPanel.setOpaque(false);
         buttonsPanel.add(startButton);
         buttonsPanel.add(settingsButton);
         buttonsPanel.add(quitButton);

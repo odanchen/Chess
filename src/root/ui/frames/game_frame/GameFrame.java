@@ -17,7 +17,7 @@ public class GameFrame extends BaseFrame {
     private final GamePanel gamePanel;
 
     private void addFlipButton() {
-        JButton flipButton = new CustomButton("Flip");
+        JButton flipButton = new CustomButton("flipButtonReleased", graphicsManager);
         flipButton.setBackground(graphicsManager.getBlackSquareColor());
         flipButton.setForeground(graphicsManager.getWhiteSquareColor());
         flipButton.setContentAreaFilled(true);

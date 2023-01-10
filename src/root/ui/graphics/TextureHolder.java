@@ -3,6 +3,7 @@ package root.ui.graphics;
 import root.assets.colors.ColorSet;
 
 import javax.imageio.ImageIO;
+import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -83,9 +84,18 @@ public class TextureHolder {
     private String getPathToBackground(String filename) {
         String root = Paths.get("").toAbsolutePath().toString();
         String[] fullPath = {root, "src", "root", "assets", "stages", filename + ".png"};
-        String ans = String.join(File.separator, fullPath);
-        return ans;
-        //return String.join(File.separator, fullPath);
+        return String.join(File.separator, fullPath);
+    }
+
+    public ImageIcon getImageIconOf(String id) {
+        String root = Paths.get("").toAbsolutePath().toString();
+        String[] fullPath = {root, "src", "root", "assets", "buttons", id + ".png"};
+        try {
+            return new ImageIcon(rescale(ImageIO.read(new File(String.join(File.separator, fullPath))), 50, 150));
+        } catch (IOException e) {
+            System.out.println(getPathToBackground(String.join(File.separator, fullPath)));
+            throw new RuntimeException(e);
+        }
     }
 
     public BufferedImage getBackgroundTexture(String filename) {
