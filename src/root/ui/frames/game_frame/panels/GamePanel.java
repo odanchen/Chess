@@ -13,6 +13,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.util.List;
 
 import static root.ui.game_flow.GameStates.*;
 
@@ -145,7 +146,7 @@ public class GamePanel extends JPanel {
         if (gameStatus.getState() == BLACK_SELECTED_PIECE) gameStatus.setGameState(BLACK_PROMOTION);
         else gameStatus.setGameState(WHITE_PROMOTION);
         gameStatus.selectMove(getMoveOnClick(e));
-        promPanel.updatePanel();
+        SwingUtilities.windowForComponent(indicPanel).repaint();
         validate();
     }
 
@@ -261,7 +262,7 @@ public class GamePanel extends JPanel {
     private void selectPiece(ChessPiece piece) {
         gameStatus.setGameState(getStateAfterSelect());
         gameStatus.selectPiece(piece);
-        indicPanel.updatePanel();
+        SwingUtilities.windowForComponent(indicPanel).repaint();
         validate();
     }
 
@@ -278,23 +279,20 @@ public class GamePanel extends JPanel {
     private void deselectPiece() {
         gameStatus.setGameState(getStateAfterDeselect());
         gameStatus.deselectPiece();
-        indicPanel.updatePanel();
+        SwingUtilities.windowForComponent(indicPanel).repaint();
         validate();
     }
 
     public void updatePanel() {
-        piecePanel.updatePanel();
-        indicPanel.updatePanel();
-        promPanel.updatePanel();
+        List.of(piecePanel, indicPanel, promPanel)
+                .forEach(panel -> SwingUtilities.windowForComponent(panel).repaint());
         validate();
     }
 
     public void flipPanel() {
         graphicsManager.flipBoard();
-        piecePanel.updatePanel();
-        indicPanel.updatePanel();
-        promPanel.updatePanel();
-        boardPanel.updatePanel();
+        List.of(piecePanel, indicPanel, promPanel, boardPanel)
+                .forEach(panel -> SwingUtilities.windowForComponent(panel).repaint());
         validate();
     }
 

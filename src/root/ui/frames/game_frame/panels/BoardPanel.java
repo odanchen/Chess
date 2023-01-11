@@ -77,10 +77,6 @@ public class BoardPanel extends JPanel {
         }
     }
 
-    public void updatePanel() {
-        repaint();
-    }
-
     @Override
     public Dimension getPreferredSize() {
         return graphicsManager.getBoardPanelBounds().getSize();

@@ -20,13 +20,9 @@ public class IndicationPanel extends JPanel {
         this.setOpaque(false);
     }
 
-    public void updatePanel() {
-        removeAll();
-        repaint();
-    }
-
     @Override
     public void paint(Graphics g) {
+        removeAll();
         if (gameStatus.isPieceSelected()) {
             gameStatus.getSelectedPieceMoves().forEach(move -> drawMoveIndication(g, move));
         }

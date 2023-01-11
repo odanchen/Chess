@@ -12,10 +12,6 @@ public class PiecePanel extends JPanel {
     private final GameStatus gameStatus;
     private final GraphicsManager graphicsManager;
 
-    public void updatePanel() {
-        repaint();
-    }
-
     @Override
     public void paint(Graphics g) {
         gameStatus.getAllPieces().forEach(piece -> drawPiece(g, piece));
