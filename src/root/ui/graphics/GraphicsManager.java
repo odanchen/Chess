@@ -93,6 +93,10 @@ public class GraphicsManager {
         return new Rectangle(edge + sqr / 2, edge + sqr / 2 , sqr * 7, sqr * 7);
     }
 
+    public Dimension getTextButtonDimension() {
+        return new Dimension(getEdgeSize() * 6, getEdgeSize() * 2);
+    }
+
     public boolean isFlipped() {
         return isFlipped;
     }

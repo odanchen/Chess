@@ -7,13 +7,12 @@ import java.awt.*;
 
 public class CustomButton extends JButton {
 
-    public CustomButton(String id, GraphicsManager graphicsManager,int width, int height) {
-        super(graphicsManager.getImageIconOf(id, width, height));
+    public CustomButton(String id, GraphicsManager graphicsManager, Dimension size) {
+        super(graphicsManager.getImageIconOf(id, size.width, size.height));
         setContentAreaFilled(false);
         setBorder(BorderFactory.createEmptyBorder());
-        setPreferredSize(new Dimension(width, height));
+        setPreferredSize(size);
         setBorderPainted(false);
         setFocusPainted(false);
     }
-
 }

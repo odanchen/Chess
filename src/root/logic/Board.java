@@ -8,7 +8,6 @@ import root.logic.pieces.properties.Position;
 import java.util.ArrayList;
 import java.util.List;
 
-import static root.logic.pieces.properties.PieceColor.BLACK;
 import static root.logic.pieces.properties.PieceColor.WHITE;
 
 public class Board {

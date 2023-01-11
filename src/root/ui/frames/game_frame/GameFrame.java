@@ -17,7 +17,7 @@ public class GameFrame extends BaseFrame {
     private final GamePanel gamePanel;
 
     private void addFlipButton() {
-        JButton flipButton = new CustomButton("flipButtonReleased", graphicsManager,75,75);
+        JButton flipButton = new CustomButton("flipButtonReleased", graphicsManager,new Dimension(75, 75));
         getContentPane().add(flipButton);
         flipButton.setBounds(graphicsManager.getFlipButtonBounds(75,75));
         flipButton.addActionListener(e -> gamePanel.flipPanel());
