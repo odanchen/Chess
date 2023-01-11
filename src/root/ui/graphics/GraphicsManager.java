@@ -145,7 +145,7 @@ public class GraphicsManager {
     }
 
     public String getPathToTexture(String pieceSignature) {
-        return textureHolder.getPathToTexture(pieceSignature);
+        return textureHolder.getPathToPieceTexture(pieceSignature);
     }
 
     public BufferedImage getTextureOfPiece(String signature) {

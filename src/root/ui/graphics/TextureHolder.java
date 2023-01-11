@@ -66,15 +66,13 @@ public class TextureHolder {
         return toBufferedImage(image.getScaledInstance(width, height, Image.SCALE_SMOOTH));
     }
 
-    public String getPathToTexture(String signature) {
-        String root = Paths.get("").toAbsolutePath().toString();
-        String[] fullPath = {root, "src", "root", "assets", "pieces", pieceTextureFolder, signature + ".png"};
-        return String.join(File.separator, fullPath);
+    public String getPathToPieceTexture(String signature) {
+        return getPathTo("pieces", pieceTextureFolder + File.separator + signature);
     }
 
     private BufferedImage getNewTexture(String signature) {
         try {
-            return rescale(ImageIO.read(new File(getPathToTexture(signature))), pieceSize, pieceSize);
+            return rescale(ImageIO.read(new File(getPathToPieceTexture(signature))), pieceSize, pieceSize);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
