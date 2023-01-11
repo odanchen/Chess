@@ -82,9 +82,9 @@ public class GraphicsManager {
         return new Rectangle(0, 0, newRectWidth, newRectHeight);
     }
 
-    public Rectangle getFlipButtonBounds(int width, int height) {
-        int startX = (getBoardPanelBounds().x + getBoardPanelBounds().width + getSquareSize() + getGameBounds().width - width) / 2;
-        return new Rectangle(startX, getSquareSize() + getEdgeSize(), width, height);
+    public Rectangle getFlipButtonBounds() {
+        int startX = (getBoardPanelBounds().x + getBoardPanelBounds().width + getSquareSize() + getGameBounds().width - getSquareSize() - getEdgeSize()) / 2;
+        return new Rectangle(startX, getSquareSize() + getEdgeSize(), getSquareSize() + getEdgeSize(), getSquareSize() + getEdgeSize());
     }
 
     public Rectangle getEndPanelBounds() {

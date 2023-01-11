@@ -10,16 +10,15 @@ import root.ui.frames.menu_frame.CustomButton;
 import root.ui.game_flow.GameStatus;
 
 import javax.swing.*;
-import java.awt.*;
 
 public class GameFrame extends BaseFrame {
     private final GraphicsManager graphicsManager;
     private final GamePanel gamePanel;
 
     private void addFlipButton() {
-        JButton flipButton = new CustomButton("flipButtonReleased", graphicsManager,new Dimension(75, 75));
+        JButton flipButton = new CustomButton("flipButtonReleased", graphicsManager, graphicsManager.getFlipButtonBounds().getSize());
         getContentPane().add(flipButton);
-        flipButton.setBounds(graphicsManager.getFlipButtonBounds(75,75));
+        flipButton.setBounds(graphicsManager.getFlipButtonBounds());
         flipButton.addActionListener(e -> gamePanel.flipPanel());
     }
 
