@@ -65,7 +65,7 @@ public class SettingsFrame extends BaseFrame {
         panel.add(save);
 
         save.addActionListener(e->{
-
+            saveSettings();
         });
 
         add(panel);
@@ -75,7 +75,7 @@ public class SettingsFrame extends BaseFrame {
     private void saveSettings(){
         try{
             FileWriter myWriter = new FileWriter("filename.txt");
-            myWriter.write("test");
+            myWriter.write("file toggle:" + isFlipTogOn + "\n" + "texture: ");
             myWriter.close();
         } catch (IOException e) {
             throw new RuntimeException(e);
