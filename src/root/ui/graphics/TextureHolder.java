@@ -22,7 +22,6 @@ public class TextureHolder {
     private Map<String, BufferedImage> activeTextures;
     private String pieceTextureFolder;
     private final int pieceSize;
-    private final Dimension stageSize;
     private final Font font;
     private final List<String> pieceSignatures = List.of("bb", "bk", "bn", "bp", "bq", "br", "wb", "wk", "wn", "wp", "wq", "wr");
 
@@ -81,27 +80,25 @@ public class TextureHolder {
         }
     }
 
-    private String getPathToBackground(String filename) {
+    public String getPathTo(String folder, String fileName) {
         String root = Paths.get("").toAbsolutePath().toString();
-        String[] fullPath = {root, "src", "root", "assets", "stages", filename + ".png"};
+        String[] fullPath = {root, "src", "root", "assets", folder, fileName + ".png"};
         return String.join(File.separator, fullPath);
     }
 
-    public ImageIcon getImageIconOf(String id, int width, int height) {
-        String root = Paths.get("").toAbsolutePath().toString();
-        String[] fullPath = {root, "src", "root", "assets", "buttons", id + ".png"};
+    public BufferedImage getTextureOf(String folder, String filename, Dimension size) {
         try {
-            return new ImageIcon(rescale(ImageIO.read(new File(String.join(File.separator, fullPath))), height, width));
+            BufferedImage img = ImageIO.read(new File(getPathTo(folder, filename)));
+            return rescale(img, size.height, size.width);
         } catch (IOException e) {
-            System.out.println(getPathToBackground(String.join(File.separator, fullPath)));
             throw new RuntimeException(e);
         }
     }
 
-    public BufferedImage getBackgroundTexture(String filename) {
+    public ImageIcon getIconOf(String folder, String filename, Dimension size) {
         try {
-            BufferedImage img = ImageIO.read(new File(getPathToBackground(filename)));
-            return rescale(img, stageSize.height, stageSize.width);
+            BufferedImage img = ImageIO.read(new File(getPathTo(folder, filename)));
+            return new ImageIcon(rescale(img, size.height, size.width));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -123,12 +120,11 @@ public class TextureHolder {
         return bitmapFont.get(letter);
     }
 
-    public TextureHolder(ColorSet colorSet, Font font, String pieceTextureFolder, int pieceSize, Dimension stageSize) {
+    public TextureHolder(ColorSet colorSet, Font font, String pieceTextureFolder, int pieceSize) {
         this.colorSet = colorSet;
         this.font = font;
         this.pieceTextureFolder = pieceTextureFolder;
         this.pieceSize = pieceSize;
-        this.stageSize = stageSize;
 
         activeTextures = new HashMap<>();
         fillActiveTextures();

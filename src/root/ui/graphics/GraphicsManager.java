@@ -72,9 +72,12 @@ public class GraphicsManager {
     }
 
     public int getCenterOfScreenX(int width) {
-        return (int) (getGameBounds().getSize().getWidth() / 2) - width/2;
+        return (int) (getGameBounds().getSize().getWidth() / 2) - width / 2;
     }
-    public int getCenterOfScreenY(int height) {return (int) (getGameBounds().getSize().getHeight() / 2) - height/2;}
+
+    public int getCenterOfScreenY(int height) {
+        return (int) (getGameBounds().getSize().getHeight() / 2) - height / 2;
+    }
 
     public Rectangle getBackgroundBounds() {
         int newRectWidth = 2 * getEdgeSize() + getBoardSize() + 5 * getSquareSize();
@@ -90,11 +93,15 @@ public class GraphicsManager {
     public Rectangle getEndPanelBounds() {
         int edge = getEdgeSize();
         int sqr = getSquareSize();
-        return new Rectangle(edge + sqr / 2, edge + sqr / 2 , sqr * 7, sqr * 7);
+        return new Rectangle(edge + sqr / 2, edge + sqr / 2, sqr * 7, sqr * 7);
     }
 
     public Dimension getTextButtonDimension() {
         return new Dimension(getEdgeSize() * 6, getEdgeSize() * 2);
+    }
+
+    public Dimension getFrameDimension() {
+        return getGameBounds().getSize();
     }
 
     public boolean isFlipped() {
@@ -150,11 +157,11 @@ public class GraphicsManager {
     }
 
     public BufferedImage getBackgroundTexture(String filename) {
-        return textureHolder.getBackgroundTexture(filename);
+        return textureHolder.getTextureOf("stages", filename, getFrameDimension());
     }
 
-    public ImageIcon getImageIconOf(String id, int width, int height) {
-        return textureHolder.getImageIconOf(id, width, height);
+    public ImageIcon getButtonIcon(String id, Dimension size) {
+        return textureHolder.getIconOf("buttons", id, size);
     }
 
     public GraphicsManager() {
@@ -162,6 +169,6 @@ public class GraphicsManager {
 
         Font letterFont = new Font("Monospaced", PLAIN, getSquareSize() / 3);
         boardColors = BoardColors.OPTION1;
-        textureHolder = new TextureHolder(boardColors, letterFont, pieceTextureFolder, getPieceSize(), getGameBounds().getSize());
+        textureHolder = new TextureHolder(boardColors, letterFont, pieceTextureFolder, getPieceSize());
     }
 }

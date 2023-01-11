@@ -8,7 +8,7 @@ import java.awt.*;
 public class CustomButton extends JButton {
 
     public CustomButton(String id, GraphicsManager graphicsManager, Dimension size) {
-        super(graphicsManager.getImageIconOf(id, size.width, size.height));
+        super(graphicsManager.getButtonIcon(id, size));
         setContentAreaFilled(false);
         setBorder(BorderFactory.createEmptyBorder());
         setPreferredSize(size);
