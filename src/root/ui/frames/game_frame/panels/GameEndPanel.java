@@ -17,6 +17,7 @@ public class GameEndPanel extends JPanel {
         this.setBounds(graphicsManager.getEndPanelBounds());
         this.setOpaque(true);
         this.setVisible(false);
+        addMenuButton();
     }
 
     @Override
@@ -48,12 +49,14 @@ public class GameEndPanel extends JPanel {
         JPanel buttonsPanel = new JPanel();
 
         Dimension size = graphicsManager.getTextButtonDimension();
-        buttonsPanel.setBounds(50, 50, size.width, size.height);
         buttonsPanel.setPreferredSize(size);
+        buttonsPanel.setBounds(0, 0, size.width, size.height);
+
         buttonsPanel.setVisible(true);
-        buttonsPanel.setOpaque(false);
+        //buttonsPanel.setOpaque(false);
 
         CustomButton menuReturnButton = new CustomButton("menuButtonReleased", graphicsManager, size);
+        menuReturnButton.setPreferredSize(size);
         buttonsPanel.add(menuReturnButton);
 
         buttonsPanel.validate();
@@ -62,8 +65,7 @@ public class GameEndPanel extends JPanel {
     }
 
     public void showPanel(GameResult gameResult) {
-        this.setVisible(true);
         this.gameResult = gameResult;
-        addMenuButton();
+        setVisible(true);
     }
 }
