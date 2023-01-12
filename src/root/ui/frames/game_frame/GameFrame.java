@@ -40,8 +40,10 @@ public class GameFrame extends BaseFrame {
         GameStatus gameStatus = new GameStatus(createBoard(), PieceColor.WHITE);
         this.gamePanel = new GamePanel(gameStatus, graphicsManager, this);
 
-        getContentPane().setBackground(graphicsManager.getWhiteSquareColor());
+        //getContentPane().setBackground(graphicsManager.getWhiteSquareColor());
         getContentPane().add(gamePanel);
         addFlipButton();
+        addBackgroundPanel("gameBackground");
+        //validate();
     }
 }

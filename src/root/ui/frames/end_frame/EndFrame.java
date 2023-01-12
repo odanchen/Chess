@@ -23,6 +23,7 @@ public class EndFrame extends BaseFrame {
         this.gameResult = getGameResult();
         addMenuButton();
         addGmeEndBoard();
+        addBackgroundPanel("gameBackground");
     }
 
     private GameResult getGameResult() {

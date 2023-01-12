@@ -10,7 +10,7 @@ public class BackgroundPanel extends JPanel {
     private final String fileName;
 
     @Override
-    public void paint(Graphics g) {
+    public void paintComponent(Graphics g) {
         g.drawImage(graphicsManager.getBackgroundTexture(fileName), 0, 0, null);
     }
 

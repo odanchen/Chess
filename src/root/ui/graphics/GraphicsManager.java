@@ -58,7 +58,7 @@ public class GraphicsManager {
 
     public Rectangle getGamePanelBounds() {
         int newRectSize = 2 * getEdgeSize() + getBoardSize();
-        return new Rectangle(0, getEdgeSize(), newRectSize, newRectSize);
+        return new Rectangle(getEdgeSize(), getEdgeSize(), newRectSize, newRectSize);
     }
 
     public Rectangle getGameBounds() {
