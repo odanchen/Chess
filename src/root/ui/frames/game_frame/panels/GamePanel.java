@@ -4,6 +4,7 @@ import root.logic.moves.*;
 import root.logic.pieces.*;
 import root.logic.pieces.properties.PieceColor;
 import root.logic.pieces.properties.Position;
+import root.ui.frames.game_frame.GameFrame;
 import root.ui.graphics.GraphicsManager;
 import root.ui.game_flow.GameResult;
 import root.ui.game_flow.GameStates;
@@ -22,18 +23,18 @@ public class GamePanel extends JPanel {
     private final PiecePanel piecePanel;
     private final IndicationPanel indicPanel;
     private final PromotionPanel promPanel;
-    private final GameEndPanel endPanel;
     private final GameStatus gameStatus;
     private final GraphicsManager graphicsManager;
+    private final GameFrame gameFrame;
 
-    public GamePanel(GameStatus gameStatus, GraphicsManager graphicsManager) {
+    public GamePanel(GameStatus gameStatus, GraphicsManager graphicsManager, GameFrame gameFrame) {
         this.gameStatus = gameStatus;
         this.graphicsManager = graphicsManager;
         this.boardPanel = new BoardPanel(graphicsManager);
         this.piecePanel = new PiecePanel(graphicsManager, gameStatus);
         this.indicPanel = new IndicationPanel(graphicsManager, gameStatus);
         this.promPanel = new PromotionPanel(graphicsManager, gameStatus);
-        this.endPanel = new GameEndPanel(graphicsManager);
+        this.gameFrame = gameFrame;
 
         addBasicParameters();
     }
@@ -49,7 +50,6 @@ public class GamePanel extends JPanel {
     }
 
     private void addPanels() {
-        add(endPanel);
         add(promPanel);
         add(piecePanel);
         add(indicPanel);
@@ -212,12 +212,19 @@ public class GamePanel extends JPanel {
     }
 
     private void checkGameEnd() {
-        if (gameStatus.getBoard().isCheckmate(PieceColor.WHITE))
-            endPanel.showPanel(GameResult.PLAYER_BLACK_WON_BY_CHECKMATE);
-        else if (gameStatus.getBoard().isStalemate(PieceColor.WHITE)) endPanel.showPanel(GameResult.STALEMATE);
-        else if (gameStatus.getBoard().isCheckmate(PieceColor.BLACK))
-            endPanel.showPanel(GameResult.PLAYER_WHITE_WON_BY_CHECKMATE);
-        else if (gameStatus.getBoard().isStalemate(PieceColor.BLACK)) endPanel.showPanel(GameResult.STALEMATE);
+        GameResult result = getGameResult();
+        if (result != null) gameFrame.swapToEndFrame(result);
+    }
+
+    private GameResult getGameResult() {
+        if (gameStatus.isCheckmate(PieceColor.WHITE)) {
+            return GameResult.PLAYER_BLACK_WON_BY_CHECKMATE;
+        } else if (gameStatus.isCheckmate(PieceColor.BLACK)) {
+            return GameResult.PLAYER_WHITE_WON_BY_CHECKMATE;
+        } else if (gameStatus.isStalemate()) {
+            return GameResult.STALEMATE;
+        }
+        return null;
     }
 
     public boolean isMovePromotional(Move move) {

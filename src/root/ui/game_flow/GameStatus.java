@@ -77,6 +77,14 @@ public class GameStatus {
         System.out.println(gameLog.getString().toString());
     }
 
+    public boolean isCheckmate(PieceColor pieceColor) {
+        return board.isCheckmate(pieceColor);
+    }
+
+    public boolean isStalemate() {
+        return board.isStalemate(PieceColor.WHITE) || board.isStalemate(PieceColor.BLACK);
+    }
+
     public GameStatus(Board board, PieceColor startingSide) {
         this.selectedPiece = null;
         this.selectedMove = null;
