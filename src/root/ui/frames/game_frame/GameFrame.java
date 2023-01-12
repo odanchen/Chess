@@ -5,6 +5,7 @@ import root.logic.pieces.properties.PieceColor;
 import root.ui.GameManager;
 import root.ui.frames.BaseFrame;
 import root.ui.frames.game_frame.panels.GamePanel;
+import root.ui.game_flow.GameResult;
 import root.ui.graphics.GraphicsManager;
 import root.ui.frames.menu_frame.CustomButton;
 import root.ui.game_flow.GameStatus;
@@ -28,11 +29,16 @@ public class GameFrame extends BaseFrame {
         return board;
     }
 
+    public void swapToEndFrame(GameResult gameResult) {
+        gameManager.swapToEndFrame(gameResult);
+        this.dispose();
+    }
+
     public GameFrame(GameManager gameManager, GraphicsManager graphicsManager) {
         super(gameManager, graphicsManager);
         this.graphicsManager = graphicsManager;
         GameStatus gameStatus = new GameStatus(createBoard(), PieceColor.WHITE);
-        this.gamePanel = new GamePanel(gameStatus, graphicsManager);
+        this.gamePanel = new GamePanel(gameStatus, graphicsManager, this);
 
         getContentPane().setBackground(graphicsManager.getWhiteSquareColor());
         getContentPane().add(gamePanel);
