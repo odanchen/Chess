@@ -1,9 +1,12 @@
 package root.ui.frames.end_frame;
 
+import root.logic.pieces.properties.PieceColor;
 import root.ui.GameManager;
-import root.ui.frames.BaseFrame;
-import root.ui.frames.menu_frame.CustomButton;
+import root.ui.frames.components.BaseFrame;
+import root.ui.frames.components.CustomButton;
+import root.ui.frames.end_frame.panels.BoardStatePanel;
 import root.ui.game_flow.GameResult;
+import root.ui.game_flow.GameStatus;
 import root.ui.graphics.GraphicsManager;
 
 import javax.swing.*;
@@ -11,19 +14,40 @@ import java.awt.*;
 
 public class EndFrame extends BaseFrame {
 
+    private final GameStatus gameStatus;
     private final GameResult gameResult;
 
-    public EndFrame(GameManager gameManager, GraphicsManager graphicsManager, GameResult gameResult) {
+    public EndFrame(GameManager gameManager, GraphicsManager graphicsManager, GameStatus gameStatus) {
         super(gameManager, graphicsManager);
-        this.gameResult = gameResult;
+        this.gameStatus = gameStatus;
+        this.gameResult = getGameResult();
         addMenuButton();
+        addGmeEndBoard();
+    }
+
+    private GameResult getGameResult() {
+        if (gameStatus.isCheckmate(PieceColor.WHITE)) {
+            return GameResult.PLAYER_BLACK_WON_BY_CHECKMATE;
+        } else if (gameStatus.isCheckmate(PieceColor.BLACK)) {
+            return GameResult.PLAYER_WHITE_WON_BY_CHECKMATE;
+        } else if (gameStatus.isStalemate()) {
+            return GameResult.STALEMATE;
+        }
+        return null;
+    }
+
+    private void addGmeEndBoard() {
+        BoardStatePanel boardStatePanel = new BoardStatePanel(graphicsManager, gameStatus);
+        add(boardStatePanel);
+        validate();
     }
 
     private void addMenuButton() {
         JPanel buttonsPanel = new JPanel();
 
         Dimension size = graphicsManager.getTextButtonDimension();
-        buttonsPanel.setBounds(graphicsManager.getCenterOfScreenX(size.width), graphicsManager.getCenterOfScreenY(size.height), size.width, (int) (size.height * 1.5));
+        int buttonY = (int) (graphicsManager.getGameBounds().getSize().getHeight() * 8 / 10);
+        buttonsPanel.setBounds(graphicsManager.getCenterOfScreenX(size.width), buttonY, size.width, (int) (size.height * 1.5));
         buttonsPanel.setOpaque(false);
 
         CustomButton menuReturnButton = new CustomButton("menuButtonReleased", graphicsManager, size);

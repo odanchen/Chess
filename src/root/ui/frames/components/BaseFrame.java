@@ -1,4 +1,4 @@
-package root.ui.frames;
+package root.ui.frames.components;
 
 import root.ui.GameManager;
 import root.ui.graphics.GraphicsManager;
@@ -14,6 +14,12 @@ public abstract class BaseFrame extends JFrame {
     @Override
     public Dimension getPreferredSize() {
         return graphicsManager.getGameBounds().getSize();
+    }
+
+    protected void addBackgroundPanel(String fileName) {
+        BackgroundPanel backgroundPanel = new BackgroundPanel(graphicsManager, fileName);
+        add(backgroundPanel);
+        backgroundPanel.repaint();
     }
 
     private void addIcon() {

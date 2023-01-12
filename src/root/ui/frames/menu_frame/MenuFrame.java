@@ -2,8 +2,9 @@
 package root.ui.frames.menu_frame;
 
 import root.ui.GameManager;
-import root.ui.frames.BaseFrame;
-import root.ui.frames.menu_frame.panels.BackgroundPanel;
+import root.ui.frames.components.BaseFrame;
+import root.ui.frames.components.BackgroundPanel;
+import root.ui.frames.components.CustomButton;
 import root.ui.graphics.GraphicsManager;
 
 import javax.swing.*;
@@ -35,16 +36,10 @@ public class MenuFrame extends BaseFrame {
         add(buttonsPanel);
     }
 
-    private void addBackgroundPanel() {
-        BackgroundPanel backgroundPanel = new BackgroundPanel(graphicsManager);
-        add(backgroundPanel);
-        backgroundPanel.repaint();
-    }
-
     public MenuFrame(GameManager gameManager, GraphicsManager graphicsManager) {
         super(gameManager, graphicsManager);
         addButtonsPanel();
-        addBackgroundPanel();
+        addBackgroundPanel("chessMenu");
         validate();
     }
 }

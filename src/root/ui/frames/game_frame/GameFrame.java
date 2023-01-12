@@ -3,11 +3,11 @@ package root.ui.frames.game_frame;
 import root.logic.Board;
 import root.logic.pieces.properties.PieceColor;
 import root.ui.GameManager;
-import root.ui.frames.BaseFrame;
+import root.ui.frames.components.BaseFrame;
 import root.ui.frames.game_frame.panels.GamePanel;
 import root.ui.game_flow.GameResult;
 import root.ui.graphics.GraphicsManager;
-import root.ui.frames.menu_frame.CustomButton;
+import root.ui.frames.components.CustomButton;
 import root.ui.game_flow.GameStatus;
 
 import javax.swing.*;
@@ -29,8 +29,8 @@ public class GameFrame extends BaseFrame {
         return board;
     }
 
-    public void swapToEndFrame(GameResult gameResult) {
-        gameManager.swapToEndFrame(gameResult);
+    public void swapToEndFrame() {
+        gameManager.swapToEndFrame(gamePanel.getGameStatus());
         this.dispose();
     }
 

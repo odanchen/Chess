@@ -30,7 +30,7 @@ public class PiecePanel extends JPanel {
         return graphicsManager.getPlayAreaBounds().getSize();
     }
 
-    PiecePanel(GraphicsManager graphicsManager, GameStatus gameStatus) {
+    public PiecePanel(GraphicsManager graphicsManager, GameStatus gameStatus) {
         this.gameStatus = gameStatus;
         this.graphicsManager = graphicsManager;
         this.setBounds(graphicsManager.getPlayAreaBounds());

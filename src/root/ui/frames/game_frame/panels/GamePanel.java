@@ -6,7 +6,6 @@ import root.logic.pieces.properties.PieceColor;
 import root.logic.pieces.properties.Position;
 import root.ui.frames.game_frame.GameFrame;
 import root.ui.graphics.GraphicsManager;
-import root.ui.game_flow.GameResult;
 import root.ui.game_flow.GameStates;
 import root.ui.game_flow.GameStatus;
 
@@ -212,19 +211,12 @@ public class GamePanel extends JPanel {
     }
 
     private void checkGameEnd() {
-        GameResult result = getGameResult();
-        if (result != null) gameFrame.swapToEndFrame(result);
+        if (isGameEnd()) gameFrame.swapToEndFrame();
     }
 
-    private GameResult getGameResult() {
-        if (gameStatus.isCheckmate(PieceColor.WHITE)) {
-            return GameResult.PLAYER_BLACK_WON_BY_CHECKMATE;
-        } else if (gameStatus.isCheckmate(PieceColor.BLACK)) {
-            return GameResult.PLAYER_WHITE_WON_BY_CHECKMATE;
-        } else if (gameStatus.isStalemate()) {
-            return GameResult.STALEMATE;
-        }
-        return null;
+    private boolean isGameEnd() {
+        return (gameStatus.isCheckmate(PieceColor.WHITE)) || (gameStatus.isCheckmate(PieceColor.BLACK)) ||
+                (gameStatus.isStalemate());
     }
 
     public boolean isMovePromotional(Move move) {
@@ -313,6 +305,10 @@ public class GamePanel extends JPanel {
         int board = graphicsManager.getBoardSize();
 
         return (e.getX() <= rect) || (e.getX() >= board + rect) || (e.getY() <= rect) || (e.getY() >= board + rect);
+    }
+
+    public GameStatus getGameStatus() {
+        return gameStatus;
     }
 
     private Position getPositionOnTheBoard(MouseEvent e) {

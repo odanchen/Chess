@@ -82,9 +82,10 @@ public class BoardPanel extends JPanel {
         return graphicsManager.getBoardPanelBounds().getSize();
     }
 
-    BoardPanel(GraphicsManager graphicsManager) {
+    public BoardPanel(GraphicsManager graphicsManager) {
         this.graphicsManager = graphicsManager;
         this.setBounds(graphicsManager.getBoardPanelBounds());
+        this.setPreferredSize(graphicsManager.getBoardPanelBounds().getSize());
         this.setOpaque(true);
     }
 }

@@ -1,11 +1,12 @@
 package root.ui;
 
 import root.logic.Board;
-import root.ui.frames.BaseFrame;
+import root.ui.frames.components.BaseFrame;
 import root.ui.frames.end_frame.EndFrame;
 import root.ui.frames.game_frame.GameFrame;
 import root.ui.frames.menu_frame.MenuFrame;
 import root.ui.game_flow.GameResult;
+import root.ui.game_flow.GameStatus;
 import root.ui.graphics.GraphicsManager;
 
 public class GameManager {
@@ -22,8 +23,8 @@ public class GameManager {
         currentFrame = new GameFrame(this, graphicsManager);
     }
 
-    public void swapToEndFrame(GameResult gameResult) {
-        currentFrame = new EndFrame(this,graphicsManager,gameResult);
+    public void swapToEndFrame(GameStatus gameStatus) {
+        currentFrame = new EndFrame(this, graphicsManager, gameStatus);
     }
 
     public void runMenu() {
