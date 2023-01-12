@@ -93,7 +93,7 @@ public class GraphicsManager {
     public Rectangle getEndPanelBounds() {
         int edge = getEdgeSize();
         int sqr = getSquareSize();
-        return new Rectangle(edge + (int) (sqr * 3.5 / 2), edge + (int) (sqr * 3.5 / 2), (int) (sqr * 5.5), (int) (sqr * 5.5));
+        return new Rectangle(edge + (int) (sqr * 1.5), edge + (int) (sqr * 1.5), sqr * 5, sqr * 5);
     }
 
     public Dimension getTextButtonDimension() {

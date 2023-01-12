@@ -28,20 +28,20 @@ public class GameEndPanel extends JPanel {
             g.setColor(Color.BLACK);
             g.setFont(new Font("Arial", Font.BOLD, 15));
             g.drawString("Game Over", getBounds().x + (int) (getBounds().width / 3.5), getBounds().y + getBounds().height / 4);
-            String result;
-            switch (gameResult) {
-                case PLAYER_WHITE_WON_BY_CHECKMATE:
-                    result = "Player white won by a checkmate!";
-                    break;
-                case PLAYER_BLACK_WON_BY_CHECKMATE:
-                    result = "Player black won by a checkmate!";
-                    break;
-                default:
-                    result = "Draw!";
-            }
+            String result = getMessageFromResult();
             g.drawString(result, getBounds().x + (int) (getBounds().width / 3.5), getBounds().y + getBounds().height / 2);
         }
+    }
 
+    private String getMessageFromResult() {
+        switch (gameResult) {
+            case PLAYER_WHITE_WON_BY_CHECKMATE:
+                return "Player white won by a checkmate!";
+            case PLAYER_BLACK_WON_BY_CHECKMATE:
+                return "Player black won by a checkmate!";
+            default:
+                return "Draw!";
+        }
     }
 
     private void addMenuButton() {
