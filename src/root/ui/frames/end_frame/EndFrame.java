@@ -25,13 +25,17 @@ public class EndFrame extends BaseFrame {
 
         Dimension size = graphicsManager.getTextButtonDimension();
         buttonsPanel.setPreferredSize(size);
-        buttonsPanel.setBounds(0, 0, size.width, size.height + 10);
+        buttonsPanel.setBounds(graphicsManager.getCenterOfScreenX(size.width), graphicsManager.getCenterOfScreenY(size.height), size.width, size.height + 10);
 
         buttonsPanel.setVisible(true);
         //buttonsPanel.setOpaque(false);
 
         CustomButton menuReturnButton = new CustomButton("menuButtonReleased", graphicsManager, size);
         menuReturnButton.setPreferredSize(size);
+        menuReturnButton.addActionListener(e -> {
+            SwingUtilities.getWindowAncestor((JComponent) e.getSource()).dispose(); // Closes window
+            gameManager.runMenu();
+        });
         buttonsPanel.add(menuReturnButton);
 
         buttonsPanel.validate();
