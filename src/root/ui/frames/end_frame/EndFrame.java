@@ -12,33 +12,27 @@ import java.awt.*;
 public class EndFrame extends BaseFrame {
 
     private final GameResult gameResult;
-    //private final GameEndPanel gameEndPanel;
 
     public EndFrame(GameManager gameManager, GraphicsManager graphicsManager, GameResult gameResult) {
-        super(gameManager,graphicsManager);
+        super(gameManager, graphicsManager);
         this.gameResult = gameResult;
         addMenuButton();
-        //this.gameEndPanel = new GameEndPanel(graphicsManager);
     }
+
     private void addMenuButton() {
         JPanel buttonsPanel = new JPanel();
 
         Dimension size = graphicsManager.getTextButtonDimension();
-        buttonsPanel.setPreferredSize(size);
-        buttonsPanel.setBounds(graphicsManager.getCenterOfScreenX(size.width), graphicsManager.getCenterOfScreenY(size.height), size.width, size.height + 10);
-
-        buttonsPanel.setVisible(true);
-        //buttonsPanel.setOpaque(false);
+        buttonsPanel.setBounds(graphicsManager.getCenterOfScreenX(size.width), graphicsManager.getCenterOfScreenY(size.height), size.width, (int) (size.height * 1.5));
+        buttonsPanel.setOpaque(false);
 
         CustomButton menuReturnButton = new CustomButton("menuButtonReleased", graphicsManager, size);
-        menuReturnButton.setPreferredSize(size);
         menuReturnButton.addActionListener(e -> {
-            SwingUtilities.getWindowAncestor((JComponent) e.getSource()).dispose(); // Closes window
+            SwingUtilities.getWindowAncestor((JComponent) e.getSource()).dispose();
             gameManager.runMenu();
         });
-        buttonsPanel.add(menuReturnButton);
 
-        buttonsPanel.validate();
+        buttonsPanel.add(menuReturnButton);
         add(buttonsPanel);
         validate();
     }

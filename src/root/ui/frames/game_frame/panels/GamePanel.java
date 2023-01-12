@@ -35,6 +35,7 @@ public class GamePanel extends JPanel {
         this.indicPanel = new IndicationPanel(graphicsManager, gameStatus);
         this.promPanel = new PromotionPanel(graphicsManager, gameStatus);
         this.gameFrame = gameFrame;
+
         addBasicParameters();
     }
 
@@ -211,12 +212,19 @@ public class GamePanel extends JPanel {
     }
 
     private void checkGameEnd() {
-        if (gameStatus.getBoard().isCheckmate(PieceColor.WHITE))
-            gameFrame.swapToEndFrame(GameResult.PLAYER_BLACK_WON_BY_CHECKMATE);
-        else if (gameStatus.getBoard().isStalemate(PieceColor.WHITE)) gameFrame.swapToEndFrame(GameResult.STALEMATE);
-        else if (gameStatus.getBoard().isCheckmate(PieceColor.BLACK))
-            gameFrame.swapToEndFrame(GameResult.PLAYER_WHITE_WON_BY_CHECKMATE);
-        else if (gameStatus.getBoard().isStalemate(PieceColor.BLACK)) gameFrame.swapToEndFrame(GameResult.STALEMATE);
+        GameResult result = getGameResult();
+        if (result != null) gameFrame.swapToEndFrame(result);
+    }
+
+    private GameResult getGameResult() {
+        if (gameStatus.isCheckmate(PieceColor.WHITE)) {
+            return GameResult.PLAYER_BLACK_WON_BY_CHECKMATE;
+        } else if (gameStatus.isCheckmate(PieceColor.BLACK)) {
+            return GameResult.PLAYER_WHITE_WON_BY_CHECKMATE;
+        } else if (gameStatus.isStalemate()) {
+            return GameResult.STALEMATE;
+        }
+        return null;
     }
 
     public boolean isMovePromotional(Move move) {
