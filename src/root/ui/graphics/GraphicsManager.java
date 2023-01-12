@@ -58,7 +58,7 @@ public class GraphicsManager {
 
     public Rectangle getGamePanelBounds() {
         int newRectSize = 2 * getEdgeSize() + getBoardSize();
-        return new Rectangle(getEdgeSize(), getSquareSize(), newRectSize, newRectSize);
+        return new Rectangle(0, getEdgeSize(), newRectSize, newRectSize);
     }
 
     public Rectangle getGameBounds() {
@@ -88,12 +88,6 @@ public class GraphicsManager {
     public Rectangle getFlipButtonBounds() {
         int startX = (getBoardPanelBounds().x + getBoardPanelBounds().width + getSquareSize() + getGameBounds().width - getSquareSize() - getEdgeSize()) / 2;
         return new Rectangle(startX, getSquareSize() + getEdgeSize(), getSquareSize() + getEdgeSize(), getSquareSize() + getEdgeSize());
-    }
-
-    public Rectangle getEndPanelBounds() {
-        int edge = getEdgeSize();
-        int sqr = getSquareSize();
-        return new Rectangle(edge + (int) (sqr * 1.5), edge + (int) (sqr * 1.5), sqr * 5, sqr * 5);
     }
 
     public Dimension getTextButtonDimension() {

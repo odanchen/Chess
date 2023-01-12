@@ -46,7 +46,7 @@ public class EndFrame extends BaseFrame {
         JPanel buttonsPanel = new JPanel();
 
         Dimension size = graphicsManager.getTextButtonDimension();
-        int buttonY = (int) (graphicsManager.getGameBounds().getSize().getHeight() * 8 / 10);
+        int buttonY = (int) (graphicsManager.getGameBounds().getSize().getHeight() * 17 / 20);
         buttonsPanel.setBounds(graphicsManager.getCenterOfScreenX(size.width), buttonY, size.width, (int) (size.height * 1.5));
         buttonsPanel.setOpaque(false);
 

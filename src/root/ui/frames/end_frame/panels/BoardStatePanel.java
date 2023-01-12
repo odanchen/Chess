@@ -6,17 +6,15 @@ import root.ui.game_flow.GameStatus;
 import root.ui.graphics.GraphicsManager;
 
 import javax.swing.*;
-import java.awt.*;
 
 public class BoardStatePanel extends JPanel {
 
     public BoardStatePanel(GraphicsManager graphicsManager, GameStatus gameStatus) {
         setLayout(new GroupLayout(this));
-        Dimension panelSize = graphicsManager.getBoardPanelBounds().getSize();
         PiecePanel piecePanel = new PiecePanel(graphicsManager, gameStatus);
         BoardPanel boardPanel = new BoardPanel(graphicsManager);
-        this.setBounds(0, 0, panelSize.width, panelSize.height);
-        this.setPreferredSize(panelSize);
+        this.setBounds(graphicsManager.getGamePanelBounds());
+        this.setPreferredSize(graphicsManager.getGamePanelBounds().getSize());
         this.setOpaque(false);
         this.setVisible(true);
 
