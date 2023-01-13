@@ -13,6 +13,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.awt.event.MouseMotionListener;
 import java.util.List;
 
 import static root.ui.game_flow.GameStates.*;
@@ -25,6 +26,7 @@ public class GamePanel extends JPanel {
     private final GameStatus gameStatus;
     private final GraphicsManager graphicsManager;
     private final GameFrame gameFrame;
+    private final DragPanel dragPanel;
 
     public GamePanel(GameStatus gameStatus, GraphicsManager graphicsManager, GameFrame gameFrame) {
         this.gameStatus = gameStatus;
@@ -33,6 +35,7 @@ public class GamePanel extends JPanel {
         this.piecePanel = new PiecePanel(graphicsManager, gameStatus);
         this.indicPanel = new IndicationPanel(graphicsManager, gameStatus);
         this.promPanel = new PromotionPanel(graphicsManager, gameStatus);
+        this.dragPanel = new DragPanel(graphicsManager);
         this.gameFrame = gameFrame;
 
         addBasicParameters();
@@ -49,6 +52,7 @@ public class GamePanel extends JPanel {
     }
 
     private void addPanels() {
+        add(dragPanel);
         add(promPanel);
         add(piecePanel);
         add(indicPanel);
@@ -116,6 +120,7 @@ public class GamePanel extends JPanel {
             public void mouseExited(MouseEvent e) {
             }
         });
+
     }
 
     private Move createPromotionMove(MouseEvent e) {
@@ -277,6 +282,8 @@ public class GamePanel extends JPanel {
 
     private boolean isActionDeselect(MouseEvent e) {
         if (isClickOutsideBoard(e)) return true;
+        if (gameStatus.getPieceAt(getPositionOnTheBoard(e)) == null) return false;
+        if (!gameStatus.isPieceSelected()) return false;
         if (gameStatus.getPieceAt(getPositionOnTheBoard(e)).equals(gameStatus.getSelectedPiece())) return false;
         return getMoveOnClick(e) == null;
     }
