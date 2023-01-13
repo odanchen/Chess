@@ -141,6 +141,9 @@ public class Board {
     public ChessPiece getPieceAt(Position position) {
         int matrixRow = position.rowToIdx();
         int matrixCol = position.colToIdx();
+        if (matrixRow < 0 || matrixRow >= BOARD_SIZE || matrixCol < 0 || matrixCol >= BOARD_SIZE) {
+            return null;
+        }
         return configuration[matrixRow][matrixCol];
     }
 
