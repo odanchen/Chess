@@ -14,14 +14,12 @@ import javax.swing.*;
 public class GameFrame extends BaseFrame {
     private final GraphicsManager graphicsManager;
     private final GamePanel gamePanel;
-
     private void addFlipButton() {
         JButton flipButton = new CustomButton("flipButtonReleased", graphicsManager, graphicsManager.getFlipButtonBounds().getSize());
         getContentPane().add(flipButton);
         flipButton.setBounds(graphicsManager.getFlipButtonBounds());
         flipButton.addActionListener(e -> gamePanel.flipPanel());
     }
-
     private Board createBoard() {
         Board board = new Board();
         board.fillStandardBoard();
