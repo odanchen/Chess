@@ -88,6 +88,10 @@ public class GamePanel extends JPanel {
         }
     }
 
+    private void onMouseRelease(MouseEvent e) {
+        if (getMoveOnClick(e) != null) makeMove(getMoveOnClick(e));
+    }
+
     private void createMouseListener() {
         this.addMouseListener(new MouseListener() {
             @Override
@@ -101,6 +105,7 @@ public class GamePanel extends JPanel {
 
             @Override
             public void mouseReleased(MouseEvent e) {
+                onMouseRelease(e);
             }
 
             @Override
@@ -272,6 +277,7 @@ public class GamePanel extends JPanel {
 
     private boolean isActionDeselect(MouseEvent e) {
         if (isClickOutsideBoard(e)) return true;
+        if (gameStatus.getPieceAt(getPositionOnTheBoard(e)).equals(gameStatus.getSelectedPiece())) return false;
         return getMoveOnClick(e) == null;
     }
 
