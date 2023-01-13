@@ -14,6 +14,7 @@ public class SettingsFrame extends BaseFrame {
     public String[] choices = { "Cburnett", "Kilifiger", "Kosal", "Legipzig",
             "Maya", "Pirat", "Regular" };
 
+    private GraphicsManager Ptext = new GraphicsManager();
 
     public SettingsFrame(GameManager gameManager, GraphicsManager graphicsManager) {
         super(gameManager, graphicsManager);
@@ -33,8 +34,8 @@ public class SettingsFrame extends BaseFrame {
 
         //piece texture selection
         final JComboBox<String> cb = new JComboBox<>(choices);
-        GraphicsManager Ptext = new GraphicsManager();
-        cb.setSelectedItem(Ptext.getPieceTextureFolder());
+
+        //cb.setSelectedItem(Ptext.getPieceTextureFolder());
         cb.setMaximumSize(cb.getPreferredSize());
         c.fill = GridBagConstraints.HORIZONTAL;
         c.weightx = 0.5;
@@ -116,7 +117,7 @@ public class SettingsFrame extends BaseFrame {
     private void saveSettings(){
         try{
             FileWriter myWriter = new FileWriter("src/root/settings.txt");
-            myWriter.write("file toggle:" + isFlipTogOn + "\n" + "texture: " + choices[2]);
+            myWriter.write("file toggle:" + isFlipTogOn + "\n" + "texture: " + Ptext.getPieceTextureFolder());
             myWriter.close();
         } catch (IOException e) {
             throw new RuntimeException(e);

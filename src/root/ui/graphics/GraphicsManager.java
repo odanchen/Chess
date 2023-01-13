@@ -12,7 +12,7 @@ import static java.awt.Font.PLAIN;
 
 
 public class GraphicsManager {
-    private String pieceTextureFolder = "cburnett";
+    private String pieceTextureFolder = "kosal";
     private final String[] pieceTextureFolders = {"cburnett", "kilifiger", "kosal", "leipzig", "maya", "pirat", "regular"};
     private ColorSet boardColors;
     private final int boardSize;
@@ -161,6 +161,8 @@ public class GraphicsManager {
     public String getPieceTextureFolder() {
         return pieceTextureFolder;
     }
+
+
 
     public GraphicsManager() {
         boardSize = (int) (Toolkit.getDefaultToolkit().getScreenSize().getWidth() / 3);
