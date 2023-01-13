@@ -1,26 +1,28 @@
-package root.ui.frames.menu_frame;
+package root.ui.frames.settings_frame;
 
 import javax.swing.*;
 import java.awt.*;
 import java.io.FileWriter;
 import java.io.IOException;
 
+import root.assets.settings.IOSettings;
 import root.ui.GameManager;
 import root.ui.frames.components.BaseFrame;
 import root.ui.frames.components.BackgroundPanel;
 import root.ui.graphics.GraphicsManager;
+
 public class SettingsFrame extends BaseFrame {
     public boolean isFlipTogOn;
-    public String[] choices = { "Cburnett", "Kilifiger", "Kosal", "Legipzig",
-            "Maya", "Pirat", "Regular" };
-
-    private GraphicsManager Ptext = new GraphicsManager();
+    public String[] choices = {"cburnett", "kilifiger", "kosal", "leipzig",
+            "maya", "pirat", "regular"};
+    final JComboBox<String> cb = new JComboBox<>(choices);
 
     public SettingsFrame(GameManager gameManager, GraphicsManager graphicsManager) {
         super(gameManager, graphicsManager);
+        IOSettings ioSettings = new IOSettings();
 
         JPanel panel = new JPanel();
-        panel.setBounds(graphicsManager.getGameBounds().height / 4, graphicsManager.getGameBounds().width / 4, graphicsManager.getGameBounds().width / 2, graphicsManager.getGameBounds().height/4);
+        panel.setBounds(graphicsManager.getGameBounds().height / 4, graphicsManager.getGameBounds().width / 4, graphicsManager.getGameBounds().width / 2, graphicsManager.getGameBounds().height / 4);
         panel.setLayout(new GridBagLayout());
         GridBagConstraints c = new GridBagConstraints();
 
@@ -30,12 +32,11 @@ public class SettingsFrame extends BaseFrame {
         c.gridx = 1;
         c.gridy = 0;
 
-        panel.add(lbl,c);
+        panel.add(lbl, c);
 
         //piece texture selection
-        final JComboBox<String> cb = new JComboBox<>(choices);
 
-        //cb.setSelectedItem(Ptext.getPieceTextureFolder());
+        cb.setSelectedItem(ioSettings.getTexturePack());
         cb.setMaximumSize(cb.getPreferredSize());
         c.fill = GridBagConstraints.HORIZONTAL;
         c.weightx = 0.5;
@@ -43,21 +44,13 @@ public class SettingsFrame extends BaseFrame {
         c.gridy = 0;
         panel.add(cb, c);
 
-        JButton btn = new JButton("OK");
-        c.fill = GridBagConstraints.HORIZONTAL;
-        c.weightx = 0.5;
-        c.gridx = 3;
-        c.gridy = 0;
-        panel.add(btn, c);
-        setVisible(true);
-
         //flip toggle
         JLabel flipLabel = new JLabel("flips the board on the end of your move");
         c.fill = GridBagConstraints.HORIZONTAL;
         c.weightx = 0.5;
         c.gridx = 1;
         c.gridy = 1;
-        panel.add(flipLabel,c);
+        panel.add(flipLabel, c);
 
         JToggleButton flipTog = new JToggleButton("place holder"); //TODO make it so the button has an icon and not a string
         flipTog.setBounds(1000, 10, 40, 40);
@@ -65,14 +58,14 @@ public class SettingsFrame extends BaseFrame {
         c.weightx = 0.5;
         c.gridx = 2;
         c.gridy = 1;
-        panel.add(flipTog,c);
+        panel.add(flipTog, c);
 
         JLabel saveL = new JLabel("Saves your settings");
         c.fill = GridBagConstraints.HORIZONTAL;
         c.weightx = 0.5;
         c.gridx = 1;
         c.gridy = 2;
-        panel.add(saveL,c);
+        panel.add(saveL, c);
 
 
         JButton saveB = new JButton("save");
@@ -81,7 +74,7 @@ public class SettingsFrame extends BaseFrame {
         c.weightx = 0.5;
         c.gridx = 2;
         c.gridy = 2;
-        panel.add(saveB,c);
+        panel.add(saveB, c);
 
 
         saveB.addActionListener(e -> {
@@ -94,7 +87,7 @@ public class SettingsFrame extends BaseFrame {
 
         //somthing to ass buttons to the top of the screen
         JPanel topBar = new JPanel();
-        topBar.setBounds(10,10,60,60);
+        topBar.setBounds(10, 10, 60, 60);
         topBar.setBackground(Color.blue);
         topBar.setVisible(true);
 
@@ -103,40 +96,30 @@ public class SettingsFrame extends BaseFrame {
 
         back.addActionListener(e -> {
             SwingUtilities.getWindowAncestor((JComponent) e.getSource()).dispose();
-            GameManager manager = new GameManager();
-            manager.runMenu();
+            gameManager.runMenu();
         });
 
         topBar.add(back);
 
         add(topBar);
         add(panel);
-
+        validate();
     }
 
-    private void saveSettings(){
-        try{
-            FileWriter myWriter = new FileWriter("src/root/settings.txt");
-            myWriter.write("file toggle:" + isFlipTogOn + "\n" + "texture: " + Ptext.getPieceTextureFolder());
-            myWriter.close();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+    private void saveSettings() {
+        IOSettings ioSettings = new IOSettings();
+        ioSettings.setFlipToggle(isFlipTogOn);
+        ioSettings.setTexturePack((String) cb.getSelectedItem());
+        graphicsManager.refreshTextures();
     }
 
-    public boolean isFlipToggleOn() {
-        return isFlipTogOn;
-    }
-
-
-    public void flipButton(){
-        if(isFlipTogOn){
+    public void flipButton() {
+        if (isFlipTogOn) {
             isFlipTogOn = false;
             System.out.println("isFlipTogTrue has been made false");
-        }else {
+        } else {
             isFlipTogOn = true;
             System.out.println("isFlipTogTrue has been made true");
         }
-
     }
 }

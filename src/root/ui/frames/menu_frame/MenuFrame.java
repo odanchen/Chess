@@ -3,8 +3,8 @@ package root.ui.frames.menu_frame;
 
 import root.ui.GameManager;
 import root.ui.frames.components.BaseFrame;
-import root.ui.frames.components.BackgroundPanel;
 import root.ui.frames.components.CustomButton;
+import root.ui.frames.settings_frame.SettingsFrame;
 import root.ui.graphics.GraphicsManager;
 
 import javax.swing.*;
@@ -34,7 +34,7 @@ public class MenuFrame extends BaseFrame {
 
         settingsButton.addActionListener((e->{
             SwingUtilities.getWindowAncestor((JComponent) e.getSource()).dispose(); // Closes window
-            SettingsFrame sFrame = new SettingsFrame(gameManager,graphicsManager);
+            new SettingsFrame(gameManager,graphicsManager);
         }));
 
         quitButton.addActionListener(e -> System.exit(0));

@@ -1,6 +1,7 @@
 package root.ui.graphics;
 
 import root.assets.colors.ColorSet;
+import root.assets.settings.IOSettings;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -19,7 +20,7 @@ import java.util.stream.Collectors;
 public class TextureHolder {
     private ColorSet colorSet;
     private Map<Character, BufferedImage> bitmapFont;
-    private Map<String, BufferedImage> activeTextures;
+    private final Map<String, BufferedImage> activeTextures;
     private String pieceTextureFolder;
     private final int pieceSize;
     private final Font font;
@@ -46,6 +47,13 @@ public class TextureHolder {
 
     private void fillActiveTextures() {
         pieceSignatures.forEach(signature -> activeTextures.put(signature, getNewTexture(signature)));
+    }
+
+    public void refreshPieceTextures(String textureFolder) {
+        if (!pieceTextureFolder.equals(textureFolder)) {
+            pieceTextureFolder = textureFolder;
+            fillActiveTextures();
+        }
     }
 
     private static BufferedImage toBufferedImage(Image img) {
@@ -118,10 +126,11 @@ public class TextureHolder {
         return bitmapFont.get(letter);
     }
 
-    public TextureHolder(ColorSet colorSet, Font font, String pieceTextureFolder, int pieceSize) {
-        this.colorSet = colorSet;
+    public TextureHolder(Font font, int pieceSize) {
+        IOSettings ioSettings = new IOSettings();
+        this.colorSet = ioSettings.getBoardColors();
         this.font = font;
-        this.pieceTextureFolder = pieceTextureFolder;
+        this.pieceTextureFolder = ioSettings.getTexturePack();
         this.pieceSize = pieceSize;
 
         activeTextures = new HashMap<>();
