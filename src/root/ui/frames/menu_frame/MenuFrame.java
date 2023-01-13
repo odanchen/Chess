@@ -31,6 +31,12 @@ public class MenuFrame extends BaseFrame {
             SwingUtilities.getWindowAncestor((JComponent) e.getSource()).dispose(); // Closes window
             gameManager.runChess();
         });
+
+        settingsButton.addActionListener((e->{
+            SwingUtilities.getWindowAncestor((JComponent) e.getSource()).dispose(); // Closes window
+            SettingsFrame sFrame = new SettingsFrame(gameManager,graphicsManager);
+        }));
+
         quitButton.addActionListener(e -> System.exit(0));
 
         add(buttonsPanel);
