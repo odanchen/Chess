@@ -13,7 +13,11 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.io.File;
 import java.util.List;
+import java.io.FileNotFoundException;
+import java.util.Objects;
+import java.util.Scanner;
 
 import static root.ui.game_flow.GameStates.*;
 
@@ -205,6 +209,22 @@ public class GamePanel extends JPanel {
     }
 
     public void makeMove(Move move) {
+
+        String TogSet = "";
+        try{
+            File myObj = new File("src/root/settings.txt");
+            Scanner Reader = new Scanner(myObj);
+            TogSet = Reader.nextLine();
+            System.out.println(TogSet);
+        }catch (FileNotFoundException e){
+            System.out.println("no settings saved");
+            System.out.println(e);
+        }
+
+        if(Objects.equals(TogSet, "file toggle:true")){
+            flipPanel();
+        }
+
         gameStatus.getBoard().makeMove(move);
         gameStatus.logMove(move);
         gameStatus.setGameState(stateAfterMove());

@@ -33,7 +33,8 @@ public class SettingsFrame extends BaseFrame {
 
         //piece texture selection
         final JComboBox<String> cb = new JComboBox<>(choices);
-        cb.setSelectedItem(choices[2]);
+        GraphicsManager Ptext = new GraphicsManager();
+        cb.setSelectedItem(Ptext.getPieceTextureFolder());
         cb.setMaximumSize(cb.getPreferredSize());
         c.fill = GridBagConstraints.HORIZONTAL;
         c.weightx = 0.5;
@@ -65,6 +66,26 @@ public class SettingsFrame extends BaseFrame {
         c.gridy = 1;
         panel.add(flipTog,c);
 
+        JLabel saveL = new JLabel("Saves your settings");
+        c.fill = GridBagConstraints.HORIZONTAL;
+        c.weightx = 0.5;
+        c.gridx = 1;
+        c.gridy = 2;
+        panel.add(saveL,c);
+
+
+        JButton saveB = new JButton("save");
+        //save.setAlignmentX();
+        c.fill = GridBagConstraints.HORIZONTAL;
+        c.weightx = 0.5;
+        c.gridx = 2;
+        c.gridy = 2;
+        panel.add(saveB,c);
+
+
+        saveB.addActionListener(e -> {
+            saveSettings();
+        });
 
         flipTog.addActionListener(e -> {
             flipButton();
@@ -72,7 +93,9 @@ public class SettingsFrame extends BaseFrame {
 
         //somthing to ass buttons to the top of the screen
         JPanel topBar = new JPanel();
-
+        topBar.setBounds(10,10,60,60);
+        topBar.setBackground(Color.blue);
+        topBar.setVisible(true);
 
         //back button
         JButton back = new JButton("back");
@@ -85,13 +108,6 @@ public class SettingsFrame extends BaseFrame {
 
         topBar.add(back);
 
-        JButton save = new JButton("save");
-        //save.setAlignmentX();
-        topBar.add(save);
-
-        save.addActionListener(e -> {
-            saveSettings();
-        });
         add(topBar);
         add(panel);
 

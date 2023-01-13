@@ -158,6 +158,10 @@ public class GraphicsManager {
         return textureHolder.getIconOf("buttons", id, size);
     }
 
+    public String getPieceTextureFolder() {
+        return pieceTextureFolder;
+    }
+
     public GraphicsManager() {
         boardSize = (int) (Toolkit.getDefaultToolkit().getScreenSize().getWidth() / 3);
 
