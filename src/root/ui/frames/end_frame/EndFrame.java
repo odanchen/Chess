@@ -1,11 +1,10 @@
 package root.ui.frames.end_frame;
 
-import root.logic.pieces.properties.PieceColor;
 import root.ui.GameManager;
 import root.ui.frames.components.BaseFrame;
 import root.ui.frames.components.CustomButton;
 import root.ui.frames.end_frame.panels.BoardStatePanel;
-import root.ui.game_flow.GameResult;
+import root.ui.frames.end_frame.panels.EndMessagePanel;
 import root.ui.game_flow.GameStatus;
 import root.ui.graphics.GraphicsManager;
 
@@ -15,26 +14,19 @@ import java.awt.*;
 public class EndFrame extends BaseFrame {
 
     private final GameStatus gameStatus;
-    private final GameResult gameResult;
 
     public EndFrame(GameManager gameManager, GraphicsManager graphicsManager, GameStatus gameStatus) {
         super(gameManager, graphicsManager);
         this.gameStatus = gameStatus;
-        this.gameResult = getGameResult();
         addMenuButton();
         addGmeEndBoard();
+        addGameResultMessage();
         addBackgroundPanel("gameBackground");
     }
 
-    private GameResult getGameResult() {
-        if (gameStatus.isCheckmate(PieceColor.WHITE)) {
-            return GameResult.PLAYER_BLACK_WON_BY_CHECKMATE;
-        } else if (gameStatus.isCheckmate(PieceColor.BLACK)) {
-            return GameResult.PLAYER_WHITE_WON_BY_CHECKMATE;
-        } else if (gameStatus.isStalemate()) {
-            return GameResult.STALEMATE;
-        }
-        return null;
+    private void addGameResultMessage() {
+        EndMessagePanel textPanel = new EndMessagePanel(graphicsManager, gameStatus.getGameResult());
+        add(textPanel);
     }
 
     private void addGmeEndBoard() {

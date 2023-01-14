@@ -6,6 +6,7 @@ import root.logic.pieces.properties.PieceColor;
 import root.logic.pieces.properties.Position;
 import root.ui.frames.game_frame.listener.MouseListener;
 import root.ui.frames.game_frame.GameFrame;
+import root.ui.game_flow.GameResult;
 import root.ui.graphics.GraphicsManager;
 import root.ui.game_flow.GameStates;
 import root.ui.game_flow.GameStatus;
@@ -198,12 +199,15 @@ public class GamePanel extends JPanel {
     }
 
     private void checkGameEnd() {
-        if (isGameEnd()) gameFrame.swapToEndFrame();
+        if (gameStatus.isGameEnd()) {
+            gameStatus.updateGameResult();
+            gameFrame.swapToEndFrame();
+        }
     }
 
-    private boolean isGameEnd() {
-        return (gameStatus.isCheckmate(PieceColor.WHITE)) || (gameStatus.isCheckmate(PieceColor.BLACK)) ||
-                (gameStatus.isStalemate());
+    public void endGame(GameResult result) {
+        gameStatus.setGameResult(result);
+        gameFrame.swapToEndFrame();
     }
 
     public boolean isMovePromotional(Move move) {

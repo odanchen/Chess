@@ -90,7 +90,7 @@ public class GraphicsManager {
 
     public Rectangle getFlipButtonBounds() {
         int startX = (getBoardPanelBounds().x + getBoardPanelBounds().width + getSquareSize() + getGameBounds().width - getSquareSize() - getEdgeSize()) / 2;
-        return new Rectangle(startX, getSquareSize() + getEdgeSize(), getSquareSize() + getEdgeSize(), getSquareSize() + getEdgeSize());
+        return new Rectangle(startX, getSquareSize() + getEdgeSize(), getSquareSize(), getSquareSize());
     }
 
     public Dimension getTextButtonDimension() {
@@ -99,6 +99,10 @@ public class GraphicsManager {
 
     public Dimension getFrameDimension() {
         return getGameBounds().getSize();
+    }
+
+    public Dimension getEndDimension() {
+        return new Dimension(getFrameDimension().width * 2 / 7, getFrameDimension().height / 4);
     }
 
     public boolean isFlipped() {
@@ -155,6 +159,9 @@ public class GraphicsManager {
 
     public BufferedImage getBackgroundTexture(String filename) {
         return textureHolder.getTextureOf("stages", filename, getFrameDimension());
+    }
+    public BufferedImage getMessageTexture(String filename) {
+        return textureHolder.getTextureOf("messages", filename, getEndDimension());
     }
 
     public ImageIcon getButtonIcon(String id, Dimension size) {
