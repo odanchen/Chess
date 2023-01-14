@@ -12,6 +12,7 @@ public class SidePanel extends JPanel {
     private final GamePanel gamePanel;
     private final GameStatus gameStatus;
     JTextArea textArea;
+    JScrollPane scroll;
     public SidePanel(GameStatus gameStatus, GraphicsManager graphicsManager, GamePanel gamePanel) {
         this.graphicsManager = graphicsManager;
         this.gamePanel = gamePanel;
@@ -33,7 +34,7 @@ public class SidePanel extends JPanel {
     }
 
     private void addTextAreaParams() {
-        textArea = new JTextArea("SidePanel", 1, 17);
+        textArea = new JTextArea("SidePanel", 5, 17);
         textArea.setOpaque(true);
         textArea.setEditable(false);
         textArea.setFocusable(false);
@@ -41,7 +42,8 @@ public class SidePanel extends JPanel {
         textArea.setFont(graphicsManager.getSideFont());
         textArea.setWrapStyleWord(true);
         textArea.setBorder(BorderFactory.createEmptyBorder());
-        add(textArea);
+        scroll = new JScrollPane (textArea, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+        add(scroll);
     }
 
     private void addFlipButton() {
