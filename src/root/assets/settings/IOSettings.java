@@ -55,7 +55,15 @@ public class IOSettings {
     private File getSettingsFile() {
         String root = Paths.get("").toAbsolutePath().toString();
         String[] fullPath = {root, "src", "root", "assets", "settings", "settings.properties"};
-        return new File(String.join(File.separator, fullPath));
+        File file = new File(String.join(File.separator, fullPath));
+        if (!file.exists()) {
+            try {
+                file.createNewFile();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }
+        return file;
     }
 
     public IOSettings() {
