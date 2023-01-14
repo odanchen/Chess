@@ -161,11 +161,18 @@ public class GraphicsManager {
         return textureHolder.getIconOf("buttons", id, size);
     }
 
+    private void refreshBoardColors(ColorSet newColor) {
+        if (boardColors != newColor) {
+            boardColors = newColor;
+            textureHolder.refreshColors();
+        }
+    }
+
     public void refreshTextures() {
         IOSettings ioSettings = new IOSettings();
         textureHolder.refreshPieceTextures(ioSettings.getTexturePack());
         flipToggle = ioSettings.getFlipToggle();
-        boardColors = ioSettings.getBoardColors();
+        refreshBoardColors(ioSettings.getBoardColors());
     }
 
     public GraphicsManager() {

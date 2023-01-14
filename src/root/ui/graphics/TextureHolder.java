@@ -10,7 +10,6 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Paths;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -28,11 +27,7 @@ public class TextureHolder {
 
     public void generateLetterTextures(ColorSet colorSet) {
         this.colorSet = colorSet;
-        List<Character> letters = new ArrayList<>();
-        for (char letter = '0'; letter <= '9'; letter++) letters.add(letter);
-        for (char letter = 'a'; letter <= 'z'; letter++) letters.add(letter);
-        for (char letter = 'A'; letter <= 'Z'; letter++) letters.add(letter);
-        letters.add(' ');
+        List<Character> letters = List.of('A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', '1', '2', '3', '4', '5', '6', '7', '8');
         this.bitmapFont = letters.stream().collect(Collectors.toMap(Function.identity(), this::createBitmap));
     }
 
@@ -124,6 +119,11 @@ public class TextureHolder {
 
     public BufferedImage getLetterImage(char letter) {
         return bitmapFont.get(letter);
+    }
+
+    public void refreshColors() {
+        colorSet = new IOSettings().getBoardColors();
+        generateLetterTextures(colorSet);
     }
 
     public TextureHolder(Font font, int pieceSize) {
