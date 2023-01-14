@@ -260,9 +260,9 @@ public class GamePanel extends JPanel {
 
     private boolean isActionDeselect(MouseEvent e) {
         if (isClickOutsideBoard(e)) return true;
-        if (gameStatus.getPieceAt(getPositionOnTheBoard(e)) == null) return true;
+        if (gameStatus.getPieceAt(getPositionOnTheBoard(e)) == null && !isActionMove(e)) return true;
         if (!gameStatus.isPieceSelected()) return false;
-        if (gameStatus.getPieceAt(getPositionOnTheBoard(e)).equals(gameStatus.getSelectedPiece())) return false;
+        if (gameStatus.getPieceAt(getPositionOnTheBoard(e)) != null && gameStatus.getPieceAt(getPositionOnTheBoard(e)).equals(gameStatus.getSelectedPiece())) return false;
         return getMoveOnClick(e) == null;
     }
 
