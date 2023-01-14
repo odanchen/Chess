@@ -3,9 +3,11 @@ package root.ui.frames.settings_frame;
 import javax.swing.*;
 import java.awt.*;
 
+import root.assets.colors.BoardColors;
 import root.assets.settings.IOSettings;
 import root.ui.GameManager;
 import root.ui.frames.components.BaseFrame;
+import root.ui.frames.components.CustomButton;
 import root.ui.graphics.GraphicsManager;
 
 public class SettingsFrame extends BaseFrame {
@@ -25,10 +27,15 @@ public class SettingsFrame extends BaseFrame {
         return flipToggleButton.getModel().isSelected();
     }
 
-    private void addToPanelHolder(double weightX, int gridX, int gridY, JComponent component) {
+    private String getColorSet() {
+        return (String) colorChoice.getSelectedItem();
+    }
+
+    private void addToPanelHolder(int gridY, JComponent component) {
         gridBag.fill = GridBagConstraints.HORIZONTAL;
-        gridBag.weightx = weightX;
-        gridBag.gridx = gridX;
+        gridBag.weighty = 2;
+        gridBag.weightx = 0.5;
+        gridBag.gridx = 2;
         gridBag.gridy = gridY;
         panelHolder.add(component, gridBag);
     }
@@ -37,14 +44,49 @@ public class SettingsFrame extends BaseFrame {
         textureChoice = new JComboBox<>(new String[]
                 {"cburnett", "kilifiger", "kosal", "leipzig", "maya", "pirat", "regular"});
         textureChoice.setSelectedItem(new IOSettings().getTexturePack());
-        addToPanelHolder(0.5, 2, 0, textureChoice);
+        addToPanelHolder(0, textureChoice);
+    }
+
+    private void addColorChoice() {
+        colorChoice = new JComboBox<>(new String[]{"option1", "option2", "option3"});
+        colorChoice.setSelectedItem(new IOSettings().getBoardColors().getStringVal());
+        addToPanelHolder(1, colorChoice);
+    }
+
+    private void addSaveButton() {
+        Dimension size = graphicsManager.getTextButtonDimension();
+        int buttonY = (int) (graphicsManager.getGameBounds().getSize().getHeight() * 3 / 4);
+        CustomButton saveButton = new CustomButton("saveButtonReleased", graphicsManager, size);
+        saveButton.addActionListener(e -> saveSettings());
+        addButton(saveButton, graphicsManager.getCenterOfScreenX(size.width), buttonY);
+    }
+
+    private void addMenuButton() {
+        Dimension size = graphicsManager.getTextButtonDimension();
+        Dimension scene = graphicsManager.getFrameDimension();
+        CustomButton menuButton = new CustomButton("menuButtonReleased", graphicsManager, size);
+        menuButton.addActionListener(e -> {
+            SwingUtilities.getWindowAncestor((JComponent) e.getSource()).dispose();
+            gameManager.runMenu();
+        });
+        addButton(menuButton, scene.width / 20, scene.height / 20);
+    }
+
+    private void addButton(JButton button, int x, int y) {
+        JPanel buttonsPanel = new JPanel();
+        Dimension size = graphicsManager.getTextButtonDimension();
+        buttonsPanel.setBounds(x, y, size.width, (int) (size.height * 1.5));
+        buttonsPanel.setOpaque(false);
+        buttonsPanel.add(button);
+        add(buttonsPanel);
+        validate();
     }
 
     private void addToggleFlipButton() {
         flipToggleButton = new JToggleButton("flip toggle");
         flipToggleButton.setSelected(new IOSettings().getFlipToggle());
         flipToggleButton.addActionListener(e -> flipButton());
-        addToPanelHolder(0.5, 2, 1, flipToggleButton);
+        addToPanelHolder(2, flipToggleButton);
     }
 
     public SettingsFrame(GameManager gameManager, GraphicsManager graphicsManager) {
@@ -52,72 +94,23 @@ public class SettingsFrame extends BaseFrame {
         gridBag = new GridBagConstraints();
 
         panelHolder = new JPanel();
-        panelHolder.setBounds(graphicsManager.getGameBounds().height / 4, graphicsManager.getGameBounds().width / 4, graphicsManager.getGameBounds().width / 2, graphicsManager.getGameBounds().height / 4);
+        panelHolder.setOpaque(false);
+        panelHolder.setBounds(graphicsManager.getGameBounds().width * 8 / 15, graphicsManager.getGameBounds().width / 4, graphicsManager.getGameBounds().width / 6, graphicsManager.getGameBounds().height / 4);
         panelHolder.setLayout(new GridBagLayout());
 
-        JLabel lbl = new JLabel("Piece texture pack: ");
-        gridBag.fill = GridBagConstraints.HORIZONTAL;
-        gridBag.weightx = 0.5;
-        gridBag.gridx = 1;
-        gridBag.gridy = 0;
-
-        panelHolder.add(lbl, gridBag);
-
-        //piece texture selection
         addTextureChoice();
-
-        //flip toggle
-        JLabel flipLabel = new JLabel("flips the board on the end of your move");
-        gridBag.fill = GridBagConstraints.HORIZONTAL;
-        gridBag.weightx = 0.5;
-        gridBag.gridx = 1;
-        gridBag.gridy = 1;
-        panelHolder.add(flipLabel, gridBag);
-
         addToggleFlipButton();
+        addColorChoice();
+        addSaveButton();
+        addMenuButton();
 
-        JLabel saveL = new JLabel("Saves your settings");
-        gridBag.fill = GridBagConstraints.HORIZONTAL;
-        gridBag.weightx = 0.5;
-        gridBag.gridx = 1;
-        gridBag.gridy = 2;
-        panelHolder.add(saveL, gridBag);
-
-
-        JButton saveB = new JButton("save");
-        //save.setAlignmentX();
-        gridBag.fill = GridBagConstraints.HORIZONTAL;
-        gridBag.weightx = 0.5;
-        gridBag.gridx = 2;
-        gridBag.gridy = 2;
-        panelHolder.add(saveB, gridBag);
-
-
-        saveB.addActionListener(e -> saveSettings());
-
-        //somthing to ass buttons to the top of the screen
-        JPanel topBar = new JPanel();
-        topBar.setBounds(10, 10, 60, 60);
-        topBar.setBackground(Color.blue);
-        topBar.setVisible(true);
-
-        //back button
-        JButton back = new JButton("back");
-
-        back.addActionListener(e -> {
-            SwingUtilities.getWindowAncestor((JComponent) e.getSource()).dispose();
-            gameManager.runMenu();
-        });
-
-        topBar.add(back);
-
-        add(topBar);
         add(panelHolder);
+        addBackgroundPanel("settingsMenu");
         validate();
     }
 
     private void saveSettings() {
-        new IOSettings().setProperties(getPieceFolder(), getToggleStatus(), null);
+        new IOSettings().setProperties(getPieceFolder(), getToggleStatus(), BoardColors.getColors(getColorSet()));
         graphicsManager.refreshTextures();
     }
 
