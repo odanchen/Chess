@@ -45,7 +45,7 @@ public class IOSettings {
             Properties properties = new Properties();
             properties.setProperty("texturePack", texturePack);
             properties.setProperty("flipToggle", String.valueOf(toggle));
-            //properties.setProperty("boardColors", colorSet.getStringVal());
+            properties.setProperty("boardColors", colorSet.getStringVal());
             properties.store(output, null);
         } catch (IOException e) {
             throw new RuntimeException(e);

@@ -12,7 +12,6 @@ import static java.awt.Font.PLAIN;
 
 
 public class GraphicsManager {
-    private String pieceTextureFolder = "cburnett";
     private ColorSet boardColors;
     private final int boardSize;
     private boolean isFlipped = false;
@@ -166,6 +165,7 @@ public class GraphicsManager {
         IOSettings ioSettings = new IOSettings();
         textureHolder.refreshPieceTextures(ioSettings.getTexturePack());
         flipToggle = ioSettings.getFlipToggle();
+        boardColors = ioSettings.getBoardColors();
     }
 
     public GraphicsManager() {
