@@ -187,6 +187,7 @@ public class GamePanel extends JPanel {
     }
 
     public void makeMove(Move move) {
+        if (graphicsManager.flipToggle()) flipPanel();
         gameStatus.getBoard().makeMove(move);
         gameStatus.logMove(move);
         gameStatus.setGameState(stateAfterMove());
