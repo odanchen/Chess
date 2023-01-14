@@ -25,7 +25,7 @@ public class EndMessagePanel extends JPanel {
     public EndMessagePanel(GraphicsManager graphicsManager, GameResult gameResult) {
         this.graphicsManager = graphicsManager;
         this.gameResult = gameResult;
-        Dimension size = graphicsManager.getFrameDimension();
+        Dimension size = graphicsManager.getFrameDimension(); 
         this.setBounds((int)(size.width * 14 / 20.25), size.height / 4, graphicsManager.getEndDimension().width, graphicsManager.getEndDimension().height);
     }
 }

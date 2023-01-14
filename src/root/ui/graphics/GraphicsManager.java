@@ -88,9 +88,13 @@ public class GraphicsManager {
         return new Rectangle(0, 0, newRectWidth, newRectHeight);
     }
 
-    public Rectangle getFlipButtonBounds() {
-        int startX = (getBoardPanelBounds().x + getBoardPanelBounds().width + getSquareSize() + getGameBounds().width - getSquareSize() - getEdgeSize()) / 2;
-        return new Rectangle(startX, getSquareSize() + getEdgeSize(), getSquareSize() + getEdgeSize(), getSquareSize() + getEdgeSize());
+    public Dimension getFlipButtonDimensions() {
+        return new Dimension(getSquareSize() + getEdgeSize(), getSquareSize() + getEdgeSize());
+    }
+
+    public Rectangle getSideBounds() {
+        int startX = getBoardPanelBounds().x + getBoardPanelBounds().width + getSquareSize();
+        return new Rectangle(startX, getEdgeSize(), getGameBounds().width - startX - getEdgeSize(), getGameBounds().height - getSquareSize()*2 - getEdgeSize());
     }
 
     public Dimension getTextButtonDimension() {
