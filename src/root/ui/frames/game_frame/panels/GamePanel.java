@@ -4,6 +4,7 @@ import root.logic.moves.*;
 import root.logic.pieces.*;
 import root.logic.pieces.properties.PieceColor;
 import root.logic.pieces.properties.Position;
+import root.ui.frames.components.MouseListener;
 import root.ui.frames.game_frame.GameFrame;
 import root.ui.graphics.GraphicsManager;
 import root.ui.game_flow.GameStates;
@@ -12,7 +13,7 @@ import root.ui.game_flow.GameStatus;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
+import java.awt.event.MouseMotionListener;
 import java.util.List;
 
 import static root.ui.game_flow.GameStates.*;
@@ -25,6 +26,8 @@ public class GamePanel extends JPanel {
     private final GameStatus gameStatus;
     private final GraphicsManager graphicsManager;
     private final GameFrame gameFrame;
+    private final DragPanel dragPanel;
+    private final MouseListener mouseListener;
 
     public GamePanel(GameStatus gameStatus, GraphicsManager graphicsManager, GameFrame gameFrame) {
         this.gameStatus = gameStatus;
@@ -33,7 +36,9 @@ public class GamePanel extends JPanel {
         this.piecePanel = new PiecePanel(graphicsManager, gameStatus);
         this.indicPanel = new IndicationPanel(graphicsManager, gameStatus);
         this.promPanel = new PromotionPanel(graphicsManager, gameStatus);
+        this.dragPanel = new DragPanel(graphicsManager, gameStatus);
         this.gameFrame = gameFrame;
+        this.mouseListener = new MouseListener(this, dragPanel);
 
         addBasicParameters();
     }
@@ -42,13 +47,15 @@ public class GamePanel extends JPanel {
         setLayout(new GroupLayout(this));
         setBounds(graphicsManager.getGamePanelBounds());
         addPanels();
-        createMouseListener();
+        this.addMouseListener(mouseListener);
+        this.addMouseMotionListener(mouseListener);
         setVisible(true);
         setOpaque(false);
         validate();
     }
 
     private void addPanels() {
+        add(dragPanel);
         add(promPanel);
         add(piecePanel);
         add(indicPanel);
@@ -71,7 +78,7 @@ public class GamePanel extends JPanel {
         if (move != null) makeMove(move);
     }
 
-    private void onMousePress(MouseEvent e) {
+    public void onMousePress(MouseEvent e) {
         switch (gameStatus.getState()) {
             case WHITE_TURN:
             case BLACK_TURN:
@@ -88,35 +95,10 @@ public class GamePanel extends JPanel {
         }
     }
 
-    private void onMouseRelease(MouseEvent e) {
+    public void onMouseRelease(MouseEvent e) {
         if (getMoveOnClick(e) != null) makeMove(getMoveOnClick(e));
     }
 
-    private void createMouseListener() {
-        this.addMouseListener(new MouseListener() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-            }
-
-            @Override
-            public void mousePressed(MouseEvent e) {
-                onMousePress(e);
-            }
-
-            @Override
-            public void mouseReleased(MouseEvent e) {
-                onMouseRelease(e);
-            }
-
-            @Override
-            public void mouseEntered(MouseEvent e) {
-            }
-
-            @Override
-            public void mouseExited(MouseEvent e) {
-            }
-        });
-    }
 
     private Move createPromotionMove(MouseEvent e) {
         ChessPiece newPiece = desiredPieceToPromoteTo(e);
@@ -278,7 +260,7 @@ public class GamePanel extends JPanel {
 
     private boolean isActionDeselect(MouseEvent e) {
         if (isClickOutsideBoard(e)) return true;
-        if (gameStatus.getPieceAt(getPositionOnTheBoard(e)) == null) return false;
+        if (gameStatus.getPieceAt(getPositionOnTheBoard(e)) == null) return true;
         if (!gameStatus.isPieceSelected()) return false;
         if (gameStatus.getPieceAt(getPositionOnTheBoard(e)).equals(gameStatus.getSelectedPiece())) return false;
         return getMoveOnClick(e) == null;
@@ -318,6 +300,18 @@ public class GamePanel extends JPanel {
 
     public GameStatus getGameStatus() {
         return gameStatus;
+    }
+
+    public void setUndrawnPiece(MouseEvent e) {
+        if (gameStatus.getPieceAt(getPositionOnTheBoard(e)) == null) return;
+        if (!gameStatus.getPieceAt(getPositionOnTheBoard(e)).equals(gameStatus.getSelectedPiece())) return;
+        piecePanel.setUndrawnPosition(gameStatus.getPieceAt(getPositionOnTheBoard(e)));
+        piecePanel.repaint();
+    }
+
+    public void setUndrawnPieceNull() {
+        piecePanel.setUndrawnPosition(null);
+        piecePanel.repaint();
     }
 
     private Position getPositionOnTheBoard(MouseEvent e) {

@@ -1,5 +1,6 @@
 package root.ui.frames.game_frame.panels;
 
+import root.logic.pieces.properties.Position;
 import root.ui.graphics.GraphicsManager;
 
 import javax.swing.*;

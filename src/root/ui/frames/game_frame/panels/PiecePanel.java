@@ -1,6 +1,7 @@
 package root.ui.frames.game_frame.panels;
 
 import root.logic.pieces.ChessPiece;
+import root.logic.pieces.properties.Position;
 import root.ui.graphics.GraphicsManager;
 import root.ui.game_flow.GameStatus;
 
@@ -11,6 +12,7 @@ import java.awt.image.BufferedImage;
 public class PiecePanel extends JPanel {
     private final GameStatus gameStatus;
     private final GraphicsManager graphicsManager;
+    private ChessPiece undrawnPiece = null;
 
     @Override
     public void paint(Graphics g) {
@@ -22,7 +24,12 @@ public class PiecePanel extends JPanel {
         int col = Math.abs(piece.getPosition().getCol() - 'a' - (graphicsManager.isFlipped() ? 7 : 0));
 
         BufferedImage image = graphicsManager.getTextureOfPiece(piece);
-        g.drawImage(image, graphicsManager.getPieceCoordinate(col), graphicsManager.getPieceCoordinate(row), null);
+        if (!piece.equals(undrawnPiece))
+            g.drawImage(image, graphicsManager.getPieceCoordinate(col), graphicsManager.getPieceCoordinate(row), null);
+    }
+
+    public void setUndrawnPosition(ChessPiece chessPiece) {
+        undrawnPiece = chessPiece;
     }
 
     @Override
