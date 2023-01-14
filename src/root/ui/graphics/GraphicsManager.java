@@ -1,7 +1,7 @@
 package root.ui.graphics;
 
-import root.assets.colors.BoardColors;
 import root.assets.colors.ColorSet;
+import root.assets.settings.IOSettings;
 import root.logic.pieces.ChessPiece;
 
 import javax.swing.*;
@@ -13,11 +13,11 @@ import static java.awt.Font.PLAIN;
 
 public class GraphicsManager {
     private String pieceTextureFolder = "cburnett";
-    private final String[] pieceTextureFolders = {"cburnett", "kilifiger", "kosal", "leipzig", "maya", "pirat", "regular"};
     private ColorSet boardColors;
     private final int boardSize;
     private boolean isFlipped = false;
     private final TextureHolder textureHolder;
+    private boolean flipToggle;
 
     public int getBoardSize() {
         return boardSize;
@@ -45,6 +45,10 @@ public class GraphicsManager {
 
     public int getEdgeSize() {
         return getSquareSize() / 2;
+    }
+
+    public boolean flipToggle() {
+        return flipToggle;
     }
 
     public Rectangle getPlayAreaBounds() {
@@ -158,11 +162,20 @@ public class GraphicsManager {
         return textureHolder.getIconOf("buttons", id, size);
     }
 
+    public void refreshTextures() {
+        IOSettings ioSettings = new IOSettings();
+        textureHolder.refreshPieceTextures(ioSettings.getTexturePack());
+        flipToggle = ioSettings.getFlipToggle();
+    }
+
     public GraphicsManager() {
         boardSize = (int) (Toolkit.getDefaultToolkit().getScreenSize().getWidth() / 3);
 
+        IOSettings ioSettings = new IOSettings();
+        flipToggle = ioSettings.getFlipToggle();
+        boardColors = ioSettings.getBoardColors();
+
         Font letterFont = new Font("Monospaced", PLAIN, getSquareSize() / 3);
-        boardColors = BoardColors.OPTION1;
-        textureHolder = new TextureHolder(boardColors, letterFont, pieceTextureFolder, getPieceSize());
+        textureHolder = new TextureHolder(letterFont, getPieceSize());
     }
 }
