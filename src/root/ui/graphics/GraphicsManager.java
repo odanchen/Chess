@@ -165,7 +165,6 @@ public class GraphicsManager {
         return textureHolder.getTextureOf("stages", filename, getFrameDimension());
     }
     public BufferedImage getMessageTexture(String filename) {
-        Dimension size = getFrameDimension();
         return textureHolder.getTextureOf("messages", filename, getEndDimension());
     }
 

@@ -89,6 +89,10 @@ public class GameStatus {
         return (generateGameResult() != null);
     }
 
+    public void setGameResult(GameResult result) {
+        gameResult = result;
+    }
+
     private GameResult generateGameResult() {
         if (isCheckmate(PieceColor.WHITE)) {
             return GameResult.PLAYER_BLACK_WON_BY_CHECKMATE;
