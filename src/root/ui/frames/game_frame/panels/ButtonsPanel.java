@@ -17,10 +17,10 @@ public class ButtonsPanel extends JPanel {
     public ButtonsPanel(GamePanel gamePanel, GraphicsManager graphicsManager) {
        this.gamePanel = gamePanel;
        this.graphicsManager = graphicsManager;
-       this.setBounds((int) (graphicsManager.getGamePanelBounds().x + graphicsManager.getGamePanelBounds().getWidth()),graphicsManager.getGamePanelBounds().y,graphicsManager.getButtonDimensions().width,700);
+       this.setBounds((int) (graphicsManager.getGamePanelBounds().x + graphicsManager.getGamePanelBounds().getWidth()),graphicsManager.getGamePanelBounds().y,graphicsManager.getButtonDimensions().width,graphicsManager.getBoardPanelBounds().height);
        this.setOpaque(false);
        addButtons();
-       setLayout(new GridLayout(3,1,0,(int) (graphicsManager.getSquareSize()*2.8)));
+       setLayout(new GridLayout(3,1,0,graphicsManager.getSquareSize()*3));
     }
     private void addButtons() {
         CustomButton topButton = new CustomButton("resignButtonReleased", graphicsManager, graphicsManager.getButtonDimensions());
