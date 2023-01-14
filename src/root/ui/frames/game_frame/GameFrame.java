@@ -5,21 +5,56 @@ import root.logic.pieces.properties.PieceColor;
 import root.ui.GameManager;
 import root.ui.frames.components.BaseFrame;
 import root.ui.frames.game_frame.panels.GamePanel;
+import root.ui.game_flow.GameResult;
 import root.ui.graphics.GraphicsManager;
 import root.ui.frames.components.CustomButton;
 import root.ui.game_flow.GameStatus;
 
 import javax.swing.*;
 
+import static root.ui.game_flow.GameResult.PLAYER_BLACK_WON_BY_RESIGNATION;
+import static root.ui.game_flow.GameResult.PLAYER_WHITE_WON_BY_RESIGNATION;
+
 public class GameFrame extends BaseFrame {
     private final GraphicsManager graphicsManager;
     private final GamePanel gamePanel;
+
     private void addFlipButton() {
         JButton flipButton = new CustomButton("flipButtonReleased", graphicsManager, graphicsManager.getFlipButtonBounds().getSize());
         getContentPane().add(flipButton);
         flipButton.setBounds(graphicsManager.getFlipButtonBounds());
         flipButton.addActionListener(e -> gamePanel.flipPanel());
     }
+
+    private void addResignButtons() {
+        int xCor = (int) (graphicsManager.getGamePanelBounds().x + graphicsManager.getGamePanelBounds().getWidth());
+        int yCor = graphicsManager.getGamePanelBounds().y;
+        int size = graphicsManager.getFlipButtonBounds().width;
+        CustomButton topButton = new CustomButton("resignButtonReleased", graphicsManager, graphicsManager.getFlipButtonBounds().getSize());
+        CustomButton botButton = new CustomButton("resignButtonReleased", graphicsManager, graphicsManager.getFlipButtonBounds().getSize());
+        topButton.setBounds(xCor, yCor, size, size);
+        botButton.setBounds(xCor, yCor + graphicsManager.getPlayAreaBounds().height, size, size);
+        add(topButton);
+        add(botButton);
+        addResignButtonActions(topButton, botButton);
+        validate();
+    }
+
+    private void addResignButtonActions(CustomButton topButton, CustomButton botButton) {
+        topButton.addActionListener(e -> topButtonPressed());
+        botButton.addActionListener(e -> botButtonPressed());
+    }
+
+    private void topButtonPressed() {
+        GameResult result = (graphicsManager.isFlipped()) ? PLAYER_BLACK_WON_BY_RESIGNATION : PLAYER_WHITE_WON_BY_RESIGNATION;
+        gamePanel.endGame(result);
+    }
+
+    private void botButtonPressed() {
+        GameResult result = (graphicsManager.isFlipped()) ? PLAYER_WHITE_WON_BY_RESIGNATION : PLAYER_BLACK_WON_BY_RESIGNATION;
+        gamePanel.endGame(result);
+    }
+
     private Board createBoard() {
         Board board = new Board();
         board.fillStandardBoard();
@@ -39,6 +74,7 @@ public class GameFrame extends BaseFrame {
 
         getContentPane().add(gamePanel);
         addFlipButton();
+        addResignButtons();
         addBackgroundPanel("gameBackground");
     }
 }

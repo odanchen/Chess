@@ -90,7 +90,7 @@ public class GraphicsManager {
 
     public Rectangle getFlipButtonBounds() {
         int startX = (getBoardPanelBounds().x + getBoardPanelBounds().width + getSquareSize() + getGameBounds().width - getSquareSize() - getEdgeSize()) / 2;
-        return new Rectangle(startX, getSquareSize() + getEdgeSize(), getSquareSize() + getEdgeSize(), getSquareSize() + getEdgeSize());
+        return new Rectangle(startX, getSquareSize() + getEdgeSize(), getSquareSize(), getSquareSize());
     }
 
     public Dimension getTextButtonDimension() {
@@ -161,7 +161,6 @@ public class GraphicsManager {
         return textureHolder.getTextureOf("stages", filename, getFrameDimension());
     }
     public BufferedImage getMessageTexture(String filename) {
-        Dimension size = getFrameDimension();
         return textureHolder.getTextureOf("messages", filename, getEndDimension());
     }
 
