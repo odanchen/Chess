@@ -198,12 +198,10 @@ public class GamePanel extends JPanel {
     }
 
     private void checkGameEnd() {
-        if (isGameEnd()) gameFrame.swapToEndFrame();
-    }
-
-    private boolean isGameEnd() {
-        return (gameStatus.isCheckmate(PieceColor.WHITE)) || (gameStatus.isCheckmate(PieceColor.BLACK)) ||
-                (gameStatus.isStalemate());
+        if (gameStatus.isGameEnd()) {
+            gameStatus.updateGameResult();
+            gameFrame.swapToEndFrame();
+        }
     }
 
     public boolean isMovePromotional(Move move) {

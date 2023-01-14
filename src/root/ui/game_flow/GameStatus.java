@@ -15,6 +15,7 @@ public class GameStatus {
     private GameStates gameState;
     private final Board board;
     private final GameLog gameLog;
+    private GameResult gameResult;
 
     public Board getBoard() {
         return board;
@@ -72,6 +73,29 @@ public class GameStatus {
         return board.getPieceAt(position);
     }
 
+    public GameResult getGameResult() {
+        return gameResult;
+    }
+
+    public void updateGameResult() {
+        gameResult = generateGameResult();
+    }
+
+    public boolean isGameEnd() {
+        return (generateGameResult() != null);
+    }
+
+    private GameResult generateGameResult() {
+        if (isCheckmate(PieceColor.WHITE)) {
+            return GameResult.PLAYER_BLACK_WON_BY_CHECKMATE;
+        } else if (isCheckmate(PieceColor.BLACK)) {
+            return GameResult.PLAYER_WHITE_WON_BY_CHECKMATE;
+        } else if (isStalemate()) {
+            return GameResult.STALEMATE;
+        }
+        return null;
+    }
+
     public void logMove(Move move) {
         gameLog.addMove(move);
         System.out.println(gameLog.getString().toString());
@@ -88,6 +112,7 @@ public class GameStatus {
     public GameStatus(Board board, PieceColor startingSide) {
         this.selectedPiece = null;
         this.selectedMove = null;
+        this.gameResult = null;
         this.gameState = startingSide == PieceColor.WHITE ? GameStates.WHITE_TURN : GameStates.BLACK_TURN;
         this.board = board;
         this.gameLog = new GameLog(board);
