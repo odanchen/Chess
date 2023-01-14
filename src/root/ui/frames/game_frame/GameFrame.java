@@ -25,9 +25,9 @@ public class GameFrame extends BaseFrame {
     private void addResignButtons() {
         int xCor = (int) (graphicsManager.getGamePanelBounds().x + graphicsManager.getGamePanelBounds().getWidth());
         int yCor = graphicsManager.getGamePanelBounds().y;
-        int size = graphicsManager.getFlipButtonBounds().width;
-        CustomButton topButton = new CustomButton("resignButtonReleased", graphicsManager, graphicsManager.getFlipButtonBounds().getSize());
-        CustomButton botButton = new CustomButton("resignButtonReleased", graphicsManager, graphicsManager.getFlipButtonBounds().getSize());
+        int size = graphicsManager.getFlipButtonDimensions().width;
+        CustomButton topButton = new CustomButton("resignButtonReleased", graphicsManager, graphicsManager.getFlipButtonDimensions().getSize());
+        CustomButton botButton = new CustomButton("resignButtonReleased", graphicsManager, graphicsManager.getFlipButtonDimensions().getSize());
         topButton.setBounds(xCor, yCor, size, size);
         botButton.setBounds(xCor, yCor + graphicsManager.getPlayAreaBounds().height, size, size);
         add(topButton);
@@ -70,7 +70,6 @@ public class GameFrame extends BaseFrame {
         this.sidePanel = new SidePanel(gameStatus, graphicsManager, gamePanel);
         getContentPane().add(sidePanel);
         getContentPane().add(gamePanel);
-        addFlipButton();
         addResignButtons();
         addBackgroundPanel("gameBackground");
     }
