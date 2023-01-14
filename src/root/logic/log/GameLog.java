@@ -18,8 +18,15 @@ public class GameLog {
         gameLogString = new ArrayList<>();
     }
 
-    public List<String> getString() {
-        return gameLogString;
+    public String getFullString() {
+        String fullString = "";
+        for (int i = 0; i < gameLogString.size(); i++) {
+            if (i % 2 == 0) {
+                fullString += (i / 2 + 1) + ". ";
+            }
+            fullString += gameLogString.get(i) + " ";
+        }
+        return fullString;
     }
 
     public void addMove(Move move) {
@@ -35,7 +42,4 @@ public class GameLog {
         return moveString;
     }
 
-    public List<Move> getGameLog() {
-        return gameLog;
-    }
 }

@@ -81,6 +81,10 @@ public class GameStatus {
         gameResult = generateGameResult();
     }
 
+    public GameLog getGameLog() {
+        return gameLog;
+    }
+
     public boolean isGameEnd() {
         return (generateGameResult() != null);
     }
@@ -102,7 +106,6 @@ public class GameStatus {
 
     public void logMove(Move move) {
         gameLog.addMove(move);
-        System.out.println(gameLog.getString().toString());
     }
 
     public boolean isCheckmate(PieceColor pieceColor) {

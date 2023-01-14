@@ -1,10 +1,12 @@
 package root.ui.frames.game_frame;
 
 import root.logic.Board;
+import root.logic.log.GameLog;
 import root.logic.pieces.properties.PieceColor;
 import root.ui.GameManager;
 import root.ui.frames.components.BaseFrame;
 import root.ui.frames.game_frame.panels.GamePanel;
+import root.ui.frames.game_frame.panels.SidePanel;
 import root.ui.game_flow.GameResult;
 import root.ui.graphics.GraphicsManager;
 import root.ui.frames.components.CustomButton;
@@ -18,20 +20,14 @@ import static root.ui.game_flow.GameResult.PLAYER_WHITE_WON_BY_RESIGNATION;
 public class GameFrame extends BaseFrame {
     private final GraphicsManager graphicsManager;
     private final GamePanel gamePanel;
-
-    private void addFlipButton() {
-        JButton flipButton = new CustomButton("flipButtonReleased", graphicsManager, graphicsManager.getFlipButtonBounds().getSize());
-        getContentPane().add(flipButton);
-        flipButton.setBounds(graphicsManager.getFlipButtonBounds());
-        flipButton.addActionListener(e -> gamePanel.flipPanel());
-    }
+    private final SidePanel sidePanel;
 
     private void addResignButtons() {
         int xCor = (int) (graphicsManager.getGamePanelBounds().x + graphicsManager.getGamePanelBounds().getWidth());
         int yCor = graphicsManager.getGamePanelBounds().y;
-        int size = graphicsManager.getFlipButtonBounds().width;
-        CustomButton topButton = new CustomButton("resignButtonReleased", graphicsManager, graphicsManager.getFlipButtonBounds().getSize());
-        CustomButton botButton = new CustomButton("resignButtonReleased", graphicsManager, graphicsManager.getFlipButtonBounds().getSize());
+        int size = graphicsManager.getFlipButtonDimensions().width;
+        CustomButton topButton = new CustomButton("resignButtonReleased", graphicsManager, graphicsManager.getFlipButtonDimensions().getSize());
+        CustomButton botButton = new CustomButton("resignButtonReleased", graphicsManager, graphicsManager.getFlipButtonDimensions().getSize());
         topButton.setBounds(xCor, yCor, size, size);
         botButton.setBounds(xCor, yCor + graphicsManager.getPlayAreaBounds().height, size, size);
         add(topButton);
@@ -71,9 +67,9 @@ public class GameFrame extends BaseFrame {
         this.graphicsManager = graphicsManager;
         GameStatus gameStatus = new GameStatus(createBoard(), PieceColor.WHITE);
         this.gamePanel = new GamePanel(gameStatus, graphicsManager, this);
-
+        this.sidePanel = new SidePanel(gameStatus, graphicsManager, gamePanel);
+        getContentPane().add(sidePanel);
         getContentPane().add(gamePanel);
-        addFlipButton();
         addResignButtons();
         addBackgroundPanel("gameBackground");
     }

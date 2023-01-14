@@ -88,9 +88,13 @@ public class GraphicsManager {
         return new Rectangle(0, 0, newRectWidth, newRectHeight);
     }
 
-    public Rectangle getFlipButtonBounds() {
-        int startX = (getBoardPanelBounds().x + getBoardPanelBounds().width + getSquareSize() + getGameBounds().width - getSquareSize() - getEdgeSize()) / 2;
-        return new Rectangle(startX, getSquareSize() + getEdgeSize(), getSquareSize(), getSquareSize());
+    public Dimension getFlipButtonDimensions() {
+        return new Dimension(getSquareSize(), getSquareSize());
+    }
+
+    public Rectangle getSideBounds() {
+        int startX = getBoardPanelBounds().x + getBoardPanelBounds().width + getSquareSize()*2;
+        return new Rectangle(startX, getEdgeSize(), getGameBounds().width - startX - getEdgeSize(), getGameBounds().height - getSquareSize()*2 - getEdgeSize());
     }
 
     public Dimension getTextButtonDimension() {
@@ -180,6 +184,9 @@ public class GraphicsManager {
         textureHolder.refreshPieceTextures(ioSettings.getTexturePack());
         flipToggle = ioSettings.getFlipToggle();
         refreshBoardColors(ioSettings.getBoardColors());
+    }
+    public Font getSideFont() {
+        return new Font("Monospaced", Font.BOLD, (int) (getEdgeSize() / 2.5));
     }
 
     public GraphicsManager() {
