@@ -1,10 +1,10 @@
 package root.ui.frames.game_frame;
 
 import root.logic.Board;
-import root.logic.log.GameLog;
 import root.logic.pieces.properties.PieceColor;
 import root.ui.GameManager;
 import root.ui.frames.components.BaseFrame;
+import root.ui.frames.game_frame.panels.ButtonsPanel;
 import root.ui.frames.game_frame.panels.GamePanel;
 import root.ui.frames.game_frame.panels.SidePanel;
 import root.ui.game_flow.GameResult;
@@ -21,35 +21,8 @@ public class GameFrame extends BaseFrame {
     private final GraphicsManager graphicsManager;
     private final GamePanel gamePanel;
     private final SidePanel sidePanel;
+    private final ButtonsPanel buttonsPanel;
 
-    private void addResignButtons() {
-        int xCor = (int) (graphicsManager.getGamePanelBounds().x + graphicsManager.getGamePanelBounds().getWidth());
-        int yCor = graphicsManager.getGamePanelBounds().y;
-        int size = graphicsManager.getFlipButtonDimensions().width;
-        CustomButton topButton = new CustomButton("resignButtonReleased", graphicsManager, graphicsManager.getFlipButtonDimensions().getSize());
-        CustomButton botButton = new CustomButton("resignButtonReleased", graphicsManager, graphicsManager.getFlipButtonDimensions().getSize());
-        topButton.setBounds(xCor, yCor, size, size);
-        botButton.setBounds(xCor, yCor + graphicsManager.getPlayAreaBounds().height, size, size);
-        add(topButton);
-        add(botButton);
-        addResignButtonActions(topButton, botButton);
-        validate();
-    }
-
-    private void addResignButtonActions(CustomButton topButton, CustomButton botButton) {
-        topButton.addActionListener(e -> topButtonPressed());
-        botButton.addActionListener(e -> botButtonPressed());
-    }
-
-    private void topButtonPressed() {
-        GameResult result = (graphicsManager.isFlipped()) ? PLAYER_BLACK_WON_BY_RESIGNATION : PLAYER_WHITE_WON_BY_RESIGNATION;
-        gamePanel.endGame(result);
-    }
-
-    private void botButtonPressed() {
-        GameResult result = (graphicsManager.isFlipped()) ? PLAYER_WHITE_WON_BY_RESIGNATION : PLAYER_BLACK_WON_BY_RESIGNATION;
-        gamePanel.endGame(result);
-    }
 
     private Board createBoard() {
         Board board = new Board();
@@ -68,9 +41,10 @@ public class GameFrame extends BaseFrame {
         GameStatus gameStatus = new GameStatus(createBoard(), PieceColor.WHITE);
         this.gamePanel = new GamePanel(gameStatus, graphicsManager, this);
         this.sidePanel = new SidePanel(gameStatus, graphicsManager, gamePanel);
+        this.buttonsPanel = new ButtonsPanel(gamePanel, graphicsManager);
         getContentPane().add(sidePanel);
         getContentPane().add(gamePanel);
-        addResignButtons();
+        getContentPane().add(buttonsPanel);
         addBackgroundPanel("gameBackground");
     }
 }

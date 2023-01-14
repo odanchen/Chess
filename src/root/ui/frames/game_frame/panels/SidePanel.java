@@ -19,7 +19,7 @@ public class SidePanel extends JPanel {
         this.gameStatus = gameStatus;
         this.setBounds(graphicsManager.getSideBounds());
         this.setOpaque(false);
-        addFlipButton();
+
         addTextAreaParams();
     }
 
@@ -46,10 +46,5 @@ public class SidePanel extends JPanel {
         add(scroll);
     }
 
-    private void addFlipButton() {
-        JButton flipButton = new CustomButton("flipButtonReleased", graphicsManager, graphicsManager.getFlipButtonDimensions());
-        add(flipButton);
-        flipButton.addActionListener(e -> gamePanel.flipPanel());
-    }
 }
 

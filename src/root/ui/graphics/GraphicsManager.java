@@ -88,7 +88,7 @@ public class GraphicsManager {
         return new Rectangle(0, 0, newRectWidth, newRectHeight);
     }
 
-    public Dimension getFlipButtonDimensions() {
+    public Dimension getButtonDimensions() {
         return new Dimension(getSquareSize(), getSquareSize());
     }
 
