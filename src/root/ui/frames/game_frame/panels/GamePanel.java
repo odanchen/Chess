@@ -4,7 +4,7 @@ import root.logic.moves.*;
 import root.logic.pieces.*;
 import root.logic.pieces.properties.PieceColor;
 import root.logic.pieces.properties.Position;
-import root.ui.frames.components.MouseListener;
+import root.ui.frames.game_frame.listener.MouseListener;
 import root.ui.frames.game_frame.GameFrame;
 import root.ui.graphics.GraphicsManager;
 import root.ui.game_flow.GameStates;
@@ -13,7 +13,6 @@ import root.ui.game_flow.GameStatus;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseMotionListener;
 import java.util.List;
 
 import static root.ui.game_flow.GameStates.*;
@@ -96,9 +95,9 @@ public class GamePanel extends JPanel {
     }
 
     public void onMouseRelease(MouseEvent e) {
-        if (getMoveOnClick(e) != null) makeMove(getMoveOnClick(e));
+        if (isActionPromotion(e)) actionPromotion(e);
+        else if (isActionMove(e)) makeMove(e);
     }
-
 
     private Move createPromotionMove(MouseEvent e) {
         ChessPiece newPiece = desiredPieceToPromoteTo(e);
@@ -262,7 +261,8 @@ public class GamePanel extends JPanel {
         if (isClickOutsideBoard(e)) return true;
         if (gameStatus.getPieceAt(getPositionOnTheBoard(e)) == null && !isActionMove(e)) return true;
         if (!gameStatus.isPieceSelected()) return false;
-        if (gameStatus.getPieceAt(getPositionOnTheBoard(e)) != null && gameStatus.getPieceAt(getPositionOnTheBoard(e)).equals(gameStatus.getSelectedPiece())) return false;
+        if (gameStatus.getPieceAt(getPositionOnTheBoard(e)) != null && gameStatus.getPieceAt(getPositionOnTheBoard(e)).equals(gameStatus.getSelectedPiece()))
+            return false;
         return getMoveOnClick(e) == null;
     }
 
