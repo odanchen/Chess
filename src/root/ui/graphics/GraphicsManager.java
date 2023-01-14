@@ -101,6 +101,10 @@ public class GraphicsManager {
         return getGameBounds().getSize();
     }
 
+    public Dimension getEndDimension() {
+        return new Dimension(getFrameDimension().width * 2 / 7, getFrameDimension().height / 4);
+    }
+
     public boolean isFlipped() {
         return isFlipped;
     }
@@ -155,6 +159,10 @@ public class GraphicsManager {
 
     public BufferedImage getBackgroundTexture(String filename) {
         return textureHolder.getTextureOf("stages", filename, getFrameDimension());
+    }
+    public BufferedImage getMessageTexture(String filename) {
+        Dimension size = getFrameDimension();
+        return textureHolder.getTextureOf("messages", filename, getEndDimension());
     }
 
     public ImageIcon getButtonIcon(String id, Dimension size) {
