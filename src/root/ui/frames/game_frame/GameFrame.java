@@ -1,6 +1,7 @@
 package root.ui.frames.game_frame;
 
 import root.logic.Board;
+import root.logic.log.GameLog;
 import root.logic.pieces.properties.PieceColor;
 import root.ui.GameManager;
 import root.ui.frames.components.BaseFrame;
@@ -32,8 +33,7 @@ public class GameFrame extends BaseFrame {
         this.graphicsManager = graphicsManager;
         GameStatus gameStatus = new GameStatus(createBoard(), PieceColor.WHITE);
         this.gamePanel = new GamePanel(gameStatus, graphicsManager, this);
-        this.sidePanel = new SidePanel(graphicsManager, gamePanel);
-
+        this.sidePanel = new SidePanel(gameStatus, graphicsManager, gamePanel);
         getContentPane().add(sidePanel);
         getContentPane().add(gamePanel);
         addBackgroundPanel("gameBackground");
