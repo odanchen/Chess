@@ -2,88 +2,98 @@ package root.ui.frames.settings_frame;
 
 import javax.swing.*;
 import java.awt.*;
-import java.io.FileWriter;
-import java.io.IOException;
 
 import root.assets.settings.IOSettings;
 import root.ui.GameManager;
 import root.ui.frames.components.BaseFrame;
-import root.ui.frames.components.BackgroundPanel;
 import root.ui.graphics.GraphicsManager;
 
 public class SettingsFrame extends BaseFrame {
-    public boolean isFlipTogOn;
-    public String[] choices = {"cburnett", "kilifiger", "kosal", "leipzig",
-            "maya", "pirat", "regular"};
-    final JComboBox<String> cb = new JComboBox<>(choices);
+    private JToggleButton flipToggleButton;
+    private JComboBox<String> textureChoice;
+
+    private JComboBox<String> colorChoice;
+
+    private final GridBagConstraints gridBag;
+    private final JPanel panelHolder;
+
+    private String getPieceFolder() {
+        return (String) textureChoice.getSelectedItem();
+    }
+
+    private boolean getToggleStatus() {
+        return flipToggleButton.getModel().isSelected();
+    }
+
+    private void addToPanelHolder(double weightX, int gridX, int gridY, JComponent component) {
+        gridBag.fill = GridBagConstraints.HORIZONTAL;
+        gridBag.weightx = weightX;
+        gridBag.gridx = gridX;
+        gridBag.gridy = gridY;
+        panelHolder.add(component, gridBag);
+    }
+
+    private void addTextureChoice() {
+        textureChoice = new JComboBox<>(new String[]
+                {"cburnett", "kilifiger", "kosal", "leipzig", "maya", "pirat", "regular"});
+        textureChoice.setSelectedItem(new IOSettings().getTexturePack());
+        addToPanelHolder(0.5, 2, 0, textureChoice);
+    }
+
+    private void addToggleFlipButton() {
+        flipToggleButton = new JToggleButton("flip toggle");
+        flipToggleButton.setSelected(new IOSettings().getFlipToggle());
+        flipToggleButton.addActionListener(e -> flipButton());
+        addToPanelHolder(0.5, 2, 1, flipToggleButton);
+    }
 
     public SettingsFrame(GameManager gameManager, GraphicsManager graphicsManager) {
         super(gameManager, graphicsManager);
-        IOSettings ioSettings = new IOSettings();
+        gridBag = new GridBagConstraints();
 
-        JPanel panel = new JPanel();
-        panel.setBounds(graphicsManager.getGameBounds().height / 4, graphicsManager.getGameBounds().width / 4, graphicsManager.getGameBounds().width / 2, graphicsManager.getGameBounds().height / 4);
-        panel.setLayout(new GridBagLayout());
-        GridBagConstraints c = new GridBagConstraints();
+        panelHolder = new JPanel();
+        panelHolder.setBounds(graphicsManager.getGameBounds().height / 4, graphicsManager.getGameBounds().width / 4, graphicsManager.getGameBounds().width / 2, graphicsManager.getGameBounds().height / 4);
+        panelHolder.setLayout(new GridBagLayout());
 
-        JLabel lbl = new JLabel("Select one of the possible choices and click OK");
-        c.fill = GridBagConstraints.HORIZONTAL;
-        c.weightx = 0.5;
-        c.gridx = 1;
-        c.gridy = 0;
+        JLabel lbl = new JLabel("Piece texture pack: ");
+        gridBag.fill = GridBagConstraints.HORIZONTAL;
+        gridBag.weightx = 0.5;
+        gridBag.gridx = 1;
+        gridBag.gridy = 0;
 
-        panel.add(lbl, c);
+        panelHolder.add(lbl, gridBag);
 
         //piece texture selection
-
-        cb.setSelectedItem(ioSettings.getTexturePack());
-        cb.setMaximumSize(cb.getPreferredSize());
-        c.fill = GridBagConstraints.HORIZONTAL;
-        c.weightx = 0.5;
-        c.gridx = 2;
-        c.gridy = 0;
-        panel.add(cb, c);
+        addTextureChoice();
 
         //flip toggle
         JLabel flipLabel = new JLabel("flips the board on the end of your move");
-        c.fill = GridBagConstraints.HORIZONTAL;
-        c.weightx = 0.5;
-        c.gridx = 1;
-        c.gridy = 1;
-        panel.add(flipLabel, c);
+        gridBag.fill = GridBagConstraints.HORIZONTAL;
+        gridBag.weightx = 0.5;
+        gridBag.gridx = 1;
+        gridBag.gridy = 1;
+        panelHolder.add(flipLabel, gridBag);
 
-        JToggleButton flipTog = new JToggleButton("place holder"); //TODO make it so the button has an icon and not a string
-        flipTog.setBounds(1000, 10, 40, 40);
-        c.fill = GridBagConstraints.HORIZONTAL;
-        c.weightx = 0.5;
-        c.gridx = 2;
-        c.gridy = 1;
-        panel.add(flipTog, c);
+        addToggleFlipButton();
 
         JLabel saveL = new JLabel("Saves your settings");
-        c.fill = GridBagConstraints.HORIZONTAL;
-        c.weightx = 0.5;
-        c.gridx = 1;
-        c.gridy = 2;
-        panel.add(saveL, c);
+        gridBag.fill = GridBagConstraints.HORIZONTAL;
+        gridBag.weightx = 0.5;
+        gridBag.gridx = 1;
+        gridBag.gridy = 2;
+        panelHolder.add(saveL, gridBag);
 
 
         JButton saveB = new JButton("save");
         //save.setAlignmentX();
-        c.fill = GridBagConstraints.HORIZONTAL;
-        c.weightx = 0.5;
-        c.gridx = 2;
-        c.gridy = 2;
-        panel.add(saveB, c);
+        gridBag.fill = GridBagConstraints.HORIZONTAL;
+        gridBag.weightx = 0.5;
+        gridBag.gridx = 2;
+        gridBag.gridy = 2;
+        panelHolder.add(saveB, gridBag);
 
 
-        saveB.addActionListener(e -> {
-            saveSettings();
-        });
-
-        flipTog.addActionListener(e -> {
-            flipButton();
-        });
+        saveB.addActionListener(e -> saveSettings());
 
         //somthing to ass buttons to the top of the screen
         JPanel topBar = new JPanel();
@@ -102,24 +112,16 @@ public class SettingsFrame extends BaseFrame {
         topBar.add(back);
 
         add(topBar);
-        add(panel);
+        add(panelHolder);
         validate();
     }
 
     private void saveSettings() {
-        IOSettings ioSettings = new IOSettings();
-        ioSettings.setFlipToggle(isFlipTogOn);
-        ioSettings.setTexturePack((String) cb.getSelectedItem());
+        new IOSettings().setProperties(getPieceFolder(), getToggleStatus(), null);
         graphicsManager.refreshTextures();
     }
 
     public void flipButton() {
-        if (isFlipTogOn) {
-            isFlipTogOn = false;
-            System.out.println("isFlipTogTrue has been made false");
-        } else {
-            isFlipTogOn = true;
-            System.out.println("isFlipTogTrue has been made true");
-        }
+        flipToggleButton.setSelected(flipToggleButton.getModel().isSelected());
     }
 }

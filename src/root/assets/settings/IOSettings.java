@@ -11,7 +11,7 @@ public class IOSettings {
     private final File propFile;
 
     public String getTexturePack() {
-        try(InputStream input = new FileInputStream(propFile)) {
+        try (InputStream input = new FileInputStream(propFile)) {
             Properties properties = new Properties();
             properties.load(input);
             return properties.getProperty("texturePack", "cburnett");
@@ -21,7 +21,7 @@ public class IOSettings {
     }
 
     public boolean getFlipToggle() {
-        try(InputStream input = new FileInputStream(propFile)) {
+        try (InputStream input = new FileInputStream(propFile)) {
             Properties properties = new Properties();
             properties.load(input);
             return Boolean.parseBoolean(properties.getProperty("flipToggle", "false"));
@@ -31,7 +31,7 @@ public class IOSettings {
     }
 
     public ColorSet getBoardColors() {
-        try(InputStream input = new FileInputStream(propFile)) {
+        try (InputStream input = new FileInputStream(propFile)) {
             Properties properties = new Properties();
             properties.load(input);
             return BoardColors.getColors(properties.getProperty("boardColors", "option1"));
@@ -40,30 +40,12 @@ public class IOSettings {
         }
     }
 
-    public void setTexturePack(String texturePack) {
-        try(OutputStream output = new FileOutputStream(propFile)) {
+    public void setProperties(String texturePack, boolean toggle, ColorSet colorSet) {
+        try (OutputStream output = new FileOutputStream(propFile)) {
             Properties properties = new Properties();
             properties.setProperty("texturePack", texturePack);
-            properties.store(output, null);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    public void setBoardColors(ColorSet colors) {
-        try(OutputStream output = new FileOutputStream(propFile)) {
-            Properties properties = new Properties();
-            properties.setProperty("boardColors", colors.getStringVal());
-            properties.store(output, null);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    public void setFlipToggle(boolean toggle) {
-        try(OutputStream output = new FileOutputStream(propFile)) {
-            Properties properties = new Properties();
-            properties.setProperty("flipToggle", Boolean.toString(toggle));
+            properties.setProperty("flipToggle", String.valueOf(toggle));
+            //properties.setProperty("boardColors", colorSet.getStringVal());
             properties.store(output, null);
         } catch (IOException e) {
             throw new RuntimeException(e);
