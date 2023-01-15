@@ -1,19 +1,19 @@
 package root.logic.utils;
 
 public class TimerPair {
-    private ChessTimer whiteTimer;
-    private ChessTimer blackTimer;
+    private final ChessTimerPair whiteTimer;
+    private final ChessTimerPair blackTimer;
 
     public TimerPair(int minutesGiven) {
-        this.whiteTimer = new ChessTimer(minutesGiven);
-        this.blackTimer = new ChessTimer(minutesGiven);
+        this.whiteTimer = new ChessTimerPair(minutesGiven);
+        this.blackTimer = new ChessTimerPair(minutesGiven);
     }
 
-    public ChessTimer getWhiteTimer() {
+    public ChessTimerPair getWhiteTimer() {
         return whiteTimer;
     }
 
-    public ChessTimer getBlackTimer() {
+    public ChessTimerPair getBlackTimer() {
         return blackTimer;
     }
 }

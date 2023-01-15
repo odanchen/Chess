@@ -117,7 +117,7 @@ public class TextureHolder {
         }
     }
 
-    private void drawCenteredString(Graphics g, String text, Rectangle rect, Font font) {
+    public void drawCenteredString(Graphics g, String text, Rectangle rect, Font font) {
         FontMetrics metrics = g.getFontMetrics(font);
         int x = rect.x + (rect.width - metrics.stringWidth(text)) / 2;
         int y = rect.y + ((rect.height - metrics.getHeight()) / 2) + metrics.getAscent();

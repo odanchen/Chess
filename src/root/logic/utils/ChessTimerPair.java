@@ -1,16 +1,16 @@
 package root.logic.utils;
 
-public class ChessTimer {
+public class ChessTimerPair {
     private float secondsLeft;
     private long timeSinceStart;
     private boolean isPaused = true;
 
-    public ChessTimer(int minutesLeft) {
+    public ChessTimerPair(int minutesLeft) {
         this.secondsLeft = minutesLeft * 60;
     }
 
     public String getTimeLeft() {
-        if(!isPaused) {
+        if (!isPaused) {
             secondsLeft -= (System.currentTimeMillis() - timeSinceStart) / 1000f;
             timeSinceStart = System.currentTimeMillis();
         }

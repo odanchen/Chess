@@ -6,16 +6,16 @@ import root.ui.graphics.GraphicsManager;
 import javax.swing.*;
 import java.awt.*;
 
-public class SidePanel extends JPanel {
+public class LogPanel extends JPanel {
     private final GraphicsManager graphicsManager;
     private final GameStatus gameStatus;
     JTextArea textArea;
     JScrollPane scroll;
 
-    public SidePanel(GameStatus gameStatus, GraphicsManager graphicsManager) {
+    public LogPanel(GameStatus gameStatus, GraphicsManager graphicsManager) {
         this.graphicsManager = graphicsManager;
         this.gameStatus = gameStatus;
-        this.setBounds(graphicsManager.getSideBounds());
+        this.setBounds(graphicsManager.getLogPanelBounds());
         this.setOpaque(false);
 
         addTextAreaParams();
