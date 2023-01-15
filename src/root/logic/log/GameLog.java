@@ -22,9 +22,11 @@ public class GameLog {
         StringBuilder fullString = new StringBuilder();
         for (int i = 0; i < gameLogString.size(); i++) {
             if (i % 2 == 0) {
+                if (i != 0) fullString.append("\n");
                 fullString.append(i / 2 + 1).append(". ");
             }
-            fullString.append(gameLogString.get(i)).append(" ");
+            fullString.append(gameLogString.get(i));
+            if (i%2 == 0) fullString.append(", ");
         }
         return fullString.toString();
     }
