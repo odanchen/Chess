@@ -1,33 +1,53 @@
 package root.ui.game_flow;
 
 import root.logic.Board;
-import root.logic.log.GameLog;
 import root.logic.moves.Move;
 import root.logic.pieces.ChessPiece;
 import root.logic.pieces.properties.PieceColor;
 import root.logic.pieces.properties.Position;
+import root.logic.utils.GameLog;
+import root.logic.utils.TimerPair;
 
 import java.util.List;
 
 public class GameStatus {
     private final Board board;
     private final GameLog gameLog;
+    private final TimerPair timers;
     private ChessPiece selectedPiece;
     private Move selectedMove;
     private GameStates gameState;
     private GameResult gameResult;
 
-    public GameStatus(Board board, PieceColor startingSide) {
+    public GameStatus(Board board, PieceColor startingSide, TimerPair timers) {
         this.selectedPiece = null;
         this.selectedMove = null;
         this.gameResult = null;
         this.gameState = startingSide == PieceColor.WHITE ? GameStates.WHITE_TURN : GameStates.BLACK_TURN;
         this.board = board;
         this.gameLog = new GameLog(board);
+        this.timers = timers;
     }
 
     public Board getBoard() {
         return board;
+    }
+
+    public String getBlackTimeLeft() {
+        return timers.getBlackTimer().getTimeLeft();
+    }
+    public String getWhiteTimeLeft() {
+        return timers.getWhiteTimer().getTimeLeft();
+    }
+
+    public void handleTimer(Move move) {
+        if (move.getPieceAtEnd(board).isWhite()) {
+            timers.getWhiteTimer().stop();
+            timers.getBlackTimer().start();
+        } else {
+            timers.getBlackTimer().stop();
+            timers.getWhiteTimer().start();
+        }
     }
 
     public ChessPiece getSelectedPiece() {

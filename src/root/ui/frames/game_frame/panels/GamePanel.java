@@ -189,6 +189,9 @@ public class GamePanel extends JPanel {
     public void makeMove(Move move) {
         if (graphicsManager.flipToggle()) flipPanel();
         gameStatus.getBoard().makeMove(move);
+        System.out.println(gameStatus.getBlackTimeLeft() + " = Black's time left.");
+        System.out.println(gameStatus.getWhiteTimeLeft() + " = White's time left.");
+        gameStatus.handleTimer(move);
         gameStatus.logMove(move);
         gameStatus.setGameState(stateAfterMove());
         gameStatus.deselectPiece();

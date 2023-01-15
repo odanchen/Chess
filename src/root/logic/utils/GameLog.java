@@ -1,4 +1,4 @@
-package root.logic.log;
+package root.logic.utils;
 
 import root.logic.Board;
 import root.logic.moves.Move;

@@ -2,6 +2,7 @@ package root.ui.frames.game_frame;
 
 import root.logic.Board;
 import root.logic.pieces.properties.PieceColor;
+import root.logic.utils.TimerPair;
 import root.ui.GameManager;
 import root.ui.frames.components.BaseFrame;
 import root.ui.frames.game_frame.panels.ButtonsPanel;
@@ -18,7 +19,7 @@ public class GameFrame extends BaseFrame {
 
     public GameFrame(GameManager gameManager, GraphicsManager graphicsManager) {
         super(gameManager, graphicsManager);
-        GameStatus gameStatus = new GameStatus(createBoard(), PieceColor.WHITE);
+        GameStatus gameStatus = new GameStatus(createBoard(), PieceColor.WHITE, new TimerPair(10));
         this.gamePanel = new GamePanel(gameStatus, graphicsManager, this);
         this.sidePanel = new SidePanel(gameStatus, graphicsManager);
         this.buttonsPanel = new ButtonsPanel(gamePanel, graphicsManager);
