@@ -65,6 +65,10 @@ public class GraphicsManager {
         return new Rectangle(getEdgeSize(), getEdgeSize(), getBoardSize(), getBoardSize());
     }
 
+    public void drawCenteredString(Graphics g, String text, Rectangle rect, Font font) {
+        textureHolder.drawCenteredString(g, text, rect, font);
+    }
+
     public Rectangle getBoardPanelBounds() {
         int newRectSize = 2 * getEdgeSize() + getBoardSize();
         return new Rectangle(0, 0, newRectSize, newRectSize);
@@ -72,7 +76,7 @@ public class GraphicsManager {
 
     public Rectangle getGamePanelBounds() {
         int newRectSize = 2 * getEdgeSize() + getBoardSize();
-        return new Rectangle(getEdgeSize(), getEdgeSize(), newRectSize, newRectSize);
+        return new Rectangle(getEdgeSize(), getSquareSize(), newRectSize, newRectSize);
     }
 
     public Rectangle getGameBounds() {
@@ -103,9 +107,13 @@ public class GraphicsManager {
         return new Dimension(getSquareSize(), getSquareSize());
     }
 
-    public Rectangle getSideBounds() {
+    public Rectangle getLogPanelBounds() {
         int startX = getBoardPanelBounds().x + getBoardPanelBounds().width + getSquareSize() * 2;
-        return new Rectangle(startX, getEdgeSize(), getGameBounds().width - startX - getEdgeSize(), getGameBounds().height - getSquareSize() * 2 - getEdgeSize());
+        return new Rectangle(startX, getSquareSize() - 5, getGameBounds().width - startX - getEdgeSize(), getGameBounds().height - getSquareSize() * 2 - getEdgeSize());
+    }
+
+    public Rectangle getTimerPanelBounds() {
+        return new Rectangle(getEdgeSize(), getEdgeSize(), getSquareSize() * 2, getBoardPanelBounds().height + getSquareSize());
     }
 
     public Dimension getTextButtonDimension() {
@@ -200,5 +208,9 @@ public class GraphicsManager {
 
     public Font getSideFont() {
         return new Font("Monospaced", Font.BOLD, (int) (getEdgeSize() / 2.5));
+    }
+
+    public Font getTimerFont() {
+        return new Font("Arial", Font.BOLD, (int) (getEdgeSize() / 1.5));
     }
 }

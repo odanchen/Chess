@@ -19,14 +19,14 @@ public class ButtonsPanel extends JPanel {
         this.graphicsManager = graphicsManager;
         this.setBounds((int) (graphicsManager.getGamePanelBounds().x + graphicsManager.getGamePanelBounds().getWidth()), graphicsManager.getGamePanelBounds().y, graphicsManager.getButtonDimensions().width, graphicsManager.getBoardPanelBounds().height);
         this.setOpaque(false);
-        addButtons();
+        addComps();
         setLayout(new GridLayout(3, 1, 0, graphicsManager.getSquareSize() * 3));
     }
 
-    private void addButtons() {
+    private void addComps() {
         CustomButton topButton = new CustomButton("resignButtonReleased", graphicsManager, graphicsManager.getButtonDimensions());
         CustomButton botButton = new CustomButton("resignButtonReleased", graphicsManager, graphicsManager.getButtonDimensions());
-        JButton flipButton = new CustomButton("flipButtonReleased", graphicsManager, graphicsManager.getButtonDimensions());
+        CustomButton flipButton = new CustomButton("flipButtonReleased", graphicsManager, graphicsManager.getButtonDimensions());
         flipButton.addActionListener(e -> gamePanel.flipPanel());
 
         add(topButton);

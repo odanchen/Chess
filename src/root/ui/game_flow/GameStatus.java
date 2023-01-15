@@ -36,6 +36,7 @@ public class GameStatus {
     public String getBlackTimeLeft() {
         return timers.getBlackTimer().getTimeLeft();
     }
+
     public String getWhiteTimeLeft() {
         return timers.getWhiteTimer().getTimeLeft();
     }
