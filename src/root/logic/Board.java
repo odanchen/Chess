@@ -1,7 +1,10 @@
 package root.logic;
 
 import root.logic.moves.*;
-import root.logic.pieces.*;
+import root.logic.pieces.Castle;
+import root.logic.pieces.ChessPiece;
+import root.logic.pieces.King;
+import root.logic.pieces.Pawn;
 import root.logic.pieces.properties.PieceColor;
 import root.logic.pieces.properties.Position;
 
@@ -19,6 +22,26 @@ public class Board {
     private List<ChessPiece> blackPieces = new ArrayList<>();
 
     public Board() {
+    }
+
+    /**
+     * creates the copy of the board passed through the arguments
+     *
+     * @param board the instance of the board copied
+     */
+    public Board(Board board) {
+        this.whiteKingPosition = Position.copyOf(board.getWhiteKingPosition());
+        this.blackKingPosition = Position.copyOf(board.getBlackKingPosition());
+        this.blackPieces = Board.copyPiecesList(board.getBlackPieces());
+        this.whitePieces = Board.copyPiecesList(board.getWhitePieces());
+        this.configuration = new ChessPiece[BOARD_SIZE][BOARD_SIZE];
+        this.getAllPieces().forEach(piece -> setPieceAt(piece.getPosition(), piece));
+    }
+
+    private static List<ChessPiece> copyPiecesList(List<ChessPiece> originalPieces) {
+        List<ChessPiece> copy = new ArrayList<>();
+        originalPieces.forEach(piece -> copy.add(piece.copy()));
+        return copy;
     }
 
     public boolean isUnderAttack(Position position, PieceColor currentSideColor) {
@@ -49,7 +72,6 @@ public class Board {
         List<ChessPiece> currentPieces = currentSide == WHITE ? getWhitePieces() : getBlackPieces();
         return currentPieces.stream().allMatch(piece -> piece.calculateMoves(this).isEmpty()) && !isCheck(currentSide);
     }
-
 
     private void handleMoveSensitivePieces(Move move) {
         if (move.getPieceAtEnd(this) instanceof Castle) {
@@ -179,6 +201,10 @@ public class Board {
         return blackKingPosition;
     }
 
+    public void setBlackKingPosition(Position blackKingPosition) {
+        this.blackKingPosition = blackKingPosition;
+    }
+
     /**
      * gets all the white pieces on the board
      *
@@ -209,10 +235,6 @@ public class Board {
         List<ChessPiece> ans = new ArrayList<>(getWhitePieces());
         ans.addAll(getBlackPieces());
         return ans;
-    }
-
-    public void setBlackKingPosition(Position blackKingPosition) {
-        this.blackKingPosition = blackKingPosition;
     }
 
     private void addWhitePiece(ChessPiece piece) {
@@ -277,25 +299,5 @@ public class Board {
      */
     public void fillStandardBoard() {
         this.fromFEN("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR");
-    }
-
-    private static List<ChessPiece> copyPiecesList(List<ChessPiece> originalPieces) {
-        List<ChessPiece> copy = new ArrayList<>();
-        originalPieces.forEach(piece -> copy.add(piece.copy()));
-        return copy;
-    }
-
-    /**
-     * creates the copy of the board passed through the arguments
-     *
-     * @param board the instance of the board copied
-     */
-    public Board(Board board) {
-        this.whiteKingPosition = Position.copyOf(board.getWhiteKingPosition());
-        this.blackKingPosition = Position.copyOf(board.getBlackKingPosition());
-        this.blackPieces = Board.copyPiecesList(board.getBlackPieces());
-        this.whitePieces = Board.copyPiecesList(board.getWhitePieces());
-        this.configuration = new ChessPiece[BOARD_SIZE][BOARD_SIZE];
-        this.getAllPieces().forEach(piece -> setPieceAt(piece.getPosition(), piece));
     }
 }

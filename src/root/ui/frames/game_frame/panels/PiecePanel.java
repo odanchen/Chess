@@ -1,9 +1,8 @@
 package root.ui.frames.game_frame.panels;
 
 import root.logic.pieces.ChessPiece;
-import root.logic.pieces.properties.Position;
-import root.ui.graphics.GraphicsManager;
 import root.ui.game_flow.GameStatus;
+import root.ui.graphics.GraphicsManager;
 
 import javax.swing.*;
 import java.awt.*;
@@ -13,6 +12,13 @@ public class PiecePanel extends JPanel {
     private final GameStatus gameStatus;
     private final GraphicsManager graphicsManager;
     private ChessPiece undrawnPiece = null;
+
+    public PiecePanel(GraphicsManager graphicsManager, GameStatus gameStatus) {
+        this.gameStatus = gameStatus;
+        this.graphicsManager = graphicsManager;
+        this.setBounds(graphicsManager.getPlayAreaBounds());
+        this.setOpaque(false);
+    }
 
     @Override
     public void paint(Graphics g) {
@@ -35,12 +41,5 @@ public class PiecePanel extends JPanel {
     @Override
     public Dimension getPreferredSize() {
         return graphicsManager.getPlayAreaBounds().getSize();
-    }
-
-    public PiecePanel(GraphicsManager graphicsManager, GameStatus gameStatus) {
-        this.gameStatus = gameStatus;
-        this.graphicsManager = graphicsManager;
-        this.setBounds(graphicsManager.getPlayAreaBounds());
-        this.setOpaque(false);
     }
 }

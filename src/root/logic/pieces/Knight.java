@@ -12,6 +12,14 @@ import java.util.List;
 
 public class Knight extends ChessPiece {
 
+    public Knight(Position position, PieceColor color) {
+        super(position, color);
+    }
+
+    public Knight(Knight knight) {
+        super(Position.copyOf(knight.getPosition()), knight.getPieceColor());
+    }
+
     private boolean canMoveTo(Position endPosition, Board board) {
         return (endPosition.insideBoard() &&
                 (board.isEmptyAt(endPosition) || differentColorFrom(board.getPieceAt(endPosition))));
@@ -48,14 +56,6 @@ public class Knight extends ChessPiece {
         if (canMoveTo(endPosition, board)) moves.add(newMove(getPosition(), endPosition, board));
 
         return moves;
-    }
-
-    public Knight(Position position, PieceColor color) {
-        super(position, color);
-    }
-
-    public Knight(Knight knight) {
-        super(Position.copyOf(knight.getPosition()), knight.getPieceColor());
     }
 
     @Override

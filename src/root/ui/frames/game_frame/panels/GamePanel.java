@@ -4,12 +4,12 @@ import root.logic.moves.*;
 import root.logic.pieces.*;
 import root.logic.pieces.properties.PieceColor;
 import root.logic.pieces.properties.Position;
-import root.ui.frames.game_frame.listener.MouseListener;
 import root.ui.frames.game_frame.GameFrame;
+import root.ui.frames.game_frame.listener.MouseListener;
 import root.ui.game_flow.GameResult;
-import root.ui.graphics.GraphicsManager;
 import root.ui.game_flow.GameStates;
 import root.ui.game_flow.GameStatus;
+import root.ui.graphics.GraphicsManager;
 
 import javax.swing.*;
 import java.awt.*;

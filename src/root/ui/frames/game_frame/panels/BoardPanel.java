@@ -1,6 +1,5 @@
 package root.ui.frames.game_frame.panels;
 
-import root.logic.pieces.properties.Position;
 import root.ui.graphics.GraphicsManager;
 
 import javax.swing.*;
@@ -8,6 +7,13 @@ import java.awt.*;
 
 public class BoardPanel extends JPanel {
     private final GraphicsManager graphicsManager;
+
+    public BoardPanel(GraphicsManager graphicsManager) {
+        this.graphicsManager = graphicsManager;
+        this.setBounds(graphicsManager.getBoardPanelBounds());
+        this.setPreferredSize(graphicsManager.getBoardPanelBounds().getSize());
+        this.setOpaque(true);
+    }
 
     @Override
     public void paint(Graphics g) {
@@ -50,7 +56,6 @@ public class BoardPanel extends JPanel {
         g2d.drawRect(edge, edge, board, board);
     }
 
-
     private void drawLetters(Graphics g) {
         if (graphicsManager.isFlipped()) drawFlippedConf(g);
         else drawNormalConf(g);
@@ -81,12 +86,5 @@ public class BoardPanel extends JPanel {
     @Override
     public Dimension getPreferredSize() {
         return graphicsManager.getBoardPanelBounds().getSize();
-    }
-
-    public BoardPanel(GraphicsManager graphicsManager) {
-        this.graphicsManager = graphicsManager;
-        this.setBounds(graphicsManager.getBoardPanelBounds());
-        this.setPreferredSize(graphicsManager.getBoardPanelBounds().getSize());
-        this.setOpaque(true);
     }
 }

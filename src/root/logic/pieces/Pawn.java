@@ -14,6 +14,17 @@ public class Pawn extends ChessPiece {
     private boolean hasMoved;
     private boolean justMovedTwo = false;
 
+    public Pawn(Position position, PieceColor color) {
+        super(position, color);
+        this.hasMoved = false;
+    }
+
+    public Pawn(Pawn pawn) {
+        super(Position.copyOf(pawn.getPosition()), pawn.getPieceColor());
+        this.hasMoved = pawn.getHasMoved();
+        this.justMovedTwo = pawn.getHasMovedTwo();
+    }
+
     @Override
     public List<Move> calculatePotentialMoves(Board board) {
         List<Move> moves = new ArrayList<>();
@@ -74,22 +85,6 @@ public class Pawn extends ChessPiece {
 
     public void setHasMovedTwo(boolean justMovedTwo) {
         this.justMovedTwo = justMovedTwo;
-    }
-
-    public Pawn(Position position, PieceColor color, boolean hasMoved) {
-        super(position, color);
-        this.hasMoved = hasMoved;
-    }
-
-    public Pawn(Position position, PieceColor color) {
-        super(position, color);
-        this.hasMoved = false;
-    }
-
-    public Pawn(Pawn pawn) {
-        super(Position.copyOf(pawn.getPosition()), pawn.getPieceColor());
-        this.hasMoved = pawn.getHasMoved();
-        this.justMovedTwo = pawn.getHasMovedTwo();
     }
 
     @Override

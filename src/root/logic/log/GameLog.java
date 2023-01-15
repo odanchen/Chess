@@ -8,8 +8,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class GameLog {
-    private List<Move> gameLog;
-    private List<String> gameLogString;
+    private final List<Move> gameLog;
+    private final List<String> gameLogString;
     private final Board board;
 
     public GameLog(Board board) {
@@ -19,14 +19,14 @@ public class GameLog {
     }
 
     public String getFullString() {
-        String fullString = "";
+        StringBuilder fullString = new StringBuilder();
         for (int i = 0; i < gameLogString.size(); i++) {
             if (i % 2 == 0) {
-                fullString += (i / 2 + 1) + ". ";
+                fullString.append(i / 2 + 1).append(". ");
             }
-            fullString += gameLogString.get(i) + " ";
+            fullString.append(gameLogString.get(i)).append(" ");
         }
-        return fullString;
+        return fullString.toString();
     }
 
     public void addMove(Move move) {

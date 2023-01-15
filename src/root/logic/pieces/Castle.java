@@ -13,6 +13,21 @@ import java.util.List;
 public class Castle extends ChessPiece {
     private boolean hasMoved;
 
+    public Castle(Position position, PieceColor color, boolean hasMoved) {
+        super(position, color);
+        this.hasMoved = hasMoved;
+    }
+
+    public Castle(Position position, PieceColor color) {
+        super(position, color);
+        this.hasMoved = false;
+    }
+
+    public Castle(Castle castle) {
+        super(Position.copyOf(castle.getPosition()), castle.getPieceColor());
+        this.hasMoved = castle.getHasMoved();
+    }
+
     private List<Move> checkLine(Position startPosition, int colDifference, int rowDifference, Board board) {
         List<Move> moves = new ArrayList<>();
         Position endPosition = new Position(getPosition(), colDifference, rowDifference);
@@ -46,21 +61,6 @@ public class Castle extends ChessPiece {
 
     public void setHasMoved(boolean hasMoved) {
         this.hasMoved = hasMoved;
-    }
-
-    public Castle(Position position, PieceColor color, boolean hasMoved) {
-        super(position, color);
-        this.hasMoved = hasMoved;
-    }
-
-    public Castle(Position position, PieceColor color) {
-        super(position, color);
-        this.hasMoved = false;
-    }
-
-    public Castle(Castle castle) {
-        super(Position.copyOf(castle.getPosition()), castle.getPieceColor());
-        this.hasMoved = castle.getHasMoved();
     }
 
     @Override

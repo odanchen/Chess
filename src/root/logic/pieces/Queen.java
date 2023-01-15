@@ -12,6 +12,14 @@ import java.util.List;
 
 public class Queen extends ChessPiece {
 
+    public Queen(Queen queen) {
+        super(Position.copyOf(queen.getPosition()), queen.getPieceColor());
+    }
+
+    public Queen(Position position, PieceColor color) {
+        super(position, color);
+    }
+
     private List<Move> checkLine(Position startPosition, int colDifference, int rowDifference, Board board) {
         List<Move> moves = new ArrayList<>();
         Position endPosition = new Position(getPosition(), colDifference, rowDifference);
@@ -42,14 +50,6 @@ public class Queen extends ChessPiece {
         moves.addAll(checkLine(getPosition(), -1, 0, board));
 
         return moves;
-    }
-
-    public Queen(Queen queen) {
-        super(Position.copyOf(queen.getPosition()), queen.getPieceColor());
-    }
-
-    public Queen(Position position, PieceColor color) {
-        super(position, color);
     }
 
     @Override

@@ -10,12 +10,21 @@ import root.logic.pieces.properties.Position;
 import java.util.List;
 
 public class GameStatus {
+    private final Board board;
+    private final GameLog gameLog;
     private ChessPiece selectedPiece;
     private Move selectedMove;
     private GameStates gameState;
-    private final Board board;
-    private final GameLog gameLog;
     private GameResult gameResult;
+
+    public GameStatus(Board board, PieceColor startingSide) {
+        this.selectedPiece = null;
+        this.selectedMove = null;
+        this.gameResult = null;
+        this.gameState = startingSide == PieceColor.WHITE ? GameStates.WHITE_TURN : GameStates.BLACK_TURN;
+        this.board = board;
+        this.gameLog = new GameLog(board);
+    }
 
     public Board getBoard() {
         return board;
@@ -77,6 +86,10 @@ public class GameStatus {
         return gameResult;
     }
 
+    public void setGameResult(GameResult result) {
+        gameResult = result;
+    }
+
     public void updateGameResult() {
         gameResult = generateGameResult();
     }
@@ -87,10 +100,6 @@ public class GameStatus {
 
     public boolean isGameEnd() {
         return (generateGameResult() != null);
-    }
-
-    public void setGameResult(GameResult result) {
-        gameResult = result;
     }
 
     private GameResult generateGameResult() {
@@ -114,14 +123,5 @@ public class GameStatus {
 
     public boolean isStalemate() {
         return board.isStalemate(PieceColor.WHITE) || board.isStalemate(PieceColor.BLACK);
-    }
-
-    public GameStatus(Board board, PieceColor startingSide) {
-        this.selectedPiece = null;
-        this.selectedMove = null;
-        this.gameResult = null;
-        this.gameState = startingSide == PieceColor.WHITE ? GameStates.WHITE_TURN : GameStates.BLACK_TURN;
-        this.board = board;
-        this.gameLog = new GameLog(board);
     }
 }

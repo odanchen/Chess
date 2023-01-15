@@ -11,6 +11,13 @@ public class EndMessagePanel extends JPanel {
     private final GraphicsManager graphicsManager;
     private final GameResult gameResult;
 
+    public EndMessagePanel(GraphicsManager graphicsManager, GameResult gameResult) {
+        this.graphicsManager = graphicsManager;
+        this.gameResult = gameResult;
+        Dimension size = graphicsManager.getFrameDimension();
+        this.setBounds((int) (size.width * 14 / 20.25), size.height / 4, graphicsManager.getEndDimension().width, graphicsManager.getEndDimension().height);
+    }
+
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
@@ -37,12 +44,5 @@ public class EndMessagePanel extends JPanel {
                 break;
         }
         return graphicsManager.getMessageTexture(folderName);
-    }
-
-    public EndMessagePanel(GraphicsManager graphicsManager, GameResult gameResult) {
-        this.graphicsManager = graphicsManager;
-        this.gameResult = gameResult;
-        Dimension size = graphicsManager.getFrameDimension(); 
-        this.setBounds((int)(size.width * 14 / 20.25), size.height / 4, graphicsManager.getEndDimension().width, graphicsManager.getEndDimension().height);
     }
 }

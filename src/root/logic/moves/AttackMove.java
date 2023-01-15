@@ -11,17 +11,17 @@ import root.logic.pieces.properties.Position;
 public class AttackMove extends Move {
     private final Position attackedPosition;
 
+    public AttackMove(Position startPosition, Position endPosition, Position attackedPosition) {
+        super(startPosition, endPosition);
+        this.attackedPosition = attackedPosition;
+    }
+
     public ChessPiece getAttackedPiece(Board board) {
         return board.getPieceAt(this.attackedPosition);
     }
 
     public Position getAttackedPosition() {
         return this.attackedPosition;
-    }
-
-    public AttackMove(Position startPosition, Position endPosition, Position attackedPosition) {
-        super(startPosition, endPosition);
-        this.attackedPosition = attackedPosition;
     }
 
     public boolean isAttackedPosition(Position position) {

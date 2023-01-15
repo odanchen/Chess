@@ -1,4 +1,3 @@
-
 package root.ui.frames.menu_frame;
 
 import root.ui.GameManager;
@@ -11,6 +10,13 @@ import javax.swing.*;
 import java.awt.*;
 
 public class MenuFrame extends BaseFrame {
+
+    public MenuFrame(GameManager gameManager, GraphicsManager graphicsManager) {
+        super(gameManager, graphicsManager);
+        addButtonsPanel();
+        addBackgroundPanel("chessMenu");
+        validate();
+    }
 
     private void addButtonsPanel() {
         JPanel buttonsPanel = new JPanel();
@@ -32,21 +38,14 @@ public class MenuFrame extends BaseFrame {
             gameManager.runChess();
         });
 
-        settingsButton.addActionListener((e->{
+        settingsButton.addActionListener((e -> {
             SwingUtilities.getWindowAncestor((JComponent) e.getSource()).dispose(); // Closes window
-            new SettingsFrame(gameManager,graphicsManager);
+            new SettingsFrame(gameManager, graphicsManager);
         }));
 
         quitButton.addActionListener(e -> System.exit(0));
 
         add(buttonsPanel);
-    }
-
-    public MenuFrame(GameManager gameManager, GraphicsManager graphicsManager) {
-        super(gameManager, graphicsManager);
-        addButtonsPanel();
-        addBackgroundPanel("chessMenu");
-        validate();
     }
 }
 

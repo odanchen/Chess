@@ -2,9 +2,8 @@ package root.ui.frames.game_frame.panels;
 
 import root.logic.moves.AttackMove;
 import root.logic.moves.Move;
-import root.ui.graphics.GraphicsManager;
 import root.ui.game_flow.GameStatus;
-
+import root.ui.graphics.GraphicsManager;
 
 import javax.swing.*;
 import java.awt.*;

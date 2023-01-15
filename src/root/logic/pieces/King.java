@@ -14,6 +14,16 @@ import java.util.List;
 public class King extends ChessPiece {
     private boolean hasMoved;
 
+    public King(Position position, PieceColor color) {
+        super(position, color);
+        this.hasMoved = false;
+    }
+
+    public King(King king) {
+        super(Position.copyOf(king.getPosition()), king.getPieceColor());
+        this.hasMoved = king.getHasMoved();
+    }
+
     private boolean canMoveTo(Position endPosition, Board board) {
         return (endPosition.insideBoard() &&
                 (board.isEmptyAt(endPosition) || differentColorFrom(board.getPieceAt(endPosition))));
@@ -97,21 +107,6 @@ public class King extends ChessPiece {
 
     public void setHasMoved(boolean hasMoved) {
         this.hasMoved = hasMoved;
-    }
-
-    public King(Position position, PieceColor color, boolean hasMoved) {
-        super(position, color);
-        this.hasMoved = hasMoved;
-    }
-
-    public King(Position position, PieceColor color) {
-        super(position, color);
-        this.hasMoved = false;
-    }
-
-    public King(King king) {
-        super(Position.copyOf(king.getPosition()), king.getPieceColor());
-        this.hasMoved = king.getHasMoved();
     }
 
     @Override

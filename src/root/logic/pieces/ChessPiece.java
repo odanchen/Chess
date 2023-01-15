@@ -24,6 +24,26 @@ public abstract class ChessPiece {
         this.position = position;
     }
 
+    public static ChessPiece fromFEN(char piece, Position position) {
+        PieceColor newPieceColor = Character.isUpperCase(piece) ? PieceColor.WHITE : PieceColor.BLACK;
+        switch (Character.toUpperCase(piece)) {
+            case 'P':
+                return new Pawn(position, newPieceColor);
+            case 'R':
+                return new Castle(position, newPieceColor);
+            case 'N':
+                return new Knight(position, newPieceColor);
+            case 'B':
+                return new Bishop(position, newPieceColor);
+            case 'Q':
+                return new Queen(position, newPieceColor);
+            case 'K':
+                return new King(position, newPieceColor);
+            default:
+                return null;
+        }
+    }
+
     /**
      * @return A replica of the chess piece.
      */
@@ -37,19 +57,19 @@ public abstract class ChessPiece {
     }
 
     /**
-     * @return The color of the piece (black or white).
-     */
-    public PieceColor getPieceColor() {
-        return pieceColor;
-    }
-
-    /**
      * Changes position of piece.
      *
      * @param position New position.
      */
     public void setPosition(Position position) {
         this.position = position;
+    }
+
+    /**
+     * @return The color of the piece (black or white).
+     */
+    public PieceColor getPieceColor() {
+        return pieceColor;
     }
 
     /**
@@ -90,26 +110,6 @@ public abstract class ChessPiece {
     public boolean attacks(Position position, Board board) {
         List<Move> moves = calculatePotentialMoves(board);
         return moves.stream().anyMatch(move -> move instanceof AttackMove && ((AttackMove) move).isAttackedPosition(position));
-    }
-
-    public static ChessPiece fromFEN(char piece, Position position) {
-        PieceColor newPieceColor = Character.isUpperCase(piece) ? PieceColor.WHITE : PieceColor.BLACK;
-        switch (Character.toUpperCase(piece)) {
-            case 'P':
-                return new Pawn(position, newPieceColor);
-            case 'R':
-                return new Castle(position, newPieceColor);
-            case 'N':
-                return new Knight(position, newPieceColor);
-            case 'B':
-                return new Bishop(position, newPieceColor);
-            case 'Q':
-                return new Queen(position, newPieceColor);
-            case 'K':
-                return new King(position, newPieceColor);
-            default:
-                return null;
-        }
     }
 
     /**

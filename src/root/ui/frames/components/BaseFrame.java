@@ -11,6 +11,19 @@ public abstract class BaseFrame extends JFrame {
     protected final GraphicsManager graphicsManager;
     protected final GameManager gameManager;
 
+    public BaseFrame(GameManager gameManager, GraphicsManager graphicsManager) {
+        this.graphicsManager = graphicsManager;
+        this.gameManager = gameManager;
+        addIcon();
+        setTitle("Chess");
+        GroupLayout layout = new GroupLayout(getContentPane());
+        getContentPane().setLayout(layout);
+        setBounds(graphicsManager.getGameBounds());
+        setResizable(false);
+        setVisible(true);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    }
+
     @Override
     public Dimension getPreferredSize() {
         return graphicsManager.getGameBounds().getSize();
@@ -29,18 +42,5 @@ public abstract class BaseFrame extends JFrame {
         if (System.getProperty("os.name").contains("Mac")) {
             Taskbar.getTaskbar().setIconImage(img.getImage());
         }
-    }
-
-    public BaseFrame(GameManager gameManager, GraphicsManager graphicsManager) {
-        this.graphicsManager = graphicsManager;
-        this.gameManager = gameManager;
-        addIcon();
-        setTitle("Chess");
-        GroupLayout layout = new GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        setBounds(graphicsManager.getGameBounds());
-        setResizable(false);
-        setVisible(true);
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
 }

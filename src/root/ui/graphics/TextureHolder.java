@@ -17,13 +17,39 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 
 public class TextureHolder {
-    private ColorSet colorSet;
-    private Map<Character, BufferedImage> bitmapFont;
     private final Map<String, BufferedImage> activeTextures;
-    private String pieceTextureFolder;
     private final int pieceSize;
     private final Font font;
     private final List<String> pieceSignatures = List.of("bb", "bk", "bn", "bp", "bq", "br", "wb", "wk", "wn", "wp", "wq", "wr");
+    private ColorSet colorSet;
+    private Map<Character, BufferedImage> bitmapFont;
+    private String pieceTextureFolder;
+
+    public TextureHolder(Font font, int pieceSize) {
+        IOSettings ioSettings = new IOSettings();
+        this.colorSet = ioSettings.getBoardColors();
+        this.font = font;
+        this.pieceTextureFolder = ioSettings.getTexturePack();
+        this.pieceSize = pieceSize;
+
+        activeTextures = new HashMap<>();
+        fillActiveTextures();
+        generateLetterTextures(colorSet);
+    }
+
+    private static BufferedImage toBufferedImage(Image img) {
+        if (img instanceof BufferedImage) {
+            return (BufferedImage) img;
+        }
+
+        BufferedImage bImage = new BufferedImage(img.getWidth(null), img.getHeight(null), BufferedImage.TYPE_INT_ARGB);
+
+        Graphics2D bGr = bImage.createGraphics();
+        bGr.drawImage(img, 0, 0, null);
+        bGr.dispose();
+
+        return bImage;
+    }
 
     public void generateLetterTextures(ColorSet colorSet) {
         this.colorSet = colorSet;
@@ -49,20 +75,6 @@ public class TextureHolder {
             pieceTextureFolder = textureFolder;
             fillActiveTextures();
         }
-    }
-
-    private static BufferedImage toBufferedImage(Image img) {
-        if (img instanceof BufferedImage) {
-            return (BufferedImage) img;
-        }
-
-        BufferedImage bImage = new BufferedImage(img.getWidth(null), img.getHeight(null), BufferedImage.TYPE_INT_ARGB);
-
-        Graphics2D bGr = bImage.createGraphics();
-        bGr.drawImage(img, 0, 0, null);
-        bGr.dispose();
-
-        return bImage;
     }
 
     private BufferedImage rescale(BufferedImage image, int height, int width) {
@@ -123,18 +135,6 @@ public class TextureHolder {
 
     public void refreshColors() {
         colorSet = new IOSettings().getBoardColors();
-        generateLetterTextures(colorSet);
-    }
-
-    public TextureHolder(Font font, int pieceSize) {
-        IOSettings ioSettings = new IOSettings();
-        this.colorSet = ioSettings.getBoardColors();
-        this.font = font;
-        this.pieceTextureFolder = ioSettings.getTexturePack();
-        this.pieceSize = pieceSize;
-
-        activeTextures = new HashMap<>();
-        fillActiveTextures();
         generateLetterTextures(colorSet);
     }
 }

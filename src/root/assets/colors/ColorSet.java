@@ -8,6 +8,13 @@ public class ColorSet {
     private final Color cellSelection;
     private final String stringVal;
 
+    ColorSet(Color whiteCell, Color blackCell, Color whiteCellSelection, String stringVal) {
+        this.whiteCell = whiteCell;
+        this.blackCell = blackCell;
+        this.cellSelection = whiteCellSelection;
+        this.stringVal = stringVal;
+    }
+
     public Color getWhiteCell() {
         return whiteCell;
     }
@@ -22,12 +29,5 @@ public class ColorSet {
 
     public String getStringVal() {
         return stringVal;
-    }
-
-    ColorSet(Color whiteCell, Color blackCell, Color whiteCellSelection, String stringVal) {
-        this.whiteCell = whiteCell;
-        this.blackCell = blackCell;
-        this.cellSelection = whiteCellSelection;
-        this.stringVal = stringVal;
     }
 }

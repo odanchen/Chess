@@ -10,6 +10,10 @@ import java.util.Properties;
 public class IOSettings {
     private final File propFile;
 
+    public IOSettings() {
+        propFile = getSettingsFile();
+    }
+
     public String getTexturePack() {
         try (InputStream input = new FileInputStream(propFile)) {
             Properties properties = new Properties();
@@ -64,9 +68,5 @@ public class IOSettings {
             }
         }
         return file;
-    }
-
-    public IOSettings() {
-        propFile = getSettingsFile();
     }
 }

@@ -4,31 +4,6 @@ public class Position {
     private final int row;
     private final char col;
 
-    /**
-     * @return Row of the position.
-     */
-    public int getRow() {
-        return row;
-    }
-
-    /**
-     * @return Column of the position.
-     */
-    public char getCol() {
-        return col;
-    }
-
-    public String toString() {
-        return String.valueOf(col) + String.valueOf(row);
-    }
-
-    /**
-     * @return If the current position is inside the board or not. (Assumes 8 by 8 board)
-     */
-    public boolean insideBoard() {
-        return (row >= 1 && row <= 8) && (col >= 'a' && col <= 'h');
-    }
-
     public Position(char col, int row) {
         this.col = col;
         this.row = row;
@@ -49,18 +24,34 @@ public class Position {
     }
 
     /**
-     * @param pos A string containing the current position in chess term. Example: a2, or e5.
-     * @return New position object.
+     * @return Row of the position.
      */
-    public static Position at(String pos) {
-        return new Position(pos.charAt(0), Integer.parseInt(pos.substring(1)));
+    public int getRow() {
+        return row;
+    }
+
+    /**
+     * @return Column of the position.
+     */
+    public char getCol() {
+        return col;
+    }
+
+    public String toString() {
+        return col + String.valueOf(row);
+    }
+
+    /**
+     * @return If the current position is inside the board or not. (Assumes 8 by 8 board)
+     */
+    public boolean insideBoard() {
+        return (row >= 1 && row <= 8) && (col >= 'a' && col <= 'h');
     }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof Position)) return false;
-        Position position = (Position) o;
+        if (!(o instanceof Position position)) return false;
         return (getRow() == position.getRow() && getCol() == position.getCol());
     }
 

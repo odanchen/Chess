@@ -12,11 +12,22 @@ import static java.awt.Font.PLAIN;
 
 
 public class GraphicsManager {
-    private ColorSet boardColors;
     private final int boardSize;
-    private boolean isFlipped = false;
     private final TextureHolder textureHolder;
+    private ColorSet boardColors;
+    private boolean isFlipped = false;
     private boolean flipToggle;
+
+    public GraphicsManager() {
+        boardSize = (int) (Toolkit.getDefaultToolkit().getScreenSize().getWidth() / 3);
+
+        IOSettings ioSettings = new IOSettings();
+        flipToggle = ioSettings.getFlipToggle();
+        boardColors = ioSettings.getBoardColors();
+
+        Font letterFont = new Font("Monospaced", PLAIN, getSquareSize() / 3);
+        textureHolder = new TextureHolder(letterFont, getPieceSize());
+    }
 
     public int getBoardSize() {
         return boardSize;
@@ -93,8 +104,8 @@ public class GraphicsManager {
     }
 
     public Rectangle getSideBounds() {
-        int startX = getBoardPanelBounds().x + getBoardPanelBounds().width + getSquareSize()*2;
-        return new Rectangle(startX, getEdgeSize(), getGameBounds().width - startX - getEdgeSize(), getGameBounds().height - getSquareSize()*2 - getEdgeSize());
+        int startX = getBoardPanelBounds().x + getBoardPanelBounds().width + getSquareSize() * 2;
+        return new Rectangle(startX, getEdgeSize(), getGameBounds().width - startX - getEdgeSize(), getGameBounds().height - getSquareSize() * 2 - getEdgeSize());
     }
 
     public Dimension getTextButtonDimension() {
@@ -164,6 +175,7 @@ public class GraphicsManager {
     public BufferedImage getBackgroundTexture(String filename) {
         return textureHolder.getTextureOf("stages", filename, getFrameDimension());
     }
+
     public BufferedImage getMessageTexture(String filename) {
         return textureHolder.getTextureOf("messages", filename, getEndDimension());
     }
@@ -185,18 +197,8 @@ public class GraphicsManager {
         flipToggle = ioSettings.getFlipToggle();
         refreshBoardColors(ioSettings.getBoardColors());
     }
+
     public Font getSideFont() {
         return new Font("Monospaced", Font.BOLD, (int) (getEdgeSize() / 2.5));
-    }
-
-    public GraphicsManager() {
-        boardSize = (int) (Toolkit.getDefaultToolkit().getScreenSize().getWidth() / 3);
-
-        IOSettings ioSettings = new IOSettings();
-        flipToggle = ioSettings.getFlipToggle();
-        boardColors = ioSettings.getBoardColors();
-
-        Font letterFont = new Font("Monospaced", PLAIN, getSquareSize() / 3);
-        textureHolder = new TextureHolder(letterFont, getPieceSize());
     }
 }

@@ -12,6 +12,14 @@ import java.util.List;
 
 public class Bishop extends ChessPiece {
 
+    public Bishop(Position position, PieceColor color) {
+        super(position, color);
+    }
+
+    public Bishop(Bishop bishop) {
+        super(Position.copyOf(bishop.getPosition()), bishop.getPieceColor());
+    }
+
     private List<Move> checkLine(Position startPosition, int colDifference, int rowDifference, Board board) {
         List<Move> moves = new ArrayList<>();
         Position endPosition = new Position(getPosition(), colDifference, rowDifference);
@@ -37,14 +45,6 @@ public class Bishop extends ChessPiece {
         moves.addAll(checkLine(getPosition(), -1, -1, board));
 
         return moves;
-    }
-
-    public Bishop(Position position, PieceColor color) {
-        super(position, color);
-    }
-
-    public Bishop(Bishop bishop) {
-        super(Position.copyOf(bishop.getPosition()), bishop.getPieceColor());
     }
 
     @Override

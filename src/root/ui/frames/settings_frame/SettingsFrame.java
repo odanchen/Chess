@@ -1,8 +1,5 @@
 package root.ui.frames.settings_frame;
 
-import javax.swing.*;
-import java.awt.*;
-
 import root.assets.colors.BoardColors;
 import root.assets.settings.IOSettings;
 import root.ui.GameManager;
@@ -10,14 +7,35 @@ import root.ui.frames.components.BaseFrame;
 import root.ui.frames.components.CustomButton;
 import root.ui.graphics.GraphicsManager;
 
+import javax.swing.*;
+import java.awt.*;
+
 public class SettingsFrame extends BaseFrame {
-    private JToggleButton flipToggleButton;
-    private JComboBox<String> textureChoice;
-
-    private JComboBox<String> colorChoice;
-
     private final GridBagConstraints gridBag;
     private final JPanel panelHolder;
+    private JToggleButton flipToggleButton;
+    private JComboBox<String> textureChoice;
+    private JComboBox<String> colorChoice;
+
+    public SettingsFrame(GameManager gameManager, GraphicsManager graphicsManager) {
+        super(gameManager, graphicsManager);
+        gridBag = new GridBagConstraints();
+
+        panelHolder = new JPanel();
+        panelHolder.setOpaque(false);
+        panelHolder.setBounds(graphicsManager.getGameBounds().width * 8 / 15, graphicsManager.getGameBounds().width / 4, graphicsManager.getGameBounds().width / 6, graphicsManager.getGameBounds().height / 4);
+        panelHolder.setLayout(new GridBagLayout());
+
+        addTextureChoice();
+        addToggleFlipButton();
+        addColorChoice();
+        addSaveButton();
+        addMenuButton();
+
+        add(panelHolder);
+        addBackgroundPanel("settingsMenu");
+        validate();
+    }
 
     private String getPieceFolder() {
         return (String) textureChoice.getSelectedItem();
@@ -87,26 +105,6 @@ public class SettingsFrame extends BaseFrame {
         flipToggleButton.setSelected(new IOSettings().getFlipToggle());
         flipToggleButton.addActionListener(e -> flipButton());
         addToPanelHolder(2, flipToggleButton);
-    }
-
-    public SettingsFrame(GameManager gameManager, GraphicsManager graphicsManager) {
-        super(gameManager, graphicsManager);
-        gridBag = new GridBagConstraints();
-
-        panelHolder = new JPanel();
-        panelHolder.setOpaque(false);
-        panelHolder.setBounds(graphicsManager.getGameBounds().width * 8 / 15, graphicsManager.getGameBounds().width / 4, graphicsManager.getGameBounds().width / 6, graphicsManager.getGameBounds().height / 4);
-        panelHolder.setLayout(new GridBagLayout());
-
-        addTextureChoice();
-        addToggleFlipButton();
-        addColorChoice();
-        addSaveButton();
-        addMenuButton();
-
-        add(panelHolder);
-        addBackgroundPanel("settingsMenu");
-        validate();
     }
 
     private void saveSettings() {
