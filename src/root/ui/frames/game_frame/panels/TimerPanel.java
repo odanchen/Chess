@@ -23,17 +23,17 @@ public class TimerPanel extends JPanel implements ActionListener {
     @Override
     public void paint(Graphics g) {
         super.paint(g);
-        g.setColor(Color.WHITE);
+        g.setColor(graphicsManager.getBlackSquareColor());
         Font timerFont = graphicsManager.getTimerFont();
         Rectangle topTimer = new Rectangle(0, 0, graphicsManager.getSquareSize() * 2, graphicsManager.getEdgeSize());
         Rectangle bottomTimer = new Rectangle(0, graphicsManager.getBoardSize() + graphicsManager.getEdgeSize() * 3, graphicsManager.getSquareSize() * 2, graphicsManager.getEdgeSize());
 
-        g.fillRect(topTimer.x, topTimer.y, topTimer.width, topTimer.height);
+        g.fillRect(topTimer.x, topTimer.y + 1, topTimer.width, topTimer.height);
         g.fillRect(bottomTimer.x, bottomTimer.y, bottomTimer.width, bottomTimer.height);
 
         g.setColor(Color.BLACK);
-        graphicsManager.drawCenteredString(g, (graphicsManager.isFlipped()) ? gameStatus.getWhiteTimeLeft() : gameStatus.getBlackTimeLeft(), topTimer, timerFont);
-        graphicsManager.drawCenteredString(g, (graphicsManager.isFlipped()) ? gameStatus.getBlackTimeLeft() : gameStatus.getWhiteTimeLeft(), bottomTimer, timerFont);
+        graphicsManager.drawCenteredString(g, (graphicsManager.isFlipped()) ? gameStatus.getWhiteTimeLeft() : gameStatus.getBlackTimeLeft(), topTimer);
+        graphicsManager.drawCenteredString(g, (graphicsManager.isFlipped()) ? gameStatus.getBlackTimeLeft() : gameStatus.getWhiteTimeLeft(), bottomTimer);
 
         Timer timer = new Timer(1000, this);
         timer.start();
