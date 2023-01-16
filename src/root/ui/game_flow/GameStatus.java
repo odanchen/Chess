@@ -13,11 +13,12 @@ import java.util.List;
 public class GameStatus {
     private final Board board;
     private final GameLog gameLog;
-    private final TimerPair timers;
+    private TimerPair timers;
     private ChessPiece selectedPiece;
     private Move selectedMove;
     private GameStates gameState;
     private GameResult gameResult;
+    private boolean timerPresent;
 
     public GameStatus(Board board, PieceColor startingSide, TimerPair timers) {
         this.selectedPiece = null;
@@ -27,6 +28,21 @@ public class GameStatus {
         this.board = board;
         this.gameLog = new GameLog(board);
         this.timers = timers;
+        this.timerPresent = true;
+    }
+
+    public GameStatus(Board board, PieceColor startingSide) {
+        this.selectedPiece = null;
+        this.selectedMove = null;
+        this.gameResult = null;
+        this.gameState = startingSide == PieceColor.WHITE ? GameStates.WHITE_TURN : GameStates.BLACK_TURN;
+        this.board = board;
+        this.gameLog = new GameLog(board);
+        this.timerPresent = false;
+    }
+
+    public boolean timerPresent() {
+        return timerPresent;
     }
 
     public Board getBoard() {

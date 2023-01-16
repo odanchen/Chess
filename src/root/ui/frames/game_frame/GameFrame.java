@@ -16,17 +16,21 @@ import root.ui.graphics.GraphicsManager;
 public class GameFrame extends BaseFrame {
     private final GamePanel gamePanel;
     private final LogPanel logPanel;
-    private final TimerPanel timerPanel;
+    private TimerPanel timerPanel;
     private final ButtonsPanel buttonsPanel;
+    private final GameStatus gameStatus;
 
 
     public GameFrame(GameManager gameManager, GraphicsManager graphicsManager) {
         super(gameManager, graphicsManager);
-        GameStatus gameStatus = new GameStatus(createBoard(), PieceColor.WHITE, new TimerPair(getGameLength()));
+        if (new IOSettings().getGameLength().equals("infinite"))
+            gameStatus = new GameStatus(createBoard(), PieceColor.WHITE);
+        else
+            gameStatus = new GameStatus(createBoard(), PieceColor.WHITE, new TimerPair(getGameLength()));
         this.gamePanel = new GamePanel(gameStatus, graphicsManager, this);
         this.logPanel = new LogPanel(gameStatus, graphicsManager);
         this.buttonsPanel = new ButtonsPanel(gamePanel, graphicsManager);
-        this.timerPanel = new TimerPanel(graphicsManager, gameStatus, gamePanel);
+        if (gameStatus.timerPresent()) this.timerPanel = new TimerPanel(graphicsManager, gameStatus, gamePanel);
         addPanels();
         addBackgroundPanel("gameBackground");
     }
@@ -43,7 +47,7 @@ public class GameFrame extends BaseFrame {
     }
 
     private void addPanels() {
-        add(timerPanel);
+        if (gameStatus.timerPresent()) add(timerPanel);
         add(logPanel);
         add(gamePanel);
         add(buttonsPanel);
