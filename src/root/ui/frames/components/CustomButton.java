@@ -2,7 +2,8 @@ package root.ui.frames.components;
 
 import root.ui.graphics.GraphicsManager;
 
-import javax.swing.*;
+import javax.swing.JButton;
+import javax.swing.BorderFactory;
 import java.awt.*;
 
 public class CustomButton extends JButton {

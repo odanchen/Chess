@@ -4,7 +4,7 @@ import root.assets.colors.ColorSet;
 import root.assets.settings.IOSettings;
 import root.logic.pieces.ChessPiece;
 
-import javax.swing.*;
+import javax.swing.ImageIcon;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 

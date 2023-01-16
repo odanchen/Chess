@@ -11,7 +11,10 @@ import root.ui.game_flow.GameStates;
 import root.ui.game_flow.GameStatus;
 import root.ui.graphics.GraphicsManager;
 
-import javax.swing.*;
+import javax.swing.GroupLayout;
+import javax.swing.JPanel;
+import javax.swing.SwingUtilities;
+
 import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.util.List;

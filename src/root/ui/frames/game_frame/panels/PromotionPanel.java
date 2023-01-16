@@ -5,7 +5,8 @@ import root.logic.pieces.properties.PieceColor;
 import root.ui.game_flow.GameStatus;
 import root.ui.graphics.GraphicsManager;
 
-import javax.swing.*;
+
+import javax.swing.JPanel;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;

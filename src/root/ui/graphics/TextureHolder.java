@@ -4,7 +4,7 @@ import root.assets.colors.ColorSet;
 import root.assets.settings.IOSettings;
 
 import javax.imageio.ImageIO;
-import javax.swing.*;
+import javax.swing.ImageIcon;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;

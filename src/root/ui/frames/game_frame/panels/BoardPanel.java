@@ -2,7 +2,7 @@ package root.ui.frames.game_frame.panels;
 
 import root.ui.graphics.GraphicsManager;
 
-import javax.swing.*;
+import javax.swing.JPanel;
 import java.awt.*;
 
 public class BoardPanel extends JPanel {

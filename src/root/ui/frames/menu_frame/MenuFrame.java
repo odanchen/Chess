@@ -6,7 +6,10 @@ import root.ui.frames.components.CustomButton;
 import root.ui.frames.settings_frame.SettingsFrame;
 import root.ui.graphics.GraphicsManager;
 
-import javax.swing.*;
+import javax.swing.JButton;
+import javax.swing.JPanel;
+import javax.swing.SwingUtilities;
+import javax.swing.JComponent;
 import java.awt.*;
 
 public class MenuFrame extends BaseFrame {
