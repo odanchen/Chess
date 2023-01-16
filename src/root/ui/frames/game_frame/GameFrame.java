@@ -21,11 +21,11 @@ public class GameFrame extends BaseFrame {
 
     public GameFrame(GameManager gameManager, GraphicsManager graphicsManager) {
         super(gameManager, graphicsManager);
-        GameStatus gameStatus = new GameStatus(createBoard(), PieceColor.WHITE, new TimerPair(10));
+        GameStatus gameStatus = new GameStatus(createBoard(), PieceColor.WHITE, new TimerPair(1));
         this.gamePanel = new GamePanel(gameStatus, graphicsManager, this);
         this.logPanel = new LogPanel(gameStatus, graphicsManager);
         this.buttonsPanel = new ButtonsPanel(gamePanel, graphicsManager);
-        this.timerPanel = new TimerPanel(graphicsManager, gameStatus);
+        this.timerPanel = new TimerPanel(graphicsManager, gameStatus, gamePanel);
         addPanels();
         addBackgroundPanel("gameBackground");
     }

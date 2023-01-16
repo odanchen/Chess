@@ -1,5 +1,6 @@
 package root.ui.frames.game_frame.panels;
 
+import root.ui.game_flow.GameResult;
 import root.ui.game_flow.GameStatus;
 import root.ui.graphics.GraphicsManager;
 
@@ -13,10 +14,12 @@ public class TimerPanel extends JPanel implements ActionListener {
 
     private final GraphicsManager graphicsManager;
     private final GameStatus gameStatus;
+    private final GamePanel gamePanel;
 
-    public TimerPanel(GraphicsManager graphicsManager, GameStatus gameStatus) {
+    public TimerPanel(GraphicsManager graphicsManager, GameStatus gameStatus, GamePanel gamePanel) {
         this.graphicsManager = graphicsManager;
         this.gameStatus = gameStatus;
+        this.gamePanel = gamePanel;
         this.setBounds(graphicsManager.getTimerPanelBounds());
         this.setOpaque(false);
     }
@@ -25,7 +28,6 @@ public class TimerPanel extends JPanel implements ActionListener {
     public void paint(Graphics g) {
         super.paint(g);
         g.setColor(graphicsManager.getBlackSquareColor());
-        Font timerFont = graphicsManager.getTimerFont();
         Rectangle topTimer = new Rectangle(0, 0, graphicsManager.getSquareSize() * 2, graphicsManager.getEdgeSize());
         Rectangle bottomTimer = new Rectangle(0, graphicsManager.getBoardSize() + graphicsManager.getEdgeSize() * 3, graphicsManager.getSquareSize() * 2, graphicsManager.getEdgeSize());
 
@@ -40,8 +42,14 @@ public class TimerPanel extends JPanel implements ActionListener {
         timer.start();
     }
 
+    private void checkForEnd() {
+        if (gameStatus.getWhiteTimeLeft().equals("00:00") && gameStatus.getGameResult() == null) gamePanel.endGame(GameResult.PLAYER_BLACK_WON_BY_TIME);
+        else if (gameStatus.getBlackTimeLeft().equals("00:00")  && gameStatus.getGameResult() == null) gamePanel.endGame(GameResult.PLAYER_WHITE_WON_BY_TIME);
+    }
+
     @Override
     public void actionPerformed(ActionEvent e) {
         repaint();
+        checkForEnd();
     }
 }

@@ -3,7 +3,7 @@ package root.ui.frames.end_frame.panels;
 import root.ui.game_flow.GameResult;
 import root.ui.graphics.GraphicsManager;
 
-import javax.swing.JPanel;
+import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
@@ -41,6 +41,12 @@ public class EndMessagePanel extends JPanel {
                 break;
             case STALEMATE:
                 folderName = "dsm";
+                break;
+            case PLAYER_BLACK_WON_BY_TIME:
+                folderName = "pbwto";
+                break;
+            case PLAYER_WHITE_WON_BY_TIME:
+                folderName = "pwwto";
                 break;
         }
         return graphicsManager.getMessageTexture(folderName);
