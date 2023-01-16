@@ -34,21 +34,16 @@ public class GameStatus {
     }
 
     public String getBlackTimeLeft() {
-        return timers.getBlackTimer().getTimeLeft();
+        return timers.getBlackTimeLeft();
     }
 
     public String getWhiteTimeLeft() {
-        return timers.getWhiteTimer().getTimeLeft();
+        return timers.getWhiteTimeLeft();
     }
 
     public void handleTimer(Move move) {
-        if (move.getPieceAtEnd(board).isWhite()) {
-            timers.getWhiteTimer().stop();
-            timers.getBlackTimer().start();
-        } else {
-            timers.getBlackTimer().stop();
-            timers.getWhiteTimer().start();
-        }
+        if (move.getPieceAtEnd(board).isWhite()) timers.whiteMoved();
+        else timers.blackMoved();
     }
 
     public ChessPiece getSelectedPiece() {

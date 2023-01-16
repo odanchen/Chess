@@ -32,8 +32,8 @@ public class TimerPanel extends JPanel implements ActionListener {
         g.fillRect(bottomTimer.x, bottomTimer.y, bottomTimer.width, bottomTimer.height);
 
         g.setColor(Color.BLACK);
-        graphicsManager.drawCenteredString(g, gameStatus.getBlackTimeLeft(), topTimer, timerFont);
-        graphicsManager.drawCenteredString(g, gameStatus.getWhiteTimeLeft(), bottomTimer, timerFont);
+        graphicsManager.drawCenteredString(g, (graphicsManager.isFlipped()) ? gameStatus.getWhiteTimeLeft() : gameStatus.getBlackTimeLeft(), topTimer, timerFont);
+        graphicsManager.drawCenteredString(g, (graphicsManager.isFlipped()) ? gameStatus.getBlackTimeLeft() : gameStatus.getWhiteTimeLeft(), bottomTimer, timerFont);
 
         Timer timer = new Timer(1000, this);
         timer.start();
