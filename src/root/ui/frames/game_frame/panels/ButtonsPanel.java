@@ -4,7 +4,8 @@ import root.ui.frames.components.CustomButton;
 import root.ui.game_flow.GameResult;
 import root.ui.graphics.GraphicsManager;
 
-import javax.swing.*;
+
+import javax.swing.JPanel;
 import java.awt.*;
 
 import static root.ui.game_flow.GameResult.PLAYER_BLACK_WON_BY_RESIGNATION;

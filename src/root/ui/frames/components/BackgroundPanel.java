@@ -2,7 +2,7 @@ package root.ui.frames.components;
 
 import root.ui.graphics.GraphicsManager;
 
-import javax.swing.*;
+import javax.swing.JPanel;
 import java.awt.*;
 
 public class BackgroundPanel extends JPanel {

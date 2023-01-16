@@ -5,7 +5,8 @@ import root.ui.frames.game_frame.panels.PiecePanel;
 import root.ui.game_flow.GameStatus;
 import root.ui.graphics.GraphicsManager;
 
-import javax.swing.*;
+import javax.swing.JPanel;
+import javax.swing.GroupLayout;
 
 public class BoardStatePanel extends JPanel {
 

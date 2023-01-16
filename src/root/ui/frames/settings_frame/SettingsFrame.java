@@ -7,7 +7,12 @@ import root.ui.frames.components.BaseFrame;
 import root.ui.frames.components.CustomButton;
 import root.ui.graphics.GraphicsManager;
 
-import javax.swing.*;
+import javax.swing.JButton;
+import javax.swing.JPanel;
+import javax.swing.SwingUtilities;
+import javax.swing.JComponent;
+import javax.swing.JToggleButton;
+import javax.swing.JComboBox;
 import java.awt.*;
 
 public class SettingsFrame extends BaseFrame {
