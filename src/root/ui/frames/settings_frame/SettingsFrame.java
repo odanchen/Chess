@@ -21,6 +21,7 @@ public class SettingsFrame extends BaseFrame {
     private JToggleButton flipToggleButton;
     private JComboBox<String> textureChoice;
     private JComboBox<String> colorChoice;
+    private JComboBox<String> lengthChoice;
 
     public SettingsFrame(GameManager gameManager, GraphicsManager graphicsManager) {
         super(gameManager, graphicsManager);
@@ -28,7 +29,7 @@ public class SettingsFrame extends BaseFrame {
 
         panelHolder = new JPanel();
         panelHolder.setOpaque(false);
-        panelHolder.setBounds(graphicsManager.getGameBounds().width * 8 / 15, graphicsManager.getGameBounds().width / 4, graphicsManager.getGameBounds().width / 6, graphicsManager.getGameBounds().height / 4);
+        panelHolder.setBounds(graphicsManager.getGameBounds().width * 8 / 15, graphicsManager.getGameBounds().width / 4, graphicsManager.getGameBounds().width / 6, graphicsManager.getGameBounds().height / 3);
         panelHolder.setLayout(new GridBagLayout());
 
         addTextureChoice();
@@ -36,6 +37,7 @@ public class SettingsFrame extends BaseFrame {
         addColorChoice();
         addSaveButton();
         addMenuButton();
+        addLengthChoice();
 
         add(panelHolder);
         addBackgroundPanel("settingsMenu");
@@ -54,6 +56,10 @@ public class SettingsFrame extends BaseFrame {
         return (String) colorChoice.getSelectedItem();
     }
 
+    private String getSelectedLength() {
+        return (String) lengthChoice.getSelectedItem();
+    }
+
     private void addToPanelHolder(int gridY, JComponent component) {
         gridBag.fill = GridBagConstraints.HORIZONTAL;
         gridBag.weighty = 2;
@@ -61,6 +67,13 @@ public class SettingsFrame extends BaseFrame {
         gridBag.gridx = 2;
         gridBag.gridy = gridY;
         panelHolder.add(component, gridBag);
+    }
+
+    private void addLengthChoice() {
+        lengthChoice = new JComboBox<>(new String[]
+                {"long", "medium", "short", "infinite"});
+        lengthChoice.setSelectedItem(new IOSettings().getGameLength());
+        addToPanelHolder(3, lengthChoice);
     }
 
     private void addTextureChoice() {
@@ -113,7 +126,7 @@ public class SettingsFrame extends BaseFrame {
     }
 
     private void saveSettings() {
-        new IOSettings().setProperties(getPieceFolder(), getToggleStatus(), BoardColors.getColors(getColorSet()));
+        new IOSettings().setProperties(getPieceFolder(), getToggleStatus(), BoardColors.getColors(getColorSet()), getSelectedLength());
         graphicsManager.refreshTextures();
     }
 

@@ -1,5 +1,6 @@
 package root.ui.frames.game_frame;
 
+import root.assets.settings.IOSettings;
 import root.logic.Board;
 import root.logic.pieces.properties.PieceColor;
 import root.logic.utils.TimerPair;
@@ -21,13 +22,24 @@ public class GameFrame extends BaseFrame {
 
     public GameFrame(GameManager gameManager, GraphicsManager graphicsManager) {
         super(gameManager, graphicsManager);
-        GameStatus gameStatus = new GameStatus(createBoard(), PieceColor.WHITE, new TimerPair(1));
+        GameStatus gameStatus = new GameStatus(createBoard(), PieceColor.WHITE, new TimerPair(getGameLength()));
         this.gamePanel = new GamePanel(gameStatus, graphicsManager, this);
         this.logPanel = new LogPanel(gameStatus, graphicsManager);
         this.buttonsPanel = new ButtonsPanel(gamePanel, graphicsManager);
         this.timerPanel = new TimerPanel(graphicsManager, gameStatus, gamePanel);
         addPanels();
         addBackgroundPanel("gameBackground");
+    }
+
+    private int getGameLength() {
+        switch (new IOSettings().getGameLength()) {
+            case "long":
+                return 10;
+            case "medium":
+                return 5;
+            default:
+                return 3;
+        }
     }
 
     private void addPanels() {

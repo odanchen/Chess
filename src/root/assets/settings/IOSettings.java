@@ -44,12 +44,23 @@ public class IOSettings {
         }
     }
 
-    public void setProperties(String texturePack, boolean toggle, ColorSet colorSet) {
+    public String getGameLength() {
+        try (InputStream input = new FileInputStream(propFile)) {
+            Properties properties = new Properties();
+            properties.load(input);
+            return properties.getProperty("gameLength", "long");
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void setProperties(String texturePack, boolean toggle, ColorSet colorSet, String gameLength) {
         try (OutputStream output = new FileOutputStream(propFile)) {
             Properties properties = new Properties();
             properties.setProperty("texturePack", texturePack);
             properties.setProperty("flipToggle", String.valueOf(toggle));
             properties.setProperty("boardColors", colorSet.getStringVal());
+            properties.setProperty("gameLength", gameLength);
             properties.store(output, null);
         } catch (IOException e) {
             throw new RuntimeException(e);
