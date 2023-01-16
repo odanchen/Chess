@@ -3,7 +3,9 @@ package root.ui.frames.components;
 import root.ui.GameManager;
 import root.ui.graphics.GraphicsManager;
 
-import javax.swing.*;
+import javax.swing.ImageIcon;
+import javax.swing.GroupLayout;
+import javax.swing.JFrame;
 import java.awt.*;
 import java.io.File;
 

@@ -11,7 +11,10 @@ import root.ui.game_flow.GameStates;
 import root.ui.game_flow.GameStatus;
 import root.ui.graphics.GraphicsManager;
 
-import javax.swing.*;
+import javax.swing.GroupLayout;
+import javax.swing.JPanel;
+import javax.swing.SwingUtilities;
+
 import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.util.List;
@@ -189,8 +192,6 @@ public class GamePanel extends JPanel {
     public void makeMove(Move move) {
         if (graphicsManager.flipToggle()) flipPanel();
         gameStatus.getBoard().makeMove(move);
-        System.out.println(gameStatus.getBlackTimeLeft() + " = Black's time left.");
-        System.out.println(gameStatus.getWhiteTimeLeft() + " = White's time left.");
         gameStatus.handleTimer(move);
         gameStatus.logMove(move);
         gameStatus.setGameState(stateAfterMove());

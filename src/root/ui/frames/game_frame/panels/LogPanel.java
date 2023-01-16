@@ -3,7 +3,10 @@ package root.ui.frames.game_frame.panels;
 import root.ui.game_flow.GameStatus;
 import root.ui.graphics.GraphicsManager;
 
-import javax.swing.*;
+import javax.swing.JPanel;
+import javax.swing.JTextArea;
+import javax.swing.JScrollPane;
+import javax.swing.BorderFactory;
 import java.awt.*;
 
 public class LogPanel extends JPanel {

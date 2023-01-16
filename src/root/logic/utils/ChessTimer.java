@@ -1,11 +1,11 @@
 package root.logic.utils;
 
-public class ChessTimerPair {
+public class ChessTimer {
     private float secondsLeft;
     private long timeSinceStart;
     private boolean isPaused = true;
 
-    public ChessTimerPair(int minutesLeft) {
+    public ChessTimer(int minutesLeft) {
         this.secondsLeft = minutesLeft * 60;
     }
 

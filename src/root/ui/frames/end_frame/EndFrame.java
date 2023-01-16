@@ -8,7 +8,9 @@ import root.ui.frames.end_frame.panels.EndMessagePanel;
 import root.ui.game_flow.GameStatus;
 import root.ui.graphics.GraphicsManager;
 
-import javax.swing.*;
+import javax.swing.JPanel;
+import javax.swing.SwingUtilities;
+import javax.swing.JComponent;
 import java.awt.*;
 
 public class EndFrame extends BaseFrame {

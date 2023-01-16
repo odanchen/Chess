@@ -4,7 +4,7 @@ import root.assets.colors.ColorSet;
 import root.assets.settings.IOSettings;
 import root.logic.pieces.ChessPiece;
 
-import javax.swing.*;
+import javax.swing.ImageIcon;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
@@ -65,8 +65,13 @@ public class GraphicsManager {
         return new Rectangle(getEdgeSize(), getEdgeSize(), getBoardSize(), getBoardSize());
     }
 
-    public void drawCenteredString(Graphics g, String text, Rectangle rect, Font font) {
-        textureHolder.drawCenteredString(g, text, rect, font);
+    public void drawCenteredString(Graphics g, String text, Rectangle rect) {
+        int fSize = textureHolder.getLetterSize() / 2;
+        int left = (rect.width - fSize * text.length()) / 2;
+        int top = (rect.height - fSize * 2) / 2;
+        for (int i = 0; i < text.length(); i++) {
+            g.drawImage(textureHolder.getLetterImage(text.charAt(i)), left + i * fSize, rect.y + top, null);
+        }
     }
 
     public Rectangle getBoardPanelBounds() {

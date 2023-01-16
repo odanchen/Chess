@@ -4,7 +4,7 @@ import root.assets.colors.ColorSet;
 import root.assets.settings.IOSettings;
 
 import javax.imageio.ImageIO;
-import javax.swing.*;
+import javax.swing.ImageIcon;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -53,7 +53,7 @@ public class TextureHolder {
 
     public void generateLetterTextures(ColorSet colorSet) {
         this.colorSet = colorSet;
-        List<Character> letters = List.of('A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', '1', '2', '3', '4', '5', '6', '7', '8');
+        List<Character> letters = List.of('A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', ':');
         this.bitmapFont = letters.stream().collect(Collectors.toMap(Function.identity(), this::createBitmap));
     }
 
@@ -64,6 +64,10 @@ public class TextureHolder {
         drawCenteredString(g, String.valueOf(character), new Rectangle(0, 0, font.getSize(), font.getSize()), font);
         g.dispose();
         return image;
+    }
+
+    public int getLetterSize() {
+        return font.getSize();
     }
 
     private void fillActiveTextures() {
