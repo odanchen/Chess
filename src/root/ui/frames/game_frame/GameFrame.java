@@ -23,7 +23,7 @@ public class GameFrame extends BaseFrame {
 
     public GameFrame(GameManager gameManager, GraphicsManager graphicsManager) {
         super(gameManager, graphicsManager);
-        if (new IOSettings().getGameLength().equals("infinite"))
+        if (new IOSettings().getGameLength().equals("Infinite"))
             gameStatus = new GameStatus(createBoard(), PieceColor.WHITE);
         else gameStatus = new GameStatus(createBoard(), PieceColor.WHITE, new TimerPair(getGameLength()));
         this.gamePanel = new GamePanel(gameStatus, graphicsManager, this);
@@ -36,9 +36,9 @@ public class GameFrame extends BaseFrame {
 
     private int getGameLength() {
         switch (new IOSettings().getGameLength()) {
-            case "long":
+            case "Long":
                 return 10;
-            case "medium":
+            case "Medium":
                 return 5;
             default:
                 return 3;

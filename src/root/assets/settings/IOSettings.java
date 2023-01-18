@@ -18,7 +18,7 @@ public class IOSettings {
         try (InputStream input = new FileInputStream(propFile)) {
             Properties properties = new Properties();
             properties.load(input);
-            return properties.getProperty("texturePack", "cburnett");
+            return properties.getProperty("texturePack", "cburnett").toLowerCase();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -38,7 +38,7 @@ public class IOSettings {
         try (InputStream input = new FileInputStream(propFile)) {
             Properties properties = new Properties();
             properties.load(input);
-            return BoardColors.getColors(properties.getProperty("boardColors", "option1"));
+            return BoardColors.getColors(properties.getProperty("boardColors", "Brown"));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

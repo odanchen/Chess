@@ -70,19 +70,21 @@ public class SettingsFrame extends BaseFrame {
     }
 
     private void addLengthChoice() {
-        lengthChoice = new JComboBox<>(new String[]{"long", "medium", "short", "infinite"});
+        lengthChoice = new JComboBox<>(new String[]
+                {"Long", "Medium", "Short", "Infinite"});
         lengthChoice.setSelectedItem(new IOSettings().getGameLength());
         addToPanelHolder(3, lengthChoice);
     }
 
     private void addTextureChoice() {
-        textureChoice = new JComboBox<>(new String[]{"cburnett", "kilifiger", "kosal", "leipzig", "maya", "pirat", "regular"});
+        textureChoice = new JComboBox<>(new String[]
+                {"Cburnett", "Kilifiger", "Kosal", "Leipzig", "Maya", "Pirat", "Regular"});
         textureChoice.setSelectedItem(new IOSettings().getTexturePack());
         addToPanelHolder(0, textureChoice);
     }
 
     private void addColorChoice() {
-        colorChoice = new JComboBox<>(new String[]{"option1", "option2", "option3"});
+        colorChoice = new JComboBox<>(new String[]{"Brown", "Green", "Gray"});
         colorChoice.setSelectedItem(new IOSettings().getBoardColors().getStringVal());
         addToPanelHolder(1, colorChoice);
     }
