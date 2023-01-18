@@ -2,7 +2,7 @@ package root.ui.frames.menu_frame;
 
 import root.ui.GameManager;
 import root.ui.frames.components.BaseFrame;
-import root.ui.frames.components.button.CustomButton;
+import root.ui.frames.components.CustomButton;
 import root.ui.frames.settings_frame.SettingsFrame;
 import root.ui.graphics.GraphicsManager;
 

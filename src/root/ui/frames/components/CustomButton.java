@@ -1,4 +1,4 @@
-package root.ui.frames.components.button;
+package root.ui.frames.components;
 
 import root.ui.graphics.GraphicsManager;
 
