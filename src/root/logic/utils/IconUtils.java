@@ -8,22 +8,8 @@ import java.awt.image.RescaleOp;
 
 public class IconUtils {
     public IconUtils() {
-public class ButtonListener extends MouseInputAdapter {
-    private final CustomButton button;
-    private final Icon originalIcon;
-
-    public ButtonListener(CustomButton button, Icon icon) {
-        super();
-        this.button = button;
-        this.originalIcon = icon;
-    }
-
-    public void mouseEntered(MouseEvent e) {
-        button.setIcon(darken(originalIcon));
-    }
 
     }
-
 
     public static Icon darken(Icon icon) {
         BufferedImage img = getBufferedImageFromIcon(icon);
