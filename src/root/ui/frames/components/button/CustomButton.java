@@ -1,10 +1,12 @@
-package root.ui.frames.components;
+package root.ui.frames.components.button;
 
 import root.ui.graphics.GraphicsManager;
 
 import javax.swing.JButton;
 import javax.swing.BorderFactory;
 import java.awt.*;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 
 public class CustomButton extends JButton {
 
@@ -15,5 +17,6 @@ public class CustomButton extends JButton {
         setPreferredSize(size);
         setBorderPainted(false);
         setFocusPainted(false);
+        addMouseListener(new ButtonListener(this, graphicsManager.getButtonIcon(id, size)));
     }
 }

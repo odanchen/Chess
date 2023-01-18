@@ -4,7 +4,7 @@ import root.assets.colors.BoardColors;
 import root.assets.settings.IOSettings;
 import root.ui.GameManager;
 import root.ui.frames.components.BaseFrame;
-import root.ui.frames.components.CustomButton;
+import root.ui.frames.components.button.CustomButton;
 import root.ui.graphics.GraphicsManager;
 
 import javax.swing.JButton;

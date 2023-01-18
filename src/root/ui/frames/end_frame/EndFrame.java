@@ -2,7 +2,7 @@ package root.ui.frames.end_frame;
 
 import root.ui.GameManager;
 import root.ui.frames.components.BaseFrame;
-import root.ui.frames.components.CustomButton;
+import root.ui.frames.components.button.CustomButton;
 import root.ui.frames.end_frame.panels.BoardStatePanel;
 import root.ui.frames.end_frame.panels.EndMessagePanel;
 import root.ui.game_flow.GameStatus;

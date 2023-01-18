@@ -1,6 +1,6 @@
 package root.ui.frames.game_frame.panels;
 
-import root.ui.frames.components.CustomButton;
+import root.ui.frames.components.button.CustomButton;
 import root.ui.game_flow.GameResult;
 import root.ui.graphics.GraphicsManager;
 
