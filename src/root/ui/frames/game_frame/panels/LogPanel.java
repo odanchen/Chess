@@ -1,12 +1,10 @@
 package root.ui.frames.game_frame.panels;
 
+import root.ui.frames.components.CustomTextArea;
 import root.ui.game_flow.GameStatus;
 import root.ui.graphics.GraphicsManager;
 
-import javax.swing.JPanel;
-import javax.swing.JTextArea;
-import javax.swing.JScrollPane;
-import javax.swing.BorderFactory;
+import javax.swing.*;
 import java.awt.*;
 
 public class LogPanel extends JPanel {
@@ -35,15 +33,8 @@ public class LogPanel extends JPanel {
     }
 
     private void addTextAreaParams() {
-        textArea = new JTextArea("SidePanel", 5, 17);
-        textArea.setOpaque(true);
-        textArea.setEditable(false);
-        textArea.setFocusable(false);
-        textArea.setLineWrap(true);
-        textArea.setFont(graphicsManager.getSideFont());
-        textArea.setWrapStyleWord(true);
-        textArea.setBorder(BorderFactory.createEmptyBorder());
-        scroll = new JScrollPane(textArea, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+        textArea = new CustomTextArea(graphicsManager, "SidePanel", 5, 20);
+        scroll = new JScrollPane(textArea, ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
         add(scroll);
     }
 
