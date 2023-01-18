@@ -25,8 +25,7 @@ public class GameFrame extends BaseFrame {
         super(gameManager, graphicsManager);
         if (new IOSettings().getGameLength().equals("Infinite"))
             gameStatus = new GameStatus(createBoard(), PieceColor.WHITE);
-        else
-            gameStatus = new GameStatus(createBoard(), PieceColor.WHITE, new TimerPair(getGameLength()));
+        else gameStatus = new GameStatus(createBoard(), PieceColor.WHITE, new TimerPair(getGameLength()));
         this.gamePanel = new GamePanel(gameStatus, graphicsManager, this);
         this.logPanel = new LogPanel(gameStatus, graphicsManager);
         this.buttonsPanel = new ButtonsPanel(gamePanel, graphicsManager);

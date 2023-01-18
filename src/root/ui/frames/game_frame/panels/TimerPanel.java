@@ -43,8 +43,10 @@ public class TimerPanel extends JPanel implements ActionListener {
     }
 
     private void checkForEnd() {
-        if (gameStatus.getWhiteTimeLeft().equals("00:00") && gameStatus.getGameResult() == null) gamePanel.endGame(GameResult.PLAYER_BLACK_WON_BY_TIME);
-        else if (gameStatus.getBlackTimeLeft().equals("00:00")  && gameStatus.getGameResult() == null) gamePanel.endGame(GameResult.PLAYER_WHITE_WON_BY_TIME);
+        if (gameStatus.getWhiteTimeLeft().equals("00:00") && gameStatus.getGameResult() == null)
+            gamePanel.endGame(GameResult.PLAYER_BLACK_WON_BY_TIME);
+        else if (gameStatus.getBlackTimeLeft().equals("00:00") && gameStatus.getGameResult() == null)
+            gamePanel.endGame(GameResult.PLAYER_WHITE_WON_BY_TIME);
     }
 
     @Override

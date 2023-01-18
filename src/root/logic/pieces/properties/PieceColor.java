@@ -1,8 +1,7 @@
 package root.logic.pieces.properties;
 
 public enum PieceColor {
-    WHITE("w"),
-    BLACK("b");
+    WHITE("w"), BLACK("b");
 
     private final String colorSign;
 
