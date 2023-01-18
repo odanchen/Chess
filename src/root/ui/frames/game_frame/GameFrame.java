@@ -37,9 +37,9 @@ public class GameFrame extends BaseFrame {
 
     private int getGameLength() {
         switch (new IOSettings().getGameLength()) {
-            case "long":
+            case "Long":
                 return 10;
-            case "medium":
+            case "Medium":
                 return 5;
             default:
                 return 3;

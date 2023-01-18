@@ -18,7 +18,7 @@ public class GameStatus {
     private Move selectedMove;
     private GameStates gameState;
     private GameResult gameResult;
-    private boolean timerPresent;
+    private final boolean timerPresent;
 
     public GameStatus(Board board, PieceColor startingSide, TimerPair timers) {
         this.selectedPiece = null;
