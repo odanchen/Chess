@@ -23,7 +23,7 @@ public class GameFrame extends BaseFrame {
 
     public GameFrame(GameManager gameManager, GraphicsManager graphicsManager) {
         super(gameManager, graphicsManager);
-        if (new IOSettings().getGameLength().equals("infinite"))
+        if (new IOSettings().getGameLength().equals("Infinite"))
             gameStatus = new GameStatus(createBoard(), PieceColor.WHITE);
         else
             gameStatus = new GameStatus(createBoard(), PieceColor.WHITE, new TimerPair(getGameLength()));
