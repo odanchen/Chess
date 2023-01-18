@@ -46,6 +46,5 @@ public class LogPanel extends JPanel {
         scroll = new JScrollPane(textArea, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
         add(scroll);
     }
-
 }
 

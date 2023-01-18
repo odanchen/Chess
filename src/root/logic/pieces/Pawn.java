@@ -42,12 +42,10 @@ public class Pawn extends ChessPiece {
         }
 
         endPosition = new Position(getPosition(), 1, direction);
-        if (canAttack(endPosition, board))
-            moves.add(new AttackMove(getPosition(), endPosition, endPosition));
+        if (canAttack(endPosition, board)) moves.add(new AttackMove(getPosition(), endPosition, endPosition));
 
         endPosition = new Position(getPosition(), -1, direction);
-        if (canAttack(endPosition, board))
-            moves.add(new AttackMove(getPosition(), endPosition, endPosition));
+        if (canAttack(endPosition, board)) moves.add(new AttackMove(getPosition(), endPosition, endPosition));
 
         // En Passant
         endPosition = new Position(getPosition(), -1, direction);
@@ -66,9 +64,7 @@ public class Pawn extends ChessPiece {
     }
 
     private boolean canAttack(Position endPosition, Board board) {
-        return endPosition.insideBoard() &&
-                board.isNotEmptyAt(endPosition) &&
-                differentColorFrom(board.getPieceAt(endPosition));
+        return endPosition.insideBoard() && board.isNotEmptyAt(endPosition) && differentColorFrom(board.getPieceAt(endPosition));
     }
 
     public boolean getHasMoved() {

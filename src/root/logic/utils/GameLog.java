@@ -37,11 +37,8 @@ public class GameLog {
     }
 
     private String handleMating(String moveString) {
-        if (board.isCheckmate(PieceColor.BLACK) || board.isCheckmate(PieceColor.WHITE))
-            moveString += "#";
-        else if (board.isCheck(PieceColor.BLACK) || board.isCheck(PieceColor.WHITE))
-            moveString += "+";
+        if (board.isCheckmate(PieceColor.BLACK) || board.isCheckmate(PieceColor.WHITE)) moveString += "#";
+        else if (board.isCheck(PieceColor.BLACK) || board.isCheck(PieceColor.WHITE)) moveString += "+";
         return moveString;
     }
-
 }

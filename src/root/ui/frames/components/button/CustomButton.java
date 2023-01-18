@@ -5,8 +5,6 @@ import root.ui.graphics.GraphicsManager;
 import javax.swing.JButton;
 import javax.swing.BorderFactory;
 import java.awt.*;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 
 public class CustomButton extends JButton {
 

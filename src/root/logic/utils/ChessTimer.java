@@ -25,5 +25,4 @@ public class ChessTimer {
     public void stop() {
         isPaused = true;
     }
-
 }

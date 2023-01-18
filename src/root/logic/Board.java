@@ -97,8 +97,7 @@ public class Board {
 
     private void handleKingMove(Move move) {
         if (move.getPieceAtEnd(this) instanceof King) {
-            if (move.getPieceAtEnd(this).isWhite())
-                setWhiteKingPosition(move.getEndPosition());
+            if (move.getPieceAtEnd(this).isWhite()) setWhiteKingPosition(move.getEndPosition());
             else setBlackKingPosition(move.getEndPosition());
         }
     }

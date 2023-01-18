@@ -51,8 +51,3 @@ public class MenuFrame extends BaseFrame {
         add(buttonsPanel);
     }
 }
-
-
-
-
-

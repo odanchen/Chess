@@ -21,8 +21,7 @@ public class Knight extends ChessPiece {
     }
 
     private boolean canMoveTo(Position endPosition, Board board) {
-        return (endPosition.insideBoard() &&
-                (board.isEmptyAt(endPosition) || differentColorFrom(board.getPieceAt(endPosition))));
+        return (endPosition.insideBoard() && (board.isEmptyAt(endPosition) || differentColorFrom(board.getPieceAt(endPosition))));
     }
 
     private Move newMove(Position startPosition, Position endPosition, Board board) {

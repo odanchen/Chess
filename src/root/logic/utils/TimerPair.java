@@ -26,5 +26,4 @@ public class TimerPair {
     public String getBlackTimeLeft() {
         return blackTimer.getTimeLeft();
     }
-
 }
