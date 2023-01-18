@@ -7,8 +7,9 @@ import java.awt.*;
 
 public class CustomTextArea extends JTextArea {
     private final GraphicsManager graphicsManager;
+
     public CustomTextArea(GraphicsManager graphicsManager, String text, int x, int y) {
-        super(text,x,y);
+        super(text, x, y);
         this.graphicsManager = graphicsManager;
         setOpaque(false);
         setEditable(false);
@@ -22,7 +23,7 @@ public class CustomTextArea extends JTextArea {
     @Override
     protected void paintComponent(Graphics g) {
         Rectangle rect = getVisibleRect();
-        g.drawImage(graphicsManager.getMessageTexture("dsm"), rect.x,rect.y,rect.width,rect.height,this);
+        g.drawImage(graphicsManager.getBackgroundTexture("gameLogBack"), rect.x, rect.y, rect.width, rect.height, this);
         super.paintComponent(g);
     }
 }

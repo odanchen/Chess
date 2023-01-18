@@ -10,8 +10,7 @@ import java.awt.*;
 public class LogPanel extends JPanel {
     private final GraphicsManager graphicsManager;
     private final GameStatus gameStatus;
-    JTextArea textArea;
-    JScrollPane scroll;
+    private JTextArea textArea;
 
     public LogPanel(GameStatus gameStatus, GraphicsManager graphicsManager) {
         this.graphicsManager = graphicsManager;
@@ -34,9 +33,8 @@ public class LogPanel extends JPanel {
 
     private void addTextAreaParams() {
         textArea = new CustomTextArea(graphicsManager, "SidePanel", 5, 20);
-        scroll = new JScrollPane(textArea, ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+        JScrollPane scroll = new JScrollPane(textArea, ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
         add(scroll);
     }
-
 }
 
