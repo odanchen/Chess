@@ -1,9 +1,18 @@
 plugins {
     id 'java'
+    id 'application'
 }
 
 group 'ca.wlmci'
-version '1.0-SNAPSHOT'
+version '1.0'
+
+ext {
+    javaMainClass = 'Main'
+}
+
+application {
+    mainClassName = javaMainClass
+}
 
 repositories {
     mavenCentral()
@@ -15,6 +24,6 @@ dependencies {
 
 jar {
     manifest {
-        attributes 'Main-Class': 'Main', 'Manifest-Version': '1.0'
+        attributes 'Main-Class': mainClassName, 'Manifest-Version': '1.0'
     }
 }
