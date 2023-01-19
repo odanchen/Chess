@@ -69,7 +69,7 @@ public class IOSettings {
 
     private File getSettingsFile() {
         String root = Paths.get("").toAbsolutePath().toString();
-        String[] fullPath = {root, "src", "main", "java", "assets", "settings", "settings.properties"};
+        String[] fullPath = {root, "settings.properties"};
         File file = new File(String.join(File.separator, fullPath));
         if (!file.exists()) {
             try {

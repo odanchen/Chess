@@ -3,4 +3,4 @@
 /build
 .DS_Store
 /out
-/src/main/java/assets/settings/settings.properties
+settings.properties

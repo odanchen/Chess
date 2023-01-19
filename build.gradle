@@ -15,8 +15,6 @@ dependencies {
 
 jar {
     manifest {
-        attributes(
-                'Main-Class': 'Main'
-        )
+        attributes 'Main-Class': 'Main', 'Manifest-Version': '1.0'
     }
 }
