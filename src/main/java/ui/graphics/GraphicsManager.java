@@ -173,10 +173,6 @@ public class GraphicsManager {
         return textureHolder.getPieceTexture(piece.getPieceSignature());
     }
 
-    public String getPathToTexture(String pieceSignature) {
-        return textureHolder.getPathToPieceTexture(pieceSignature);
-    }
-
     public BufferedImage getTextureOfPiece(String signature) {
         return textureHolder.getPieceTexture(signature);
     }
@@ -213,9 +209,5 @@ public class GraphicsManager {
 
     public Font getSideFont() {
         return new Font("Monospaced", Font.BOLD, (int) (getEdgeSize() / 2.5));
-    }
-
-    public Font getTimerFont() {
-        return new Font("Arial", Font.BOLD, (int) (getEdgeSize() / 1.5));
     }
 }
