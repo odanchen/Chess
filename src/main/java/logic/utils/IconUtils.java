@@ -7,9 +7,6 @@ import java.awt.image.BufferedImageOp;
 import java.awt.image.RescaleOp;
 
 public class IconUtils {
-    public IconUtils() {
-
-    }
 
     public static Icon darken(Icon icon) {
         BufferedImage img = getBufferedImageFromIcon(icon);

@@ -8,13 +8,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class GameLog {
-    private final List<Move> gameLog;
     private final List<String> gameLogString;
     private final Board board;
 
     public GameLog(Board board) {
         this.board = board;
-        gameLog = new ArrayList<>();
         gameLogString = new ArrayList<>();
     }
 
@@ -32,7 +30,6 @@ public class GameLog {
     }
 
     public void addMove(Move move) {
-        gameLog.add(move);
         gameLogString.add(handleMating(move.toString(board)));
     }
 
