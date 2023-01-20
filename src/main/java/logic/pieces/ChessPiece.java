@@ -3,6 +3,7 @@ package logic.pieces;
 import logic.Board;
 import logic.moves.AttackMove;
 import logic.moves.Move;
+import logic.moves.RelocationMove;
 import logic.pieces.properties.PieceColor;
 import logic.pieces.properties.Position;
 
@@ -127,6 +128,30 @@ public abstract class ChessPiece {
      */
     public List<Move> calculateMoves(Board board) {
         return validateMoves(board, calculatePotentialMoves(board));
+    }
+
+    protected List<Move> checkLine(Position startPosition, int colDifference, int rowDifference, Board board) {
+        List<Move> moves = new ArrayList<>();
+        Position endPosition = new Position(getPosition(), colDifference, rowDifference);
+
+        while (endPosition.insideBoard() && board.isEmptyAt(endPosition)) {
+            moves.add(newMove(startPosition, endPosition, board));
+            endPosition = new Position(endPosition, colDifference, rowDifference);
+        }
+
+        if (canMoveTo(endPosition, board))
+            moves.add(newMove(startPosition, endPosition, board));
+
+        return moves;
+    }
+
+    protected boolean canMoveTo(Position endPosition, Board board) {
+        return (endPosition.insideBoard() && (board.isEmptyAt(endPosition) || differentColorFrom(board.getPieceAt(endPosition))));
+    }
+
+    protected Move newMove(Position startPosition, Position endPosition, Board board) {
+        if (board.isEmptyAt(endPosition)) return new RelocationMove(startPosition, endPosition);
+        return new AttackMove(startPosition, endPosition, endPosition);
     }
 
     public abstract String getPieceSignature();

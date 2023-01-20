@@ -1,9 +1,7 @@
 package logic.pieces;
 
 import logic.Board;
-import logic.moves.AttackMove;
 import logic.moves.Move;
-import logic.moves.RelocationMove;
 import logic.pieces.properties.PieceColor;
 import logic.pieces.properties.Position;
 
@@ -44,21 +42,6 @@ public class Castle extends ChessPiece {
     public Castle(Castle castle) {
         super(Position.copyOf(castle.getPosition()), castle.getPieceColor());
         this.hasMoved = castle.getHasMoved();
-    }
-
-    private List<Move> checkLine(Position startPosition, int colDifference, int rowDifference, Board board) {
-        List<Move> moves = new ArrayList<>();
-        Position endPosition = new Position(getPosition(), colDifference, rowDifference);
-
-        while (endPosition.insideBoard() && board.isEmptyAt(endPosition)) {
-            moves.add(new RelocationMove(startPosition, endPosition));
-            endPosition = new Position(endPosition, colDifference, rowDifference);
-        }
-
-        if (endPosition.insideBoard() && differentColorFrom(board.getPieceAt(endPosition)))
-            moves.add(new AttackMove(startPosition, endPosition, endPosition));
-
-        return moves;
     }
 
     @Override
