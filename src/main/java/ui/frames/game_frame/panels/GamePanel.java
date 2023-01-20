@@ -6,6 +6,7 @@ import logic.pieces.properties.PieceColor;
 import logic.pieces.properties.Position;
 import ui.frames.game_frame.GameFrame;
 import ui.frames.game_frame.listener.MouseListener;
+import ui.frames.game_frame.panels.dragging.DragPanel;
 import ui.game_flow.GameResult;
 import ui.game_flow.GameStates;
 import ui.game_flow.GameStatus;
