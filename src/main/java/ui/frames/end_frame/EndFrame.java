@@ -42,7 +42,7 @@ public class EndFrame extends BaseFrame {
 
         Dimension size = graphicsManager.getTextButtonDimension();
         int buttonY = (int) (graphicsManager.getGameBounds().getSize().getHeight() * 17 / 20);
-        buttonsPanel.setBounds(graphicsManager.getCenterOfScreenX(size.width), buttonY, size.width, (int) (size.height * 1.5));
+        buttonsPanel.setBounds(graphicsManager.getGameBounds().width * 3 / 4, buttonY, size.width, (int) (size.height * 1.5));
         buttonsPanel.setOpaque(false);
 
         CustomButton menuReturnButton = new CustomButton("menuButtonReleased", graphicsManager, size);
