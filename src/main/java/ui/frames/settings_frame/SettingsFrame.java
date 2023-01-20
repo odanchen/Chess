@@ -15,6 +15,7 @@ import javax.swing.JToggleButton;
 import javax.swing.JComboBox;
 import java.awt.*;
 
+@SuppressWarnings("SpellCheckingInspection")
 public class SettingsFrame extends BaseFrame {
     private final GridBagConstraints gridBag;
     private final JPanel panelHolder;

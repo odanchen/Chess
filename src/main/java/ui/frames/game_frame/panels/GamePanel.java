@@ -21,6 +21,7 @@ import java.util.List;
 
 import static ui.game_flow.GameStates.*;
 
+@SuppressWarnings("SpellCheckingInspection")
 public class GamePanel extends JPanel {
     private final BoardPanel boardPanel;
     private final PiecePanel piecePanel;
