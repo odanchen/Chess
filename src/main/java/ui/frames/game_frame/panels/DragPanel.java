@@ -19,6 +19,7 @@ public class DragPanel extends JPanel {
         this.gameStatus = gameStatus;
         this.setBounds(graphicsManager.getPlayAreaBounds());
         this.setOpaque(false);
+
     }
 
     @Override

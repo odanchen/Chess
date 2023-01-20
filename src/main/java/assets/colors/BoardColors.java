@@ -11,6 +11,10 @@ public class BoardColors {
     public static final ColorSet OPTION2 = new ColorSet(new Color(238, 238, 210), new Color(118, 150, 86), new Color(28, 28, 26, 50), "Green");
     public static final ColorSet OPTION3 = new ColorSet(new Color(232, 235, 239), new Color(125, 135, 150), new Color(28, 28, 26, 50), "Gray");
 
+    /**
+     * @param signature The signature color set. A color set is a theme for the game, including the board colors.
+     * @return The corresponding color set.
+     */
     public static ColorSet getColors(String signature) {
         switch (signature) {
             case "Brown":

@@ -19,6 +19,10 @@ public class IOSettings {
         propFile = getSettingsFile();
     }
 
+    /**
+     * Accesses the properties file.
+     * @return The name of the texture pack currently used.
+     */
     public String getTexturePack() {
         try (InputStream input = new FileInputStream(propFile)) {
             Properties properties = new Properties();
@@ -29,6 +33,10 @@ public class IOSettings {
         }
     }
 
+    /**
+     * Accesses the properties file for the flip toggle.
+     * @return The yes/no of whether the flip toggle is on or not.
+     */
     public boolean getFlipToggle() {
         try (InputStream input = new FileInputStream(propFile)) {
             Properties properties = new Properties();
