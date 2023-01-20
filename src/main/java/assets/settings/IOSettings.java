@@ -11,6 +11,7 @@ import java.util.Properties;
  * A class which reads saved setting for the game
  */
 
+@SuppressWarnings("SpellCheckingInspection")
 public class IOSettings {
     private final File propFile;
 
@@ -71,6 +72,7 @@ public class IOSettings {
         }
     }
 
+    @SuppressWarnings("ResultOfMethodCallIgnored")
     private File getSettingsFile() {
         String root = Paths.get("").toAbsolutePath().toString();
         String[] fullPath = {root, "settings.properties"};
