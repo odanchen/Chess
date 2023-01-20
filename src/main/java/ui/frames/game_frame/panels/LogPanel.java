@@ -8,7 +8,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.JScrollPane;
 import javax.swing.ScrollPaneConstants;
-import java.awt.*;
+import java.awt.Graphics;
 
 public class LogPanel extends JPanel {
     private final GraphicsManager graphicsManager;

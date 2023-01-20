@@ -3,7 +3,7 @@ package ui.frames.components;
 import ui.graphics.GraphicsManager;
 
 import javax.swing.JPanel;
-import java.awt.*;
+import java.awt.Graphics;
 
 public class BackgroundPanel extends JPanel {
     private final GraphicsManager graphicsManager;

@@ -6,7 +6,8 @@ import ui.graphics.GraphicsManager;
 import javax.swing.ImageIcon;
 import javax.swing.GroupLayout;
 import javax.swing.JFrame;
-import java.awt.*;
+import java.awt.Dimension;
+import java.awt.Taskbar;
 
 public abstract class BaseFrame extends JFrame {
     protected final GraphicsManager graphicsManager;

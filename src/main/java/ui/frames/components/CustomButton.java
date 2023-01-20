@@ -6,7 +6,7 @@ import ui.graphics.GraphicsManager;
 import javax.swing.JButton;
 import javax.swing.ImageIcon;
 import javax.swing.BorderFactory;
-import java.awt.*;
+import java.awt.Dimension;
 
 public class CustomButton extends JButton {
 

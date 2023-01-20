@@ -1,6 +1,6 @@
 package assets.colors;
 
-import java.awt.*;
+import java.awt.Color;
 
 public class ColorSet {
     private final Color whiteCell;

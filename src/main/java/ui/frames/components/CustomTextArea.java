@@ -2,7 +2,8 @@ package ui.frames.components;
 
 import ui.graphics.GraphicsManager;
 
-import javax.swing.*;
+import javax.swing.JTextArea;
+import javax.swing.BorderFactory;
 import java.awt.Graphics;
 import java.awt.Rectangle;
 

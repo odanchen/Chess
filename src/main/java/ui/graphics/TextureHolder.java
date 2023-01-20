@@ -5,7 +5,14 @@ import assets.settings.IOSettings;
 
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
-import java.awt.*;
+import java.awt.Font;
+import java.awt.Graphics2D;
+import java.awt.Image;
+import java.awt.Rectangle;
+import java.awt.Dimension;
+import java.awt.FontMetrics;
+import java.awt.Graphics;
+
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
