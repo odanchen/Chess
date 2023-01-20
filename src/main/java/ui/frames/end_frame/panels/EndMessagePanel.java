@@ -7,6 +7,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
+@SuppressWarnings("SpellCheckingInspection")
 public class EndMessagePanel extends JPanel {
     private final GraphicsManager graphicsManager;
     private final GameResult gameResult;

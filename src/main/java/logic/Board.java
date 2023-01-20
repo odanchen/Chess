@@ -13,6 +13,7 @@ import java.util.List;
 
 import static logic.pieces.properties.PieceColor.WHITE;
 
+@SuppressWarnings("SpellCheckingInspection")
 public class Board {
     private final static int BOARD_SIZE = 8;
     private ChessPiece[][] configuration = new ChessPiece[BOARD_SIZE][BOARD_SIZE];

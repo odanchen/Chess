@@ -4,11 +4,25 @@ public class Position {
     private final int row;
     private final char col;
 
+    /**
+     * Creates a position with given coordinates
+     *
+     * @param col - the letter chess coordinate
+     * @param row - the number chess coordinate
+     */
+
     public Position(char col, int row) {
         this.col = col;
         this.row = row;
     }
 
+    /**
+     * A constructor creates a position on a given distance from the starting position
+     *
+     * @param start         - the position off of which the offset begins
+     * @param colDifference - the horizontal distance between the start position and the created one
+     * @param rowDifference - the horizontal distance between the start position and the created one
+     */
     public Position(Position start, int colDifference, int rowDifference) {
         this.row = start.getRow() + rowDifference;
         this.col = (char) (start.getCol() + colDifference);
@@ -56,9 +70,13 @@ public class Position {
         return (getRow() == position.getRow() && getCol() == position.getCol());
     }
 
+    /**
+     * Gets the row of the 2-dimensional array, the chess pieces are stored as
+     *
+     * @return a number in the range from 0 to 7,the current position refers to
+     */
     public int rowToIdx() {
-        int BOARD_SIZE = 8;
-        return Math.abs(row - BOARD_SIZE);
+        return Math.abs(row - 8);
     }
 
     public int colToIdx() {

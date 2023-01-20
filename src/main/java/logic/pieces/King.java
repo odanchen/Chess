@@ -1,10 +1,8 @@
 package logic.pieces;
 
 import logic.Board;
-import logic.moves.AttackMove;
 import logic.moves.CastlingMove;
 import logic.moves.Move;
-import logic.moves.RelocationMove;
 import logic.pieces.properties.PieceColor;
 import logic.pieces.properties.Position;
 
@@ -22,15 +20,6 @@ public class King extends ChessPiece {
     public King(King king) {
         super(Position.copyOf(king.getPosition()), king.getPieceColor());
         this.hasMoved = king.getHasMoved();
-    }
-
-    private boolean canMoveTo(Position endPosition, Board board) {
-        return (endPosition.insideBoard() && (board.isEmptyAt(endPosition) || differentColorFrom(board.getPieceAt(endPosition))));
-    }
-
-    private Move newMove(Position startPosition, Position endPosition, Board board) {
-        if (board.isEmptyAt(endPosition)) return new RelocationMove(startPosition, endPosition);
-        return new AttackMove(startPosition, endPosition, endPosition);
     }
 
     @Override

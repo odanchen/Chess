@@ -103,6 +103,7 @@ public class TextureHolder {
     }
 
     public BufferedImage getTextureOf(String folder, String filename, Dimension size) {
+        //noinspection DataFlowIssue
         try (InputStream in = Thread.currentThread().getContextClassLoader().getResource(getPathTo(folder, filename)).openStream()) {
             return rescale(ImageIO.read(in), size.height, size.width);
         } catch (IOException e) {
@@ -111,6 +112,7 @@ public class TextureHolder {
     }
 
     public ImageIcon getIconOf(String folder, String filename, Dimension size) {
+        //noinspection DataFlowIssue
         try (InputStream in = Thread.currentThread().getContextClassLoader().getResource(getPathTo(folder, filename)).openStream()) {
             return new ImageIcon(rescale(ImageIO.read(in), size.height, size.width));
         } catch (IOException e) {
