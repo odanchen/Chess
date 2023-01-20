@@ -10,7 +10,7 @@ import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 import javax.swing.JComponent;
-import java.awt.*;
+import java.awt.Dimension;
 
 public class MenuFrame extends BaseFrame {
 

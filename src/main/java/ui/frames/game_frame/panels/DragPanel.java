@@ -5,7 +5,7 @@ import ui.graphics.GraphicsManager;
 
 
 import javax.swing.JPanel;
-import java.awt.*;
+import java.awt.Graphics;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 

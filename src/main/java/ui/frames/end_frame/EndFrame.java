@@ -11,7 +11,7 @@ import ui.graphics.GraphicsManager;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 import javax.swing.JComponent;
-import java.awt.*;
+import java.awt.Dimension;
 
 public class EndFrame extends BaseFrame {
 

@@ -6,7 +6,7 @@ import ui.graphics.GraphicsManager;
 
 
 import javax.swing.JPanel;
-import java.awt.*;
+import java.awt.GridLayout;
 
 import static ui.game_flow.GameResult.PLAYER_BLACK_WON_BY_RESIGNATION;
 import static ui.game_flow.GameResult.PLAYER_WHITE_WON_BY_RESIGNATION;

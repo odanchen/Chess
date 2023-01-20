@@ -6,7 +6,10 @@ import ui.game_flow.GameStatus;
 import ui.graphics.GraphicsManager;
 
 import javax.swing.JPanel;
-import java.awt.*;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.Dimension;
+import java.awt.BasicStroke;
 
 public class IndicationPanel extends JPanel {
     private final GameStatus gameStatus;

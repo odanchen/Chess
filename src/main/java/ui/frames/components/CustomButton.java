@@ -3,7 +3,9 @@ package ui.frames.components;
 import logic.utils.IconUtils;
 import ui.graphics.GraphicsManager;
 
-import javax.swing.*;
+import javax.swing.JButton;
+import javax.swing.ImageIcon;
+import javax.swing.BorderFactory;
 import java.awt.*;
 
 public class CustomButton extends JButton {

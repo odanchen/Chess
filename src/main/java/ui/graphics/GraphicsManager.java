@@ -5,8 +5,13 @@ import logic.pieces.ChessPiece;
 import assets.settings.IOSettings;
 
 import javax.swing.ImageIcon;
-import java.awt.*;
+import java.awt.Toolkit;
 import java.awt.image.BufferedImage;
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.Rectangle;
+import java.awt.Graphics;
+import java.awt.Dimension;
 
 import static java.awt.Font.PLAIN;
 

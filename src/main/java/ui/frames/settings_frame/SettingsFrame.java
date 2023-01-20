@@ -13,7 +13,9 @@ import javax.swing.SwingUtilities;
 import javax.swing.JComponent;
 import javax.swing.JToggleButton;
 import javax.swing.JComboBox;
-import java.awt.*;
+import java.awt.GridBagLayout;
+import java.awt.GridBagConstraints;
+import java.awt.Dimension;
 
 @SuppressWarnings("SpellCheckingInspection")
 public class SettingsFrame extends BaseFrame {

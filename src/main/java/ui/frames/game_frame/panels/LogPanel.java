@@ -4,7 +4,10 @@ import ui.frames.components.CustomTextArea;
 import ui.game_flow.GameStatus;
 import ui.graphics.GraphicsManager;
 
-import javax.swing.*;
+import javax.swing.JPanel;
+import javax.swing.JTextArea;
+import javax.swing.JScrollPane;
+import javax.swing.ScrollPaneConstants;
 import java.awt.*;
 
 public class LogPanel extends JPanel {

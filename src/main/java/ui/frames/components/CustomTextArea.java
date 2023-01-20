@@ -3,7 +3,8 @@ package ui.frames.components;
 import ui.graphics.GraphicsManager;
 
 import javax.swing.*;
-import java.awt.*;
+import java.awt.Graphics;
+import java.awt.Rectangle;
 
 public class CustomTextArea extends JTextArea {
     private final GraphicsManager graphicsManager;

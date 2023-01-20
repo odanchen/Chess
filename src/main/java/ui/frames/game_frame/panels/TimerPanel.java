@@ -6,7 +6,9 @@ import ui.graphics.GraphicsManager;
 
 import javax.swing.Timer;
 import javax.swing.JPanel;
-import java.awt.*;
+import java.awt.Graphics;
+import java.awt.Rectangle;
+import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
