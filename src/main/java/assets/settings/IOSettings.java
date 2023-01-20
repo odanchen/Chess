@@ -47,6 +47,10 @@ public class IOSettings {
         }
     }
 
+    /**
+     * Accesses the properties file for the current color set being used.
+     * @return The color set.
+     */
     public ColorSet getBoardColors() {
         try (InputStream input = new FileInputStream(propFile)) {
             Properties properties = new Properties();
@@ -57,6 +61,10 @@ public class IOSettings {
         }
     }
 
+    /**
+     * Accesses the properties file for the game length preference being used.
+     * @return The string key for the corresponding game length.
+     */
     public String getGameLength() {
         try (InputStream input = new FileInputStream(propFile)) {
             Properties properties = new Properties();
@@ -67,6 +75,13 @@ public class IOSettings {
         }
     }
 
+    /**
+     * Updates the properties.
+     * @param texturePack
+     * @param toggle
+     * @param colorSet
+     * @param gameLength
+     */
     public void setProperties(String texturePack, boolean toggle, ColorSet colorSet, String gameLength) {
         try (OutputStream output = new FileOutputStream(propFile)) {
             Properties properties = new Properties();
@@ -79,7 +94,7 @@ public class IOSettings {
             throw new RuntimeException(e);
         }
     }
-
+    
     @SuppressWarnings("ResultOfMethodCallIgnored")
     private File getSettingsFile() {
         String root = Paths.get("").toAbsolutePath().toString();
