@@ -12,10 +12,21 @@ import java.util.List;
 
 public class Bishop extends ChessPiece {
 
+    /**
+     * creates a new bishop at the given position
+     *
+     * @param position - position of the new bishop
+     * @param color    - color of the new bishop
+     */
     public Bishop(Position position, PieceColor color) {
         super(position, color);
     }
 
+    /**
+     * A copy constructor
+     *
+     * @param bishop - the instance of a bishop, the identical copy of which would be created
+     */
     public Bishop(Bishop bishop) {
         super(Position.copyOf(bishop.getPosition()), bishop.getPieceColor());
     }

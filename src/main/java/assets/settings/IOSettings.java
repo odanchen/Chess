@@ -7,6 +7,10 @@ import java.io.*;
 import java.nio.file.Paths;
 import java.util.Properties;
 
+/**
+ * A class which reads saved setting for the game
+ */
+
 public class IOSettings {
     private final File propFile;
 

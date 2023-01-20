@@ -24,6 +24,13 @@ public abstract class ChessPiece {
         this.position = position;
     }
 
+    /**
+     * Constructs a new chess piece, based on the current FEN reading
+     *
+     * @param piece    - a letter representing a piece and its color
+     * @param position - the position of the new piece
+     * @return the new piece
+     */
     public static ChessPiece fromFEN(char piece, Position position) {
         PieceColor newPieceColor = Character.isUpperCase(piece) ? PieceColor.WHITE : PieceColor.BLACK;
         switch (Character.toUpperCase(piece)) {
