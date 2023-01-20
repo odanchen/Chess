@@ -3,7 +3,6 @@ package logic.pieces;
 import logic.Board;
 import logic.moves.AttackMove;
 import logic.moves.Move;
-import logic.moves.RelocationMove;
 import logic.pieces.properties.PieceColor;
 import logic.pieces.properties.Position;
 
@@ -34,18 +33,18 @@ public class Pawn extends ChessPiece {
 
         endPosition = new Position(getPosition(), 0, direction);
         if (endPosition.insideBoard() && board.isEmptyAt(endPosition)) {
-            moves.add(new RelocationMove(getPosition(), endPosition));
+            moves.add(newMove(getPosition(), endPosition, board));
 
             endPosition = new Position(getPosition(), 0, 2 * direction);
             if (endPosition.insideBoard() && board.isEmptyAt(endPosition) && !hasMoved)
-                moves.add(new RelocationMove(getPosition(), endPosition));
+                moves.add(newMove(getPosition(), endPosition, board));
         }
 
         endPosition = new Position(getPosition(), 1, direction);
-        if (canAttack(endPosition, board)) moves.add(new AttackMove(getPosition(), endPosition, endPosition));
+        if (canAttack(endPosition, board)) moves.add(newMove(getPosition(), endPosition, board));
 
         endPosition = new Position(getPosition(), -1, direction);
-        if (canAttack(endPosition, board)) moves.add(new AttackMove(getPosition(), endPosition, endPosition));
+        if (canAttack(endPosition, board)) moves.add(newMove(getPosition(), endPosition, board));
 
         // En Passant
         endPosition = new Position(getPosition(), -1, direction);
