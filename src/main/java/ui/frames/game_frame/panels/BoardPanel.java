@@ -3,7 +3,10 @@ package ui.frames.game_frame.panels;
 import ui.graphics.GraphicsManager;
 
 import javax.swing.JPanel;
-import java.awt.*;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.BasicStroke;
+import java.awt.Dimension;
 
 public class BoardPanel extends JPanel {
     private final GraphicsManager graphicsManager;

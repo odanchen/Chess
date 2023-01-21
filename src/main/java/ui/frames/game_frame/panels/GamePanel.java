@@ -16,7 +16,7 @@ import javax.swing.GroupLayout;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
-import java.awt.*;
+import java.awt.Dimension;
 import java.awt.event.MouseEvent;
 import java.util.List;
 

@@ -3,8 +3,9 @@ package ui.frames.end_frame.panels;
 import ui.game_flow.GameResult;
 import ui.graphics.GraphicsManager;
 
-import javax.swing.*;
-import java.awt.*;
+import javax.swing.JPanel;
+import java.awt.Dimension;
+import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 
 @SuppressWarnings("SpellCheckingInspection")

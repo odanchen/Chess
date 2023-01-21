@@ -1,6 +1,6 @@
 package assets.colors;
 
-import java.awt.*;
+import java.awt.Color;
 
 /**
  * A class which stores color sets for the board;

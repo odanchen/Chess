@@ -6,7 +6,8 @@ import ui.graphics.GraphicsManager;
 
 
 import javax.swing.JPanel;
-import java.awt.*;
+import java.awt.Graphics;
+import java.awt.Dimension;
 import java.awt.image.BufferedImage;
 
 public class PiecePanel extends JPanel {
