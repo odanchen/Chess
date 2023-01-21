@@ -9,13 +9,9 @@ import java.awt.*;
 import java.awt.event.MouseEvent;
 
 public class DragPanel extends JPanel {
-    private final GraphicsManager graphicsManager;
-    private final GameStatus gameStatus;
     private final PieceDraggedPanel piecePanel;
 
     public DragPanel(GraphicsManager graphicsManager, GameStatus gameStatus) {
-        this.graphicsManager = graphicsManager;
-        this.gameStatus = gameStatus;
         this.setBounds(graphicsManager.getPlayAreaBounds());
         this.setVisible(true);
         this.setOpaque(false);
