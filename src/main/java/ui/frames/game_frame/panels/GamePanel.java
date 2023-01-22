@@ -12,19 +12,13 @@ import ui.game_flow.GameStates;
 import ui.game_flow.GameStatus;
 import ui.graphics.GraphicsManager;
 
-import javax.sound.sampled.AudioInputStream;
-import javax.sound.sampled.AudioSystem;
-import javax.sound.sampled.Clip;
-import javax.sound.sampled.DataLine;
 import javax.swing.GroupLayout;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
 import java.awt.Dimension;
 import java.awt.event.MouseEvent;
-import java.io.File;
 import java.util.List;
-import java.util.Objects;
 
 import static ui.game_flow.GameStates.*;
 
@@ -200,7 +194,6 @@ public class GamePanel extends JPanel {
     public void makeMove(Move move) {
         if (graphicsManager.flipToggle()) flipPanel();
         gameStatus.getBoard().makeMove(move);
-        makeSound(move);
         if (gameStatus.timerPresent()) gameStatus.handleTimer(move);
         gameStatus.logMove(move);
         gameStatus.setGameState(stateAfterMove());
@@ -209,20 +202,6 @@ public class GamePanel extends JPanel {
         updatePanel();
         checkGameEnd();
         validate();
-    }
-
-    private void makeSound(Move move) {
-        String fileName;
-        if (move instanceof AttackMove) fileName = "capture.wav";
-        else fileName = "move.wav";
-        try {
-            AudioInputStream audioStream = AudioSystem.getAudioInputStream(Objects.requireNonNull(getClass().getClassLoader().getResourceAsStream(String.join(File.separator, new String[]{"sounds", fileName}))));
-            Clip audioClip = (Clip) AudioSystem.getLine(new DataLine.Info(Clip.class, audioStream.getFormat()));
-            audioClip.open(audioStream);
-            audioClip.start();
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
     }
 
     private void checkGameEnd() {

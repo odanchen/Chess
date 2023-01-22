@@ -32,7 +32,6 @@ public class PieceDraggedPanel extends JPanel {
 
     @Override
     public void paint(Graphics g) {
-        super.paint(g);
         if (gameStatus.isPieceSelected()) {
             BufferedImage image = graphicsManager.getTextureOfPiece(gameStatus.getSelectedPiece());
             g.drawImage(image, 0, 0, null);
