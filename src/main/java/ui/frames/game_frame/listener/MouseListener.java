@@ -1,6 +1,6 @@
 package ui.frames.game_frame.listener;
 
-import ui.frames.game_frame.panels.DragPanel;
+import ui.frames.game_frame.panels.dragging.DragPanel;
 import ui.frames.game_frame.panels.GamePanel;
 
 import javax.swing.event.MouseInputAdapter;
