@@ -24,6 +24,8 @@ public class TimerPanel extends JPanel implements ActionListener {
         this.gamePanel = gamePanel;
         this.setBounds(graphicsManager.getTimerPanelBounds());
         this.setOpaque(false);
+        Timer timer = new Timer(1000, this);
+        timer.start();
     }
 
     @Override
@@ -39,9 +41,6 @@ public class TimerPanel extends JPanel implements ActionListener {
         g.setColor(Color.BLACK);
         graphicsManager.drawCenteredString(g, (graphicsManager.isFlipped()) ? gameStatus.getWhiteTimeLeft() : gameStatus.getBlackTimeLeft(), topTimer);
         graphicsManager.drawCenteredString(g, (graphicsManager.isFlipped()) ? gameStatus.getBlackTimeLeft() : gameStatus.getWhiteTimeLeft(), bottomTimer);
-
-        Timer timer = new Timer(1000, this);
-        timer.start();
     }
 
     private void checkForEnd() {
