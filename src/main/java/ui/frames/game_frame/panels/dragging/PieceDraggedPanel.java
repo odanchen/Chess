@@ -5,37 +5,48 @@ import ui.graphics.GraphicsManager;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 
-public class PieceDraggedPanel extends JPanel {
+public class PieceDraggedPanel extends JPanel implements ActionListener {
 
     private final GraphicsManager graphicsManager;
     private final GameStatus gameStatus;
+    private final int pieceSize;
+    private final int offset;
 
     public PieceDraggedPanel(GraphicsManager graphicsManager, GameStatus gameStatus) {
         this.graphicsManager = graphicsManager;
         this.gameStatus = gameStatus;
-        this.setBounds(0,0,graphicsManager.getSquareSize(),graphicsManager.getSquareSize());
+        this.pieceSize = graphicsManager.getPieceSize();
+        this.offset = (int) (pieceSize * 0.075);
+        clean();
         this.setOpaque(false);
         this.setVisible(true);
+        Timer timer = new Timer(50, this);
+        timer.start();
     }
 
     public void pieceMoved(MouseEvent e) {
-        setVisible(true);
-        setBounds(e.getX() - graphicsManager.getSquareSize(),e.getY() - graphicsManager.getSquareSize(),graphicsManager.getSquareSize(),graphicsManager.getSquareSize());
+        setBounds(e.getX()-pieceSize-offset,e.getY() - pieceSize-offset,pieceSize,pieceSize);
     }
 
     public void clean() {
-        setVisible(false);
+        this.setBounds(-pieceSize,-pieceSize,pieceSize,pieceSize);
     }
 
     @Override
-    public void paint(Graphics g) {
+    public void paintComponent(Graphics g) {
         if (gameStatus.isPieceSelected()) {
             BufferedImage image = graphicsManager.getTextureOfPiece(gameStatus.getSelectedPiece());
             g.drawImage(image, 0, 0, null);
         }
     }
 
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        repaint();
+    }
 }

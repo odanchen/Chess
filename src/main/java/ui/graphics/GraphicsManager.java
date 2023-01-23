@@ -146,7 +146,7 @@ public class GraphicsManager {
         isFlipped = !isFlipped;
     }
 
-    private int getPieceSize() {
+    public int getPieceSize() {
         return (int) (getSquareSize() * 0.875);
     }
 
